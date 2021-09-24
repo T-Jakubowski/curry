@@ -10,7 +10,8 @@ class User{
         $this->nom = $nom;
         $this->prenom = $prenom;
 
-
     }
 }
+
+
 ?>
