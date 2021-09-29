@@ -1,8 +1,10 @@
 <?php
 namespace app\utils;
 class SingletonConfigReader
-{    
-    public function __construct(){}
+{   
+    private static $instance;
+
+    private function __construct(){}
     public function getValue($key)
     {
         $ini_array = parse_ini_file("../app/utils/config.ini");
@@ -12,6 +14,12 @@ class SingletonConfigReader
             }
     }
         return $data;
+    }
+    public static function getInstance() : SingletonConfigReader {
+        if(is_null(self::$instance)){
+            self::$instance = new SingletonConfigReader();
+        }
+        return self::$instance;
     }
 }
 ?>

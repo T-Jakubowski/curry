@@ -10,11 +10,11 @@ class Caserne{
 
    public function __construct($NumCaserne,$Adresse="",$CP="",$Ville="",$CodeTypeC)
    {
-       $this->NumCaserne = $NumCaserne;
-       $this->Adresse = $Adresse;
-       $this->CP = $CP;
-       $this->Ville = $Ville;
-       $this->CodeTypeC = $CodeTypeC;
+    $this->NumCaserne = $NumCaserne;
+    $this->Adresse = $Adresse;
+    $this->CP = $CP;
+    $this->Ville = $Ville;
+    $this->CodeTypeC = $CodeTypeC;
    }
     public function getNumCaserne(){
         return $this->NumCaserne;
