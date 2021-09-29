@@ -6,8 +6,8 @@ class DAOPompier {
 
     private $cnx;
 
-    public function __construct($cnx) {
-        $this->cnx = $cnx;
+    public function __construct() {
+        //$this->cnx = $cnx;
     }
 
     public function find($matricule) {
@@ -20,8 +20,28 @@ class DAOPompier {
         return $data;
     }
 
-    public function save(Caserne $pompier): void {
-        
+    public function save(Pompier $p): void {
+        $sql = "INSERT INTO pompiers(Matricule, Prenom, Nom, ChefAgret, DateNaissance, NumCaserne, CodeGrade, matriculeRespo)
+                Values (:matricule, :prenom, :nom, :chefAgret, :dateNaissance, :numCaserne, :codeGrade, :matriculeRespo);";
+        $matricule = $p->getMatricule();
+        $prenom = $p->getPrenom();
+        $nom = $p->getNom();
+        $chefAgret = $p->getChefAgret();
+        $dateNaissance = $p->getDateNaissance();
+        $numCaserne = $p->getNumCaserne();
+        $codeGrade = $p->getCodeGrade();
+        $matriculeRespo = $p->getMatriculeRespo();
+
+        $prepared_Statement = $cnx->prepare($sql);
+        $prepared_Statement->bindParam("matricule", $matricule);
+        $prepared_Statement->bindParam("prenom", $prenom);
+        $prepared_Statement->bindParam("nom", $nom);
+        $prepared_Statement->bindParam("chefAgret", $chefAgret);
+        $prepared_Statement->bindParam("dateNaissance", $dateNaissance);
+        $prepared_Statement->bindParam("numCaserne", $numCaserne);
+        $prepared_Statement->bindParam("codeGrade", $codeGrade);
+        $prepared_Statement->bindParam("matriculeRespo", $matriculeRespo);
+        $prepared_Statement->execute();
     }
 
     public function remove($matricule): void {
