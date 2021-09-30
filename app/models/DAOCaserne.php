@@ -1,29 +1,17 @@
 <?php
 namespace app\models;
 use PDO;
-use FFI\Exception;
-require_once "Caserne.php";
 use app\models\Caserne;
 use app\utils\SingletonDBMaria;
 
-$dbhost="127.0.0.1";
-$dbname="Pompier";
-$dbuser="Pompier_dbuser";
-$dbpassword="123123";
+
 //SOLID ET GRASP A cherché
 // loger et object de connexion unique
-
-try{
-    $cnx = new PDO("mysql:host=". $dbhost.";dbname=".$dbname, $dbuser, $dbpassword);
-}catch(Exception $e){
-    echo "<pre>" . print_r($e, true) ."</pre>";
-    } 
-
-
 
 /*$daop = new \app\models\DAOPompier($cnx);
 $nb = $daop->count();
 echo "nb pompier : ".$count;*/
+
 class DAOCaserne{
     private PDO $cnx;
     
@@ -34,60 +22,39 @@ class DAOCaserne{
     /*
         Renvoie une caserne par rapport a son id
         @param int $id
-        @return caserne $data
+        @return caserne $Caserne
     */
     public function find($id) : Caserne {
             $SQL = 'SELECT NumCaserne ,Adresse ,CP ,Ville ,CodeTypeC FROM casernes c 
             WHERE NumCaserne=:id;';
-            //$SQL='SELECT * FROM casernes WHERE Matricule=? ';
-            //$preparedStatement=$connect->query($SQL);
-            
             $cnx=$this->cnx;
-
             $preparedStatement=$cnx->prepare($SQL);
             $preparedStatement->bindParam("id",$id);
             $preparedStatement->execute();
-            var_dump($preparedStatement);
             while($row = $preparedStatement->fetch(\PDO::FETCH_ASSOC)){
-                $NumCaserne = $row['NumCaserne'];
-                $Adresse = $row['Adresse'];
-                $CP = $row['CP'];
-                $Ville = $row['Ville'];
-                $CodeTypeC = $row['CodeTypeC'];
-                $Caserne = new caserne($NumCaserne,$Adresse,$CP,$Ville,$CodeTypeC);
+                $Caserne = new caserne($row['NumCaserne'],$row['Adresse'],$row['CP'],$row['Ville'],$row['CodeTypeC']);
             }
-            
-            //$data=$preparedStatement->fetchObject("Caserne");
-        
             return $Caserne;
-            //$preparedStatement->bindValue(1,$mat); comme bindparam mais presque
-
     }
-    
-    
     /*
         Enregistre une caserne dans la bdd Toute les caserne
         @param Caserne $Caserne
         @return void
     */
     public function save(Caserne $Caserne) : void{
-        $sql = 'INSERT INTO caserne (NumCaserne,Adresse,CP,Ville,CodeTypeC) VALUES(":NumCaserne",":Adresse",":CP",":Ville",":CodeTypeC")';
-        
+        $sql = 'INSERT INTO casernes (NumCaserne,Adresse,CP,Ville,CodeTypeC) VALUES(:NumCaserne,:Adresse,:CP,:Ville,:CodeTypeC);';
+        $NumCaserne=$Caserne->getNumCaserne();
+        $Adresse=$Caserne->getadresse();
+        $CP=$Caserne->getCP();
+        $Ville=$Caserne->getville();
+        $CodeTypeC=$Caserne->getCodeTypeC();
         $prepared_Statement = $this->cnx->prepare($sql);
-        $prepared_Statement->bindParam("NumCaserne", $Caserne->getNumCaserne());
-        $prepared_Statement->bindParam("Adresse", $Caserne->getadresse());
-        $prepared_Statement->bindParam("CP", $Caserne->getCP());
-        $prepared_Statement->bindParam("Ville", $Caserne->getville());
-        $prepared_Statement->bindParam("CodeTypeC", $Caserne->getCodeTypeC());
+        $prepared_Statement->bindParam("NumCaserne",$NumCaserne);
+        $prepared_Statement->bindParam("Adresse",$Adresse);
+        $prepared_Statement->bindParam("CP",$CP);
+        $prepared_Statement->bindParam("Ville",$Ville);
+        $prepared_Statement->bindParam("CodeTypeC",$CodeTypeC);
         $prepared_Statement->execute();
-
-        //$statement=$cnx->query($SQL);
-        
-        //$preparedStatement=$cnx->prepare($SQL);
-        //$preparedStatement->bindParam(1,$mat);
-        //$preparedStatement->bindValue(1,$mat); comme bindparam mais presque
-
-
     }
     /*
         Supprime une caserne
@@ -95,7 +62,7 @@ class DAOCaserne{
         @return void
     */
     public function remove($id) : void{
-        $sql = 'DELETE FROM casernes c WHERE NumCaserne=:id;';
+        $sql = 'DELETE FROM casernes WHERE NumCaserne=:id;';
         $cnx=SingletonDBMaria::getInstance()->getConnection();
         $prepared_Statement = $cnx->prepare($sql);
         $prepared_Statement->bindParam("id", $id);
@@ -109,19 +76,30 @@ class DAOCaserne{
         @return array<Caserne>
     */
     public function findAll($offset=0,$limit=10) : Array{
-        $x=[];
-        return $x;
+        $SQL = 'SELECT NumCaserne ,Adresse ,CP ,Ville ,CodeTypeC FROM casernes LIMIT :lim OFFSET :offs;';
+        $cnx=$this->cnx;
+        $preparedStatement=$cnx->prepare($SQL);
+       
+        $preparedStatement->bindValue(':offs', $offset, PDO::PARAM_INT);
+        $preparedStatement->bindValue(':lim', $limit, PDO::PARAM_INT);
+        $preparedStatement->execute();
+        var_dump($preparedStatement);
+        $DesCaserne=array();
+        while($row = $preparedStatement->fetch(\PDO::FETCH_ASSOC)){
+            $DesCaserne[] = new caserne($row['NumCaserne'],$row['Adresse'],$row['CP'],$row['Ville'],$row['CodeTypeC']);
+        }
+        return $DesCaserne;
     }
     /*
         Renvoie le nombre de caserne
         @return int
     */
     public function count() : int {
-        $x=1;
-        return $x;
-
-
-
+        $sql = 'SELECT COUNT(*) as nbCaserne from casernes;';
+        $statement = $this->cnx->query($sql);
+        $nbCaserne = $statement->fetch(\PDO::FETCH_ASSOC);
+        $nbCaserne = $nbCaserne['nbCaserne'];
+        return $nbCaserne;
     }
 /*
 $pompiers = getCountPompiers();

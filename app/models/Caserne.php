@@ -2,7 +2,7 @@
 namespace app\models;
 
 class Caserne{
-   private $NumCaserne;
+   private int $NumCaserne;
    private $Adresse;
    private $CP;
    private $Ville;
