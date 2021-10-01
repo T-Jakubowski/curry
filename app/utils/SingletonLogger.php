@@ -16,7 +16,7 @@ class SingletonLogger
     /** @var  SingletonLogger */
     private static $instance;
     private string $logFile;
-    private bool $logOn; //Correct naming ??
+    private bool $logOn; //Correct naming ???????
     /** @var resource */
     private $handle;
 
