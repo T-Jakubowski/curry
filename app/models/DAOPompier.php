@@ -6,17 +6,16 @@ class DAOPompier {
 
     private $cnx;
 
-    public function __construct() {
-        //$this->cnx = $cnx;
+    public function __construct($cnx) {
+        $this->cnx = $cnx;
     }
 
     public function find($matricule) {
         $sql = 'SELECT * FROM pompiers WHERE Matricule=:matricule;';
-        $prepared_Statement = $cnx->prepare($sql);
+        $prepared_Statement = $this->cnx->prepare($sql);
         $prepared_Statement->bindParam("matricule", $matricule);
         $prepared_Statement->execute();
         $data = $prepared_Statement->fetch(\PDO::FETCH_ASSOC);
-        echo "<pre>" . print_r($data, true) . "</pre>";
         return $data;
     }
 
@@ -32,7 +31,7 @@ class DAOPompier {
         $codeGrade = $p->getCodeGrade();
         $matriculeRespo = $p->getMatriculeRespo();
 
-        $prepared_Statement = $cnx->prepare($sql);
+        $prepared_Statement = $this->cnx->prepare($sql);
         $prepared_Statement->bindParam("matricule", $matricule);
         $prepared_Statement->bindParam("prenom", $prenom);
         $prepared_Statement->bindParam("nom", $nom);
@@ -46,43 +45,41 @@ class DAOPompier {
 
     public function remove($matricule): void {
         $sql = 'delete from pompiers WHERE Matricule=:matricule;';
-        $prepared_Statement = $cnx->prepare($sql);
+        $prepared_Statement = $this->cnx->prepare($sql);
         $prepared_Statement->bindParam("matricule", $matricule);
         $prepared_Statement->execute();
     }
 
     public function findAll($offset = 0, $limit = 10): Array {
-        $sql = 'SELECT * FROM pompiers LIMIT=:limit;';
-        $prepared_Statement = $cnx->prepare($sql);
-        $prepared_Statement->bindParam('limit', $limit);
+
+        $sql = 'SELECT * FROM pompiers LIMIT :limit OFFSET :offset';
+        $prepared_Statement = $this->cnx->prepare($sql);
+        $prepared_Statement->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $prepared_Statement->bindValue(':offset', $offset, \PDO::PARAM_INT);
         $prepared_Statement->execute();
         $firemen = [];
-        while ($fireman = $prepared_Statement->fetchObject(Pompier::Pompier)) {
-            $firemen[] = $fireman;
+        foreach($prepared_Statement as $ps){
+            array_unshift($firemen, $ps);
         }
-        echo '<pre>' . print_r($firemen, true) . '</pre>';
         return $firemen;
     }
 
     public function count(): int {
         $sql = 'SELECT COUNT(*) as nbPompiers from pompiers p ;';
-        $statement = $cnx->query($sql);
+        $statement = $this->cnx->prepare($sql);
         $nbPompiers = $statement->fetch(\PDO::FETCH_ASSOC);
         $nbPompier = $nbPompiers['nbPompiers'];
-        echo '<pre>' . print_r($nbPompier, true) . '</pre>';
         return $nbPompier;
     }
 
     public function findFireHouseFromFireman($matricule) {
         $sql = 'SELECT NumCaserne FROM pompiers WHERE Matricule=:matricule;';
-        $prepared_Statement = $cnx->prepare($sql);
+        $prepared_Statement = $this->cnx->prepare($sql);
         $prepared_Statement->bindParam("matricule", $matricule);
         $prepared_Statement->execute();
         $data = $prepared_Statement->fetch(\PDO::FETCH_ASSOC);
-        echo "<pre>" . print_r($data, true) . "</pre>";
         return $data;
     }
-
 }
 
 ?>
