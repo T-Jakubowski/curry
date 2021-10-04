@@ -3,7 +3,7 @@ namespace app\utils;
 
 class Renderer{
     public static function render($file,array $data=null) : string {
-        $path='../app/view/demo.php';//chemin vers le fichier
+        $path='../app/view/home.php';//chemin vers le fichier
         ob_start();
         if($data != null){
             extract($data);
