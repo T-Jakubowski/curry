@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,3 +16,12 @@ namespace app\controllers;
 class BaseController {
     
 }
+=======
+namespace app\controllers;
+
+
+class BaseController{
+
+}
+?>
+>>>>>>> origin/main
