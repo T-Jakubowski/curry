@@ -33,9 +33,9 @@ class Casernecontroller extends BaseController{
 
     }
     public function update() : void{
-        $CaserneDetail = $this->DAOCaserne->remove();//TODO METHODE UPDATE
-        $page=Renderer::render("caserne.php", compact("LstCaserne"));
-        echo $page;
+        //$CaserneDetail = $this->DAOCaserne->remove();//TODO METHODE UPDATE
+        //$page=Renderer::render("caserne.php", compact("LstCaserne"));
+        //echo $page;
         //methode put du protocole http
         //il faut filtrer les données (Faille XSS)
         //validé les donnée (donnée coerentes)
