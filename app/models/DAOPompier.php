@@ -5,18 +5,21 @@ namespace app\models;
 class DAOPompier {
 
     private $cnx;
+    
 
     public function __construct($cnx) {
         $this->cnx = $cnx;
     }
 
-    public function find($matricule) {
+    public function find($matricule) : Pompier{
         $sql = 'SELECT * FROM pompiers WHERE Matricule=:matricule;';
         $prepared_Statement = $this->cnx->prepare($sql);
         $prepared_Statement->bindParam("matricule", $matricule);
         $prepared_Statement->execute();
-        $data = $prepared_Statement->fetch(\PDO::FETCH_ASSOC);
-        return $data;
+        while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
+            $pompier = new Pompier($row['Matricule'],$row['Prenom'],$row['Nom'],$row['ChefAgret'],$row['DateNaissance'],$row['NumCaserne'],$row['CodeGrade'],$row['matriculeRespo']);
+        }
+        return $pompier;
     }
 
     public function save(Pompier $p): void {
@@ -57,11 +60,12 @@ class DAOPompier {
         $prepared_Statement->bindValue(':limit', $limit, \PDO::PARAM_INT);
         $prepared_Statement->bindValue(':offset', $offset, \PDO::PARAM_INT);
         $prepared_Statement->execute();
-        $firemen = [];
-        foreach($prepared_Statement as $ps){
-            array_unshift($firemen, $ps);
+        
+        $desPompiers=array();
+        while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
+            $desPompiers[] = new Pompier($row['Matricule'],$row['Prenom'],$row['Nom'],$row['ChefAgret'],$row['DateNaissance'],$row['NumCaserne'],$row['CodeGrade'],$row['matriculeRespo']);
         }
-        return $firemen;
+        return $desPompiers;
     }
 
     public function count(): int {
