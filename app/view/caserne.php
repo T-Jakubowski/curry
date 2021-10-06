@@ -11,13 +11,17 @@ namespace app\views;
 
     <meta lang="fr">
     <meta charset="UTF-8">
+
+
+
+    
     </head>
 
 
 
     <body>
         <header>
-            <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #1aa3ff;">
+            <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #ff8787;">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#">Navigation</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +40,7 @@ namespace app\views;
                     
                 </div><form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <button class="btn btn-success" type="submit">Search</button>
       </form>
                 
             </nav>
@@ -64,7 +68,7 @@ namespace app\views;
         <span>  <?php //echo $name ?></span>
         <br>
         <div><h3>Liste des Casernes :</h3></div>
-        <table class="table table-striped table-hover table-info .table-responsive">
+        <table id="tableCaserne" class="table table-striped table-hover table-Secondary .table-responsive" >
         <thead>
     <tr>
       <th data-bs-toggle="tooltip" data-bs-placement="top" title="NumCaserne Int(11)">#</th>
@@ -77,24 +81,27 @@ namespace app\views;
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>30 rue plomc</td>
-      <td>69000</td>
-      <td>Lyon</td>
-      <td>5</td>
-      <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editCaserneModal"><img class="fit-picture" src="/img/edit_black_24dp.svg" alt="edit"></button></td>
-      <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteCaserneModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button></td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>10 rue alto</td>
-      <td>30805</td>
-      <td>Paris</td>
-      <td>6</td>
-      <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editCaserneModal"><img class="fit-picture" src="/img/edit_black_24dp.svg" alt="edit"></button></td>
-      <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteCaserneModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button></td>
-    </tr>
+    <?php 
+foreach ($LstCaserne as $Caserne){
+  /* @var Caserne $Caserne */
+  ?>
+  <tr>
+    <td><?php $id = $Caserne->getNumCaserne();echo $id;?></td>
+    <td><?php echo $Caserne->getAdresse(); ?></td>
+    <td><?php echo $Caserne->getCP(); ?></td>
+    <td><?php echo $Caserne->getVille(); ?></td>
+    <td><?php echo $Caserne->getCodeTypeC(); ?></std>
+    <td><button id="<?php echo $id."edit"; ?>" type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#editCaserneModal"><img class="fit-picture" src="/img/edit_black_24dp.svg" alt="edit"></button></td>
+      <td><button id="<?php echo $id."del"; ?>" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteCaserneModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button></td>
+  </tr>
+  <?php
+
+
+  
+}
+
+
+  ?>
 
   </tbody>
         </table>
@@ -204,7 +211,7 @@ namespace app\views;
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <h3>Etes-vous sur de vouloir supprimé la caserne $$$ ?</h3>
+      <h3>Etes-vous sur de vouloir supprimé la caserne <span id="wantToDelete"></span> ?</h3>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">NON</button>
@@ -247,6 +254,10 @@ namespace app\views;
 </nav>
     </footer>
     <script>
+
+
+
+
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl)
