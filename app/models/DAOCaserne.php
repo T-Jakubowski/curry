@@ -56,6 +56,21 @@ class DAOCaserne{
         $prepared_Statement->bindParam("CodeTypeC",$CodeTypeC);
         $prepared_Statement->execute();
     }
+    public function update(Caserne $Caserne) : void{
+        $sql = 'UPDATE caserne SET';
+        $NumCaserne=$Caserne->getNumCaserne();
+        $Adresse=$Caserne->getadresse();
+        $CP=$Caserne->getCP();
+        $Ville=$Caserne->getville();
+        $CodeTypeC=$Caserne->getCodeTypeC();
+        $prepared_Statement = $this->cnx->prepare($sql);
+        $prepared_Statement->bindParam("NumCaserne",$NumCaserne);
+        $prepared_Statement->bindParam("Adresse",$Adresse);
+        $prepared_Statement->bindParam("CP",$CP);
+        $prepared_Statement->bindParam("Ville",$Ville);
+        $prepared_Statement->bindParam("CodeTypeC",$CodeTypeC);
+        $prepared_Statement->execute();
+    }
     /*
         Supprime une caserne
         @param int $id
@@ -83,11 +98,10 @@ class DAOCaserne{
         $preparedStatement->bindValue(':offs', $offset, PDO::PARAM_INT);
         $preparedStatement->bindValue(':lim', $limit, PDO::PARAM_INT);
         $preparedStatement->execute();
-        var_dump($preparedStatement);
         $DesCaserne=array();
         while($row = $preparedStatement->fetch(\PDO::FETCH_ASSOC)){
             $DesCaserne[] = new caserne($row['NumCaserne'],$row['Adresse'],$row['CP'],$row['Ville'],$row['CodeTypeC']);
-        }
+        }//TODO nom de classe commence par une majuscule
         return $DesCaserne;
     }
     /*
