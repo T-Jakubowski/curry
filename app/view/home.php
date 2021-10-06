@@ -42,7 +42,7 @@ namespace app\views;
                         <div class="navbar-nav">
                             <a class="nav-link active" aria-current="page" href="#">Home</a>
                             <a class="nav-link" href="#">Pompier</a>
-                            <a class="nav-link" href="#">Caserne</a>
+                            <a class="nav-link" href="/caserne/affiche">Caserne</a>
                             <a class="nav-link disabled">Prochainement...</a>     
                         </div>
                     </div> 
@@ -57,8 +57,8 @@ namespace app\views;
    <br>
    
     <div class="d-flex justify-content-center">
-    <span class="mx-4"><button type="button" class="btn btn-danger"><img class="fit-picture" src="/img/CaserneImg.png" width="400" height="500" alt="Caserne"></button></span>
-    <span class="mx-4"><button type="button" class="btn btn-danger"><img class="fit-picture" src="/img/PompierImg.jpg" width="400" height="500" alt="Pompier"></button></span>
+    <span class="mx-4"><a type="button" href="/caserne/affiche" class="btn btn-danger"><img class="fit-picture" src="/img/CaserneImg.png" width="400" height="500" alt="Caserne"></a></span>
+    <span class="mx-4"><a type="button" class="btn btn-danger"><img class="fit-picture" src="/img/PompierImg.jpg" width="400" height="500" alt="Pompier"></a></span>
     </div>
 
     <script>

@@ -64,7 +64,7 @@ switch ($control) {
 
 function defaultRoutes_get($fragments)
 {
-    call_user_func_array(["\app\controllers\BaseController()", "index"], $fragments);
+    call_user_func_array([new BaseController(), "index"], $fragments);
 }
 
 
@@ -139,11 +139,7 @@ function caserneRoutes_get($fragments)
     $action = array_shift($fragments);
     switch ($action) {
         case "affiche":
-
-            var_dump($action);
-            echo "test 1";
             call_user_func_array([new CaserneController(), "show"], $fragments);
-            echo "test 2";
             break;
         case "detail" :
             call_user_func_array([new CaserneController(), "detail"], $fragments);

@@ -7,11 +7,18 @@
  */
 
 namespace app\controllers;
+use app\utils\Renderer;
 /**
  * Description of BaseController
  *
  * @author student
  */
 class BaseController {
-    
+    public function __construct() {
+
+    }
+    public function index(){
+        $page=Renderer::render("home.php");
+        echo $page;
+    }
 }
