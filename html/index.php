@@ -1,5 +1,5 @@
 <?php
-namespace html;
+require_once '../autoloader.php';
 
 use app\controllers\BaseController;
 use app\controllers\CaserneController;
