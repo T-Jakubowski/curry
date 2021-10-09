@@ -41,7 +41,8 @@ class DAOCaserne{
         @param Caserne $Caserne
         @return void
     */
-    public function save(Caserne $Caserne) : void{
+    public function save(Caserne $Caserne) {
+
         $sql = 'INSERT INTO casernes (NumCaserne,Adresse,CP,Ville,CodeTypeC) VALUES(:NumCaserne,:Adresse,:CP,:Ville,:CodeTypeC);';
         $NumCaserne=$Caserne->getNumCaserne();
         $Adresse=$Caserne->getadresse();
@@ -54,7 +55,8 @@ class DAOCaserne{
         $prepared_Statement->bindParam("CP",$CP);
         $prepared_Statement->bindParam("Ville",$Ville);
         $prepared_Statement->bindParam("CodeTypeC",$CodeTypeC);
-        $prepared_Statement->execute();
+        $isSuccess=$prepared_Statement->execute();
+        return $isSuccess;
     }
     public function update(Caserne $Caserne) : void{
         $sql = 'UPDATE caserne SET';

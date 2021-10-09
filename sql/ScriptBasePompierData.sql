@@ -2,9 +2,9 @@
 
 DELETE FROM pompiers_dispos;
 DELETE FROM pompiers 
-WHERE Matricule='coucou';
+WHERE Matricule='Ma0010';
 DELETE FROM pompiers 
-WHERE Matricule='coucou2';
+WHERE Matricule='Ma0011';
 
 
 UPDATE pompiers

@@ -105,6 +105,13 @@ function pompierRoutes_get($fragments)
             call_user_func_array([new PompierController(), "edit"], $fragments); // \app\controllers\PompierController
             break;
         }
+        case "add" :
+        {   
+            //http://127.0.0.1:8080/pompier/show/5?p=25&a=12
+            echo "Calling pompierController->show <hr>";
+            call_user_func_array(["PompierController", "show"], $fragments);//nomController , methode du controler ,fragment a passer
+            break;
+        }
 
         default :
         {
@@ -142,10 +149,10 @@ function caserneRoutes_get($fragments)
             call_user_func_array([new CaserneController(), "show"], $fragments);
             break;
         case "detail" :
-            call_user_func_array([new CaserneController(), "detail"], $fragments);
+            call_user_func_array([new CaserneController(), "showDetails"], $fragments);
             break;
         case "add" :
-            call_user_func_array([new CaserneController(), "add"], $fragments);
+            call_user_func_array([new CaserneController(), "insert"], $fragments);
             break;
 
         default:
@@ -162,7 +169,8 @@ function caserneRoutes_post($fragments)
             call_user_func_array([new CaserneController(), "delete"], $fragments);
             break;
         case "add" :
-            call_user_func_array([new CaserneController(), "do_add"], $fragments);
+            
+            call_user_func_array([new CaserneController(), "insert"], $fragments);
             break;
         default:
             break;

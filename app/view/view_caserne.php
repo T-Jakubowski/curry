@@ -4,17 +4,13 @@ namespace app\views;
 ?>
 <html>
     <head>
-    <link href="/html/css/bootstrap.css" rel="stylesheet">
-    <script src="/html/js/bootstrap.bundle.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+      <link href="/html/css/bootstrap.css" rel="stylesheet">
+      <script src="/html/js/bootstrap.bundle.js"></script>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 
-    <meta lang="fr">
-    <meta charset="UTF-8">
-
-
-
-    
+      <meta lang="fr">
+      <meta charset="UTF-8">
     </head>
 
 
@@ -45,7 +41,23 @@ namespace app\views;
                 
             </nav>
         </header>
+<?php
+if (isset($isSuccess)){
+  if ($isSuccess==1){
+    ?>
 
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+<img class="fit-picture" src="/img/check_black_24dp.svg" alt="success"><strong>Success Action !</strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+    <?php
+  }
+  else{
+    
+  }
+}
+?>
 
    <br>
     <div class="container">
@@ -127,32 +139,34 @@ foreach ($LstCaserne as $Caserne){
         <h5 class="modal-title" id="createCaserneModalLabel">Create Caserne</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <form id="InsertCaserne" method="post" action="/caserne/add">
       <div class="modal-body">
       <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="ex: 128" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <input id="AddCaserne_NumCaserne" name="AddCaserne_NumCaserne" type="text" class="form-control" placeholder="ex: 128" aria-label="Recipient's username" aria-describedby="basic-addon2">
             <span class="input-group-text" id="basic-addon2">NumCaserne</span>
         </div>
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="ex: 12 rue arla" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <input id="AddCaserne_Addresse" name="AddCaserne_Addresse" type="text" class="form-control" placeholder="ex: 12 rue arla" aria-label="Recipient's username" aria-describedby="basic-addon2">
             <span class="input-group-text" id="basic-addon2">Addresse</span>
         </div>
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="ex: 69100" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <input id="AddCaserne_Code Postal" name="AddCaserne_CP" type="text" class="form-control" placeholder="ex: 69100" aria-label="Recipient's username" aria-describedby="basic-addon2">
             <span class="input-group-text" id="basic-addon2">Code Postal</span>
         </div>
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="ex: Lyon" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <input id="AddCaserne_Ville" name="AddCaserne_Ville" type="text" class="form-control" placeholder="ex: Lyon" aria-label="Recipient's username" aria-describedby="basic-addon2">
             <span class="input-group-text" id="basic-addon2">Ville</span>
         </div>
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="ex: 2" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <input id="AddCaserne" name="AddCaserne_CodeTypeC" type="text" class="form-control" placeholder="ex: 2" aria-label="Recipient's username" aria-describedby="basic-addon2">
             <span class="input-group-text" id="basic-addon2">CodeTypeC</span>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save</button>
+        <input type="submit" class="btn btn-primary" value="save">
       </div>
+    </form>
     </div>
   </div>
 </div>
