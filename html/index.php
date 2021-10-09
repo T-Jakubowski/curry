@@ -79,9 +79,9 @@ function pompierRoutes_get($fragments)
     switch ($action) {
         case "affiche" :
         {
-            //http://127.0.0.1:8080/pompier/show/5?p=25&a=12
+            //http://127.0.0.1:8080/pompier/affiche/5?p=25&a=12
             echo "Calling pompierController->show <hr>";
-            call_user_func_array(["PompierController", "show"], $fragments);//nomController , methode du controler ,fragment a passer
+            call_user_func_array([new PompierController(), "show"], $fragments);//nomController , methode du controler ,fragment a passer
             break;
         }
         case "demo" :
@@ -89,14 +89,14 @@ function pompierRoutes_get($fragments)
             //http://127.0.0.1:8080/pompier/demo/1/45?p=2
             echo "Calling pompierController->demo_test <hr>";
             //var_dump($fragments);
-            call_user_func_array(["PompierController", "demo_test"], $fragments);
+            call_user_func_array([new PompierController(), "demo_test"], $fragments);
             break;
         }
         case "delete" :
         {
             //echo "Calling pompierController->del <hr>";
             //Access permission can be checked here too
-            call_user_func_array([new PompierController(), "delete"], $fragments);
+            call_user_func_array([new PompierController(), "    delete"], $fragments);
             break;
         }
         case "edit" :
