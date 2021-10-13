@@ -1,12 +1,8 @@
-<?php 
-
+<?php
 require_once '../autoloader.php';
-use app\models\DAOPompier;
-use app\utils\SingletonDBMaria;
+
 $cnx = app\utils\SingletonDBMaria::getInstance()->getConnection();
 $connexion = new app\models\DAOPompier($cnx);
-
-
 ?>
 
 
@@ -32,6 +28,32 @@ $connexion = new app\models\DAOPompier($cnx);
         <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     </head>
     <body>
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #ff8787;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Navigation</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link" href="/">Home</a>
+                        <a class="nav-link active" aria-current="page" href="#">Pompier</a>
+                        <a class="nav-link" href="../caserne/affiche">Caserne</a>
+                        <a class="nav-link disabled">Prochainement...</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <br><br><br>
+
+
+    <center><button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#createPompierModal">Ajouter un pompier</button>
+        <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#editPompierModal">Modifier un pompier</button>
+        <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#confirmDeleteCaserneModal">Supprimer un pompier</button>
+    </center><br>
+
+
+    <div id="tableau" name="tableau">
         <table id="table_id" class="display">
             <thead>
                 <tr>
@@ -43,170 +65,172 @@ $connexion = new app\models\DAOPompier($cnx);
                     <th>Num Caserne</th>
                     <th>Code Grade</th>
                     <th>Matricule Responsable</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
 
-                    
+
                 <?php foreach ($pompiers as $value) { ?>
-                <tr>
-                    <td><?php echo $value->GetMatricule() ;?></td>
-                    <td><?php echo $value->GetPrenom() ;?></td>
-                    <td><?php echo $value->GetNom() ;?></td>
-                    <td><?php echo $value->GetChefAgret() ;?></td>
-                    <td><?php echo $value->GetDateNaissance() ;?></td>
-                    <td><?php echo $value->GetNumCaserne() ;?></td>
-                    <td><?php echo $value->GetCodeGrade() ;?></td>
-                    <td><?php echo $value->GetMatriculeRespo() ;?></td>
-                    <th><button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#editCaserneModal"><img class="fit-picture" src="/img/edit_black_24dp.svg" alt="edit"></button></th>
-                    <th><button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#confirmDeleteCaserneModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button></th>
-                </tr>
-                <?php }  ?>
+                    <tr>
+                        <td><?php echo $value->GetMatricule(); ?></td>
+                        <td><?php echo $value->GetPrenom(); ?></td>
+                        <td><?php echo $value->GetNom(); ?></td>
+                        <td><?php echo $value->GetChefAgret(); ?></td>
+                        <td><?php echo $value->GetDateNaissance(); ?></td>
+                        <td><?php echo $value->GetNumCaserne(); ?></td>
+                        <td><?php echo $value->GetCodeGrade(); ?></td>
+                        <td><?php echo $value->GetMatriculeRespo(); ?></td>
+                    </tr>
+                <?php } ?>
             </tbody>
         </table>
-        <script>
-            $(document).ready(function () {
-                $('#table_id').DataTable();
-            });
-        </script>
-
-    <br><center><button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#createCaserneModal">Ajouter un pompier</button></center>
+    </div>
 
 
-    <!-- Modal edit Caserne-->
-    <div class="modal fade" id="editCaserneModal" tabindex="-1" aria-labelledby="editCaserneModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="createCaserneModalLabel">Edit</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="LastValue" aria-label="lastValue" readonly>
-                        <span class="input-group-text">Matricule</span>
-                        <input type="text" class="form-control" placeholder="Nouvelle valeur" aria-label="newValue">
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+
+
+
+    <!-- Modal edit Pompier-->
+    <form id="editPompier" method="post" action="/pompier/edit">
+        <div class="modal fade" id="editPompierModal" tabindex="-1" aria-labelledby="editCaserneModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createPompierModalLabel">Edit</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="LastValue" aria-label="lastValue" readonly>
-                        <span class="input-group-text">Prenom</span>
-                        <input type="text" class="form-control" placeholder="Nouvelle valeur" aria-label="newValue">
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="LastValue" aria-label="lastValue" readonly>
+                            <span class="input-group-text">Matricule</span>
+                            <input name='editMatricule' type="text" class="form-control" placeholder="Nouvelle valeur" aria-label="newValue">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="LastValue" aria-label="lastValue" readonly>
+                            <span class="input-group-text">Prenom</span>
+                            <input name='editPrenom' type="text" class="form-control" placeholder="Nouvelle valeur" aria-label="newValue">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="LastValue" aria-label="lastValue" readonly>
+                            <span class="input-group-text">Nom</span>
+                            <input name='editNom' type="text" class="form-control" placeholder="Nouvelle valeur" aria-label="newValue">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="LastValue" aria-label="lastValue" readonly>
+                            <span class="input-group-text">ChefAgret</span>
+                            <input name='editChefAgret' type="text" class="form-control" placeholder="Nouvelle valeur" aria-label="newValue">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="LastValue" aria-label="lastValue"readonly>
+                            <span class="input-group-text">Date Naissance</span>
+                            <input name='editDateNaissance' type="text" class="form-control" placeholder="Nouvelle valeur" aria-label="newValue">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="LastValue" aria-label="lastValue"readonly>
+                            <span class="input-group-text">NumCaserne</span>
+                            <input name="editNumCaserne" type="text" class="form-control" placeholder="Nouvelle valeur" aria-label="newValue">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="LastValue" aria-label="lastValue"readonly>
+                            <span class="input-group-text">Code Grade</span>
+                            <input name='editCodeGrade' type="text" class="form-control" placeholder="Nouvelle valeur" aria-label="newValue">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="LastValue" aria-label="lastValue"readonly>
+                            <span class="input-group-text">Matricule Responsable</span>
+                            <input name='editMatriculeRespo' type="text" class="form-control" placeholder="Nouvelle valeur" aria-label="newValue">
+                        </div>
                     </div>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="LastValue" aria-label="lastValue" readonly>
-                        <span class="input-group-text">Nom</span>
-                        <input type="text" class="form-control" placeholder="Nouvelle valeur" aria-label="newValue">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" name="save_pompier" value="Save">
                     </div>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="LastValue" aria-label="lastValue" readonly>
-                        <span class="input-group-text">ChefAgret</span>
-                        <input type="text" class="form-control" placeholder="Nouvelle valeur" aria-label="newValue">
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="LastValue" aria-label="lastValue"readonly>
-                        <span class="input-group-text">Date Naissance</span>
-                        <input type="text" class="form-control" placeholder="Nouvelle valeur" aria-label="newValue">
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="LastValue" aria-label="lastValue"readonly>
-                        <span class="input-group-text">NumCaserne</span>
-                        <input type="text" class="form-control" placeholder="Nouvelle valeur" aria-label="newValue">
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="LastValue" aria-label="lastValue"readonly>
-                        <span class="input-group-text">Code Grade</span>
-                        <input type="text" class="form-control" placeholder="Nouvelle valeur" aria-label="newValue">
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="LastValue" aria-label="lastValue"readonly>
-                        <span class="input-group-text">Matricule Responsable</span>
-                        <input type="text" class="form-control" placeholder="Nouvelle valeur" aria-label="newValue">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
+
     <!-- Delete -->
-    <div class="modal fade" id="confirmDeleteCaserneModal" tabindex="-1" aria-labelledby="confirmDeleteCaserneModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmDeleteCaserneModalLabel">Delete</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <h3>Etes-vous sur de vouloir supprimé le pompier $$$ ?</h3>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">NON</button>
-                    <button type="button" class="btn btn-success">OUI</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Create -->
-    <!-- Modal create Caserne-->
-    <div class="modal fade" id="createCaserneModal" tabindex="-1" aria-labelledby="createCaserneModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="createCaserneModalLabel">Create Pompier</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
+    <form id="deletePompier" method="post" action="/pompier/delete">
+        <div class="modal fade" id="confirmDeleteCaserneModal" tabindex="-1" aria-labelledby="confirmDeleteCaserneModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmDeleteCaserneModalLabel">Delete</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h3>Quelle pompier voulez vous supprimmer</h3>
+                    </div>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="ex: 128" aria-label="Recipient's username" aria-describedby="basic-addon2">
                         <span class="input-group-text" id="basic-addon2">Matricule</span>
+                        <input name="deleteMatricule" type="text" class="form-control" placeholder="ex: Ma0021" aria-label="Recipient's username" aria-describedby="basic-addon2">
                     </div>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="ex: 12 rue arla" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                        <span class="input-group-text" id="basic-addon2">Prenom</span>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
+                        <input type="submit" class="btn btn-success" value="Valider"></input>
                     </div>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="ex: 69100" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                        <span class="input-group-text" id="basic-addon2">Nom</span>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="ex: Lyon" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                        <span class="input-group-text" id="basic-addon2">Chef Agret</span>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="ex: 2" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                        <span class="input-group-text" id="basic-addon2">Date Naissance</span>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="ex: 2" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                        <span class="input-group-text" id="basic-addon2">NumCaserne</span>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="ex: 2" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                        <span class="input-group-text" id="basic-addon2">CodeGrade</span>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="ex: 2" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                        <span class="input-group-text" id="basic-addon2">Matricule Responsable</span>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save</button>
                 </div>
             </div>
         </div>
-    </div>
+        <form>
+            <!-- Create -->
+            <!-- Modal create Pompier-->
+            <form id="addPompier" method="post" action="/pompier/add">
+                <div class="modal fade" id="createCaserneModal" tabindex="-1" aria-labelledby="createCaserneModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="createCaserneModalLabel">Create Pompier</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="input-group mb-3">
+                                    <input name="addMatricule" type="text" class="form-control" placeholder="ex: 128" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                    <span class="input-group-text" id="basic-addon2">Matricule</span>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input name="addPrenom" type="text" class="form-control" placeholder="ex: 12 rue arla" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                    <span class="input-group-text" id="basic-addon2">Prenom</span>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input name="addNom" type="text" class="form-control" placeholder="ex: 69100" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                    <span class="input-group-text" id="basic-addon2">Nom</span>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input name="addChefAgret" ype="text" class="form-control" placeholder="ex: Lyon" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                    <span class="input-group-text" id="basic-addon2">Chef Agret</span>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input name="addDateNaissance" type="text" class="form-control" placeholder="ex: 2" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                    <span class="input-group-text" id="basic-addon2">Date Naissance</span>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input name="addNumCaserne" type="text" class="form-control" placeholder="ex: 2" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                    <span class="input-group-text" id="basic-addon2">NumCaserne</span>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input name="addCodeGrade" type="text" class="form-control" placeholder="ex: 2" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                    <span class="input-group-text" id="basic-addon2">CodeGrade</span>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input name="addMatriculeRespo" type="text" class="form-control" placeholder="ex: 2" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                    <span class="input-group-text" id="basic-addon2">Matricule Responsable</span>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <input type="submit" class="btn btn-primary" name="add_pompier" value="Save">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
 
-    <style>
-        body{
-            margin:50px;
-        }
-    </style>
-
-</body>
-</html>
+            </body>
+            </html>

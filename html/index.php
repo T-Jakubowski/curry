@@ -79,24 +79,15 @@ function pompierRoutes_get($fragments)
     switch ($action) {
         case "affiche" :
         {
-            //http://127.0.0.1:8080/pompier/affiche/5?p=25&a=12
-            echo "Calling pompierController->show <hr>";
+            //echo "Calling pompierController->show <hr>";
             call_user_func_array([new PompierController(), "show"], $fragments);//nomController , methode du controler ,fragment a passer
-            break;
-        }
-        case "demo" :
-        {
-            //http://127.0.0.1:8080/pompier/demo/1/45?p=2
-            echo "Calling pompierController->demo_test <hr>";
-            //var_dump($fragments);
-            call_user_func_array([new PompierController(), "demo_test"], $fragments);
             break;
         }
         case "delete" :
         {
             //echo "Calling pompierController->del <hr>";
             //Access permission can be checked here too
-            call_user_func_array([new PompierController(), "    delete"], $fragments);
+            call_user_func_array([new PompierController(), "delete"], $fragments);
             break;
         }
         case "edit" :
@@ -107,12 +98,10 @@ function pompierRoutes_get($fragments)
         }
         case "add" :
         {   
-            //http://127.0.0.1:8080/pompier/show/5?p=25&a=12
-            echo "Calling pompierController->show <hr>";
-            call_user_func_array(["PompierController", "show"], $fragments);//nomController , methode du controler ,fragment a passer
+            //echo "Calling pompierController->show <hr>";
+            call_user_func_array([new PompierController(), "add"], $fragments);//nomController , methode du controler ,fragment a passer
             break;
         }
-
         default :
         {
             echo "Action '$action' non defini <hr>";
@@ -123,18 +112,24 @@ function pompierRoutes_get($fragments)
 
 function pompierRoutes_post($fragments)
 {
-    
     $action = array_shift($fragments);
     switch ($action) {
         case "delete":
             //Access permission can be checked here too
-            call_user_func_array([new PompierController(), "do_delete"], $fragments);// \app\controllers\PompierController
+            call_user_func_array([new PompierController(), "delete"], $fragments);// \app\controllers\PompierController
             break;
-        case "update" :
+        case "add" :
             //echo "Action '$action' ready <hr>";
             //Access permission can be checked here too
-            call_user_func_array([new PompierController(), "update"], $fragments);
+            call_user_func_array([new PompierController(), "add"], $fragments);
             break;
+        case "edit" :
+        {
+            //echo "Calling pompierController->del <hr>";
+            call_user_func_array([new PompierController(), "edit"], $fragments); // \app\controllers\PompierController
+            break;
+        }
+
         default:
             echo "Action '$action' non defini <hr>";
             break;

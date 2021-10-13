@@ -45,10 +45,51 @@ class DAOPompier {
         $prepared_Statement->bindParam("matriculeRespo", $matriculeRespo);
         $prepared_Statement->execute();
     }
+    
+    public function edit(Pompier $p) : void{
+        
+        $sql = 'UPDATE pompiers
+                SET Matricule=:matricule, Prenom=:prenom, Nom=:nom, ChefAgret=:chefAgret, DateNaissance=:dateNaissance, NumCaserne=:numCaserne, CodeGrade=:codeGrade, matriculeRespo=:matriculeRespo
+                Where Matricule=:matricule';
+        
+        $matricule = $p->getMatricule();
+        $prenom = $p->getPrenom();
+        $nom = $p->getNom();
+        $chefAgret = $p->getChefAgret();
+        $dateNaissance = $p->getDateNaissance();
+        $numCaserne = $p->getNumCaserne();
+        $codeGrade = $p->getCodeGrade();
+        $matriculeRespo = $p->getMatriculeRespo();
+        
+        $prepared_Statement = $this->cnx->prepare($sql);
+        
+        $prepared_Statement->bindParam("matricule", $matricule);
+        $prepared_Statement->bindParam("prenom", $prenom);
+        $prepared_Statement->bindParam("nom", $nom);
+        $prepared_Statement->bindParam("chefAgret", $chefAgret);
+        $prepared_Statement->bindParam("dateNaissance", $dateNaissance);
+        $prepared_Statement->bindParam("numCaserne", $numCaserne);
+        $prepared_Statement->bindParam("codeGrade", $codeGrade);
+        $prepared_Statement->bindParam("matriculeRespo", $matriculeRespo);
+        
+        $prepared_Statement->execute();
+    }
 
     public function remove($matricule): void {
-        $sql = 'delete from pompiers WHERE Matricule=:matricule;';
-        $prepared_Statement = $this->cnx->prepare($sql);
+        /*$sqlupdate ='update pompiers
+            set matriculeRespo = ""
+            Where matriculeRespo=:matricule';
+        $prepared_Statement_Update = $this->cnx->prepare($sqlupdate);
+        $prepared_Statement_Update->bindParam("matricule", $matricule);
+        $prepared_Statement_Update->execute();
+                
+        $sqldelete1 = 'delete from pompiers_qualification WHERE Matricule=:matricule;';
+        $prepared_Statement_delete1 = $this->cnx->prepare($sqldelete1);
+        $prepared_Statement_delete1->bindParam("matricule", $matricule);
+        $prepared_Statement_delete1->execute();*/
+        
+        $sqldelete2 = 'delete from pompiers WHERE Matricule=:matricule;';
+        $prepared_Statement = $this->cnx->prepare($sqldelete2);
         $prepared_Statement->bindParam("matricule", $matricule);
         $prepared_Statement->execute();
     }

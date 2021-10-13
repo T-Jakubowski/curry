@@ -41,7 +41,7 @@ namespace app\views;
                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div class="navbar-nav">
                             <a class="nav-link active" aria-current="page" href="#">Home</a>
-                            <a class="nav-link" href="#">Pompier</a>
+                            <a class="nav-link" href="/pompier/affiche">Pompier</a>
                             <a class="nav-link" href="/caserne/affiche">Caserne</a>
                             <a class="nav-link disabled">Prochainement...</a>     
                         </div>
@@ -58,7 +58,7 @@ namespace app\views;
    
     <div class="d-flex justify-content-center">
     <span class="mx-4"><a type="button" href="/caserne/affiche" class="btn btn-danger"><img class="fit-picture" src="/img/CaserneImg.png" width="400" height="500" alt="Caserne"></a></span>
-    <span class="mx-4"><a type="button" class="btn btn-danger"><img class="fit-picture" src="/img/PompierImg.jpg" width="400" height="500" alt="Pompier"></a></span>
+    <span class="mx-4"><a type="button" href="/pompier/affiche" class="btn btn-danger"><img class="fit-picture" src="/img/PompierImg.jpg" width="400" height="500" alt="Pompier"></a></span>
     </div>
 
     <script>
