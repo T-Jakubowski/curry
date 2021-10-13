@@ -29,12 +29,10 @@ class Casernecontroller extends BaseController{
 
         //A AJOUTER SECURITER VERIFIACTION DATA
         $caserneToAdd = new Caserne($_POST['AddCaserne_NumCaserne'],$_POST['AddCaserne_Addresse'],$_POST['AddCaserne_CP'],$_POST['AddCaserne_Ville'],$_POST['AddCaserne_CodeTypeC']);
-        var_dump($caserneToAdd);
         $isSuccess=$this->DAOCaserne->save($caserneToAdd);
-
-        $LstCaserne = $this->DAOCaserne->findAll();
-        $page=Renderer::render("view_caserne.php", compact("LstCaserne","isSuccess"));
+        $page=Renderer::render("view_AddCaserne.php", compact("isSuccess"));
         echo $page;
+
         
         //$page=Renderer::render("view_caserne.php", compact("isSuccess"));
         //echo $page;
@@ -65,7 +63,7 @@ class Casernecontroller extends BaseController{
     }
     public function showDetails(string $id){
         $CaserneDetail = $this->DAOCaserne->find($id);
-        $page=Renderer::render("view_caserne.php", compact("LstCaserne"));
+        $page=Renderer::render("view_DeleteCaserne.php", compact("LstCaserne"));
         echo $page;
         //afficher plus de détail sur un pompier
     }
