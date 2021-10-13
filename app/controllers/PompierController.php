@@ -33,14 +33,14 @@ class PompierController extends BaseController {
 
     public function Add(): void {
 
-        $matricule = $_POST['addMatricule'];
-        $prenom = $_POST['addPrenom'];
-        $nom = $_POST['addNom'];
-        $chefAgret = $_POST['addChefAgret'];
-        $dateNaissance = $_POST['addDateNaissance'];
-        $numCaserne = $_POST['addNumCaserne'];
-        $codeGrade = $_POST['addCodeGrade'];
-        $matriculeRespo = $_POST['addMatriculeRespo'];
+        $matricule = htmlspecialchars($_POST['addMatricule']);
+        $prenom = htmlspecialchars($_POST['addPrenom']);
+        $nom = htmlspecialchars($_POST['addNom']);
+        $chefAgret = htmlspecialchars($_POST['addChefAgret']);
+        $dateNaissance = htmlspecialchars($_POST['addDateNaissance']);
+        $numCaserne = htmlspecialchars($_POST['addNumCaserne']);
+        $codeGrade = htmlspecialchars($_POST['addCodeGrade']);
+        $matriculeRespo = htmlspecialchars($_POST['addMatriculeRespo']);
 
         $p = new Pompier($matricule, $prenom, $nom, $chefAgret, $dateNaissance, $numCaserne, $codeGrade, $matriculeRespo);
         $pompier = $this->daoPompier->save($p);
@@ -51,14 +51,14 @@ class PompierController extends BaseController {
 
     public function edit() {
         
-        $matricule = $_POST['editMatricule'];
-        $prenom = $_POST['editPrenom'];
-        $nom = $_POST['editNom'];
-        $chefAgret = $_POST['editChefAgret'];
-        $dateNaissance = $_POST['editDateNaissance'];
-        $numCaserne = $_POST['editNumCaserne'];
-        $codeGrade = $_POST['editCodeGrade'];
-        $matriculeRespo = $_POST['editMatriculeRespo'];
+        $matricule = htmlspecialchars($_POST['editMatricule']);
+        $prenom = htmlspecialchars($_POST['editPrenom']);
+        $nom = htmlspecialchars($_POST['editNom']);
+        $chefAgret = htmlspecialchars($_POST['editChefAgret']);
+        $dateNaissance = htmlspecialchars($_POST['editDateNaissance']);
+        $numCaserne = htmlspecialchars($_POST['editNumCaserne']);
+        $codeGrade = htmlspecialchars($_POST['editCodeGrade']);
+        $matriculeRespo = htmlspecialchars($_POST['editMatriculeRespo']);
 
         $p = new Pompier($matricule, $prenom, $nom, $chefAgret, $dateNaissance, $numCaserne, $codeGrade, $matriculeRespo);
         $pompier = $this->daoPompier->edit($p);
@@ -74,7 +74,7 @@ class PompierController extends BaseController {
 
     public function delete(): void {
         
-        $matricule = $_POST['deleteMatricule'];
+        $matricule = htmlspecialchars($_POST['deleteMatricule']);
         
         $pompiers = $this->daoPompier->remove($matricule);
         $page = \app\utils\Renderer::render('delete.php', compact('pompiers'));
