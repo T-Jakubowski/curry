@@ -182,7 +182,7 @@ $connexion = new app\models\DAOPompier($cnx);
             <!-- Create -->
             <!-- Modal create Pompier-->
             <form id="addPompier" method="post" action="/pompier/add">
-                <div class="modal fade" id="createCaserneModal" tabindex="-1" aria-labelledby="createCaserneModalLabel" aria-hidden="true">
+                <div class="modal fade" id="createPompierModal" tabindex="-1" aria-labelledby="createCaserneModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">

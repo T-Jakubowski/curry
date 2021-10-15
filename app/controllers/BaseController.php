@@ -10,7 +10,6 @@ namespace app\controllers;
 use app\utils\Renderer;
 /**
  * Description of BaseController
- *
  * @author student
  */
 class BaseController {
@@ -18,7 +17,7 @@ class BaseController {
 
     }
     public function index(){
-        $page=Renderer::render("home.php");
+        $page=Renderer::render("view_home.php");
         echo $page;
     }
 }

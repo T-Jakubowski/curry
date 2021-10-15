@@ -27,7 +27,7 @@ class PompierController extends BaseController {
     //Renvoie la page de tous les pompiers
     public function Show(): void {
         $pompiers = $this->daoPompier->findAll('0', '100');
-        $page = \app\utils\Renderer::render('vue_pompier.php', compact('pompiers'));
+        $page = \app\utils\Renderer::render('view_pompier.php', compact('pompiers'));
         echo $page;
     }
 
@@ -45,7 +45,7 @@ class PompierController extends BaseController {
         $p = new Pompier($matricule, $prenom, $nom, $chefAgret, $dateNaissance, $numCaserne, $codeGrade, $matriculeRespo);
         $pompier = $this->daoPompier->save($p);
         
-        $page = \app\utils\Renderer::render('add.php', compact('pompier'));
+        $page = \app\utils\Renderer::render('view_pompier_add.php', compact('pompier'));
         echo $page;
     }
 
@@ -63,7 +63,7 @@ class PompierController extends BaseController {
         $p = new Pompier($matricule, $prenom, $nom, $chefAgret, $dateNaissance, $numCaserne, $codeGrade, $matriculeRespo);
         $pompier = $this->daoPompier->edit($p);
         
-        $page = \app\utils\Renderer::render('edit.php', compact('pompier'));
+        $page = \app\utils\Renderer::render('view_pompier_edit.php', compact('pompier'));
         echo $page;
 
         //methode put
@@ -77,7 +77,7 @@ class PompierController extends BaseController {
         $matricule = htmlspecialchars($_POST['deleteMatricule']);
         
         $pompiers = $this->daoPompier->remove($matricule);
-        $page = \app\utils\Renderer::render('delete.php', compact('pompiers'));
+        $page = \app\utils\Renderer::render('view_pompier_delete.php', compact('pompiers'));
         echo $page;
         //methode put
         //filtrer les données (failles xss)
