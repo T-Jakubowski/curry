@@ -28,7 +28,7 @@ class Casernecontroller extends BaseController{
     public function insert(){
 
         //A AJOUTER SECURITER VERIFIACTION DATA
-        $caserneToAdd = new Caserne($_POST['AddCaserne_NumCaserne'],$_POST['AddCaserne_Addresse'],$_POST['AddCaserne_CP'],$_POST['AddCaserne_Ville'],$_POST['AddCaserne_CodeTypeC']);
+        $caserneToAdd = new Caserne(htmlspecialchars($_POST['AddCaserne_NumCaserne']),htmlspecialchars($_POST['AddCaserne_Addresse']),htmlspecialchars($_POST['AddCaserne_CP']),htmlspecialchars($_POST['AddCaserne_Ville']),htmlspecialchars($_POST['AddCaserne_CodeTypeC']));
         $isSuccess=$this->DAOCaserne->save($caserneToAdd);
         $page=Renderer::render("view_AddCaserne.php", compact("isSuccess"));
         echo $page;

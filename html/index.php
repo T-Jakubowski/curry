@@ -149,6 +149,9 @@ function caserneRoutes_get($fragments)
         case "add" :
             call_user_func_array([new CaserneController(), "insert"], $fragments);
             break;
+        case "delete" :
+            call_user_func_array([new CaserneController(), "insert"], $fragments);
+            break;
 
         default:
             echo "Action '$action' non defini <hr>";
