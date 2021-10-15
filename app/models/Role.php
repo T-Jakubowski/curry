@@ -12,25 +12,25 @@ class Role{
         $this->role = $role;
         $this->permission = $permission;
     }
-    public function getid() {
+    public function getId() {
         return $this->id;
     }
-    public function getrole() {
+    public function getRole() {
         return $this->role;
     }
-    public function getpermission() {
+    public function getPermission() {
         return $this->permission;
     }
 
-    public function setid($id) {
+    public function setId($id) {
         $this->id = $id;
         return $this;
     }
-    public function setrole($role) {
+    public function setRole($role) {
         $this->role = $role;
         return $this;
     }
-    public function setpermission($permission) {
+    public function setPermission($permission) {
         $this->permission = $permission;
         return $this;
     }

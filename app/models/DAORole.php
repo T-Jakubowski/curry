@@ -1,6 +1,6 @@
 <?php
 namespace app\models;
-class DAOUser {
+class DAORole {
     private $cnx;
     
 
@@ -8,99 +8,90 @@ class DAOUser {
         $this->cnx = $cnx;
     }
 
-    public function find($matricule) : Pompier{
-        $sql = 'SELECT * FROM pompiers WHERE Matricule=:matricule;';
-        $prepared_Statement = $this->cnx->prepare($sql);
-        $prepared_Statement->bindParam("matricule", $matricule);
-        $prepared_Statement->execute();
-        while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
-            $pompier = new Pompier($row['Matricule'],$row['Prenom'],$row['Nom'],$row['ChefAgret'],$row['DateNaissance'],$row['NumCaserne'],$row['CodeGrade'],$row['matriculeRespo']);
+    public function find($id) : Role{
+        $sql = 'SELECT * FROM Roles WHERE id=:id;';
+        $urepared_Statement = $this->cnx->prepare($sql);
+        $urepared_Statement->bindParam("id", $id);
+        $urepared_Statement->execute();
+        while($row = $urepared_Statement->fetch(\PDO::FETCH_ASSOC)){
+            $Role = new Role($row['id'],$row['role'],$row['permission']);
         }
-        return $pompier;
+        return $Role;
     }
 
-    public function save(Pompier $p): void {
-        $sql = "INSERT INTO pompiers(Matricule, Prenom, Nom, ChefAgret, DateNaissance, NumCaserne, CodeGrade, matriculeRespo)
-                Values (:matricule, :prenom, :nom, :chefAgret, :dateNaissance, :numCaserne, :codeGrade, :matriculeRespo);";
-        $matricule = $p->getMatricule();
-        $prenom = $p->getPrenom();
-        $nom = $p->getNom();
-        $chefAgret = $p->getChefAgret();
-        $dateNaissance = $p->getDateNaissance();
-        $numCaserne = $p->getNumCaserne();
-        $codeGrade = $p->getCodeGrade();
-        $matriculeRespo = $p->getMatriculeRespo();
+    public function save(Role $u): void {
+        $sql = "INSERT INTO Roles(id, role, permission)
+                Values (:id, :role, :pssermission);";
+        $id = $u->getId();
+        $role = $u->getRole();
+        $permission = $u->getPermission();
 
-        $prepared_Statement = $this->cnx->prepare($sql);
-        $prepared_Statement->bindParam("matricule", $matricule);
-        $prepared_Statement->bindParam("prenom", $prenom);
-        $prepared_Statement->bindParam("nom", $nom);
-        $prepared_Statement->bindParam("chefAgret", $chefAgret);
-        $prepared_Statement->bindParam("dateNaissance", $dateNaissance);
-        $prepared_Statement->bindParam("numCaserne", $numCaserne);
-        $prepared_Statement->bindParam("codeGrade", $codeGrade);
-        $prepared_Statement->bindParam("matriculeRespo", $matriculeRespo);
-        $prepared_Statement->execute();
+        $urepared_Statement = $this->cnx->prepare($sql);
+        $urepared_Statement->bindParam("id", $id);
+        $urepared_Statement->bindParam("role", $role);
+        $urepared_Statement->bindParam("permission", $permission);
+
+        $urepared_Statement->execute();
     }
     
-    public function edit(Pompier $p) : void{
+    public function edit(Role $u) : void{
         
-        $sql = 'UPDATE pompiers
-                SET Matricule=:matricule, Prenom=:prenom, Nom=:nom, ChefAgret=:chefAgret, DateNaissance=:dateNaissance, NumCaserne=:numCaserne, CodeGrade=:codeGrade, matriculeRespo=:matriculeRespo
-                Where Matricule=:matricule';
+        $sql = 'UPDATE Roles
+                SET id=:id, role=:role, permission=:permission, ChefAgret=:chefAgret, DateNaissance=:dateNaissance, NumCaserne=:numCaserne, CodeGrade=:codeGrade, idRespo=:idRespo
+                Where id=:id';
         
-        $matricule = $p->getMatricule();
-        $prenom = $p->getPrenom();
-        $nom = $p->getNom();
-        $chefAgret = $p->getChefAgret();
-        $dateNaissance = $p->getDateNaissance();
-        $numCaserne = $p->getNumCaserne();
-        $codeGrade = $p->getCodeGrade();
-        $matriculeRespo = $p->getMatriculeRespo();
+        $id = $u->getid();
+        $urenom = $u->getPrenom();
+        $nom = $u->getNom();
+        $chefAgret = $u->getChefAgret();
+        $dateNaissance = $u->getDateNaissance();
+        $numCaserne = $u->getNumCaserne();
+        $codeGrade = $u->getCodeGrade();
+        $idRespo = $u->getidRespo();
         
-        $prepared_Statement = $this->cnx->prepare($sql);
+        $urepared_Statement = $this->cnx->prepare($sql);
         
-        $prepared_Statement->bindParam("matricule", $matricule);
-        $prepared_Statement->bindParam("prenom", $prenom);
-        $prepared_Statement->bindParam("nom", $nom);
-        $prepared_Statement->bindParam("chefAgret", $chefAgret);
-        $prepared_Statement->bindParam("dateNaissance", $dateNaissance);
-        $prepared_Statement->bindParam("numCaserne", $numCaserne);
-        $prepared_Statement->bindParam("codeGrade", $codeGrade);
-        $prepared_Statement->bindParam("matriculeRespo", $matriculeRespo);
+        $urepared_Statement->bindParam("id", $id);
+        $urepared_Statement->bindParam("prenom", $urenom);
+        $urepared_Statement->bindParam("nom", $nom);
+        $urepared_Statement->bindParam("chefAgret", $chefAgret);
+        $urepared_Statement->bindParam("dateNaissance", $dateNaissance);
+        $urepared_Statement->bindParam("numCaserne", $numCaserne);
+        $urepared_Statement->bindParam("codeGrade", $codeGrade);
+        $urepared_Statement->bindParam("idRespo", $idRespo);
         
-        $prepared_Statement->execute();
+        $urepared_Statement->execute();
     }
 
-    public function remove($matricule): void {
+    public function remove($id): void {
 
-        $sqldelete2 = 'delete from pompiers WHERE Matricule=:matricule;';
-        $prepared_Statement = $this->cnx->prepare($sqldelete2);
-        $prepared_Statement->bindParam("matricule", $matricule);
-        $prepared_Statement->execute();
+        $sqldelete2 = 'delete from Roles WHERE id=:id;';
+        $urepared_Statement = $this->cnx->prepare($sqldelete2);
+        $urepared_Statement->bindParam("id", $id);
+        $urepared_Statement->execute();
     }
 
     public function findAll($offset = 0, $limit = 10): Array {
 
-        $sql = 'SELECT * FROM pompiers LIMIT :limit OFFSET :offset';
-        $prepared_Statement = $this->cnx->prepare($sql);
-        $prepared_Statement->bindValue(':limit', $limit, \PDO::PARAM_INT);
-        $prepared_Statement->bindValue(':offset', $offset, \PDO::PARAM_INT);
-        $prepared_Statement->execute();
+        $sql = 'SELECT * FROM Roles LIMIT :limit OFFSET :offset';
+        $urepared_Statement = $this->cnx->prepare($sql);
+        $urepared_Statement->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $urepared_Statement->bindValue(':offset', $offset, \PDO::PARAM_INT);
+        $urepared_Statement->execute();
         
-        $desPompiers=array();
-        while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
-            $desPompiers[] = new Pompier($row['Matricule'],$row['Prenom'],$row['Nom'],$row['ChefAgret'],$row['DateNaissance'],$row['NumCaserne'],$row['CodeGrade'],$row['matriculeRespo']);
+        $desRoles=array();
+        while($row = $urepared_Statement->fetch(\PDO::FETCH_ASSOC)){
+            $desRoles[] = new Role($row['id'],$row['Prenom'],$row['Nom'],$row['ChefAgret'],$row['DateNaissance'],$row['NumCaserne'],$row['CodeGrade'],$row['idRespo']);
         }
-        return $desPompiers;
+        return $desRoles;
     }
 
     public function count(): int {
-        $sql = 'SELECT COUNT(*) as nbPompiers from pompiers p ;';
+        $sql = 'SELECT COUNT(*) as nbRoles from Roles p ;';
         $statement = $this->cnx->prepare($sql);
-        $nbPompiers = $statement->fetch(\PDO::FETCH_ASSOC);
-        $nbPompier = $nbPompiers['nbPompiers'];
-        return $nbPompier;
+        $nbRoles = $statement->fetch(\PDO::FETCH_ASSOC);
+        $nbRole = $nbRoles['nbRoles'];
+        return $nbRole;
     }
 }
 

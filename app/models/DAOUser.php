@@ -37,17 +37,19 @@ class DAOUser {
         
         $sql = 'UPDATE user
                 SET Identifiant=:Identifiant, Password=:Password, IdRole=:IdRoless
-                Where Id=:id';
+                Where Id=:Id';
         
         $Identifiant = $u->getIdentifiant();
         $Password = $u->getPassword();
         $IdRole = $u->getIdRole();
+        $Id = $u->getId();
         
         $prepared_Statement = $this->cnx->prepare($sql);
         
         $prepared_Statement->bindParam("Identifiant", $Identifiant);
         $prepared_Statement->bindParam("Password", $Password);
         $prepared_Statement->bindParam("IdRole", $IdRole);
+        $prepared_Statement->bindParam("Id", $Id);
         
         $prepared_Statement->execute();
     }
@@ -61,7 +63,7 @@ class DAOUser {
 
     public function findAll($offset = 0, $limit = 10): Array {
 
-        $sql = 'SELECT * FROM pompiers LIMIT :limit OFFSET :offset';
+        $sql = 'SELECT * FROM user LIMIT :limit OFFSET :offset';
         $prepared_Statement = $this->cnx->prepare($sql);
         $prepared_Statement->bindValue(':limit', $limit, \PDO::PARAM_INT);
         $prepared_Statement->bindValue(':offset', $offset, \PDO::PARAM_INT);
@@ -69,17 +71,17 @@ class DAOUser {
         
         $desUser=array();
         while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
-            $desPompiers[] = new Pompier($row['Matricule'],$row['Prenom'],$row['Nom'],$row['ChefAgret'],$row['DateNaissance'],$row['NumCaserne'],$row['CodeGrade'],$row['matriculeRespo']);
+            $desUser[] = new User($row['IdUser'],$row['Identifiant'],$row['Password'],$row['IdRole']);
         }
-        return $desPompiers;
+        return $desUser;
     }
 
     public function count(): int {
-        $sql = 'SELECT COUNT(*) as nbPompiers from pompiers p ;';
+        $sql = 'SELECT COUNT(*) as nbUser from user u ;';
         $statement = $this->cnx->prepare($sql);
-        $nbPompiers = $statement->fetch(\PDO::FETCH_ASSOC);
-        $nbPompier = $nbPompiers['nbPompiers'];
-        return $nbPompier;
+        $nbUser = $statement->fetch(\PDO::FETCH_ASSOC);
+        $nbUser = $nbUser['nbUser'];
+        return $nbUser;
     }
 
 }
