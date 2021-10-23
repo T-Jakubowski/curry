@@ -32,7 +32,7 @@ class DAOCaserne{
             $preparedStatement->bindParam("id",$id);
             $preparedStatement->execute();
             while($row = $preparedStatement->fetch(\PDO::FETCH_ASSOC)){
-                $Caserne = new caserne($row['NumCaserne'],$row['Adresse'],$row['CP'],$row['Ville'],$row['CodeTypeC']);
+                $Caserne = new Caserne($row['NumCaserne'],$row['Adresse'],$row['CP'],$row['Ville'],$row['CodeTypeC']);
             }
             return $Caserne;
     }
@@ -102,8 +102,8 @@ class DAOCaserne{
         $preparedStatement->execute();
         $DesCaserne=array();
         while($row = $preparedStatement->fetch(\PDO::FETCH_ASSOC)){
-            $DesCaserne[] = new caserne($row['NumCaserne'],$row['Adresse'],$row['CP'],$row['Ville'],$row['CodeTypeC']);
-        }//TODO nom de classe commence par une majuscule
+            $DesCaserne[] = new Caserne($row['NumCaserne'],$row['Adresse'],$row['CP'],$row['Ville'],$row['CodeTypeC']);
+        }
         return $DesCaserne;
     }
     /*

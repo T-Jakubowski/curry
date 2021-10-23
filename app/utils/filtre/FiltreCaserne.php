@@ -1,5 +1,6 @@
 <?php
 namespace app\utils\filtre;
+use app\utils\filtre\AbstractCaserne;
 /*
 * @author Baptiste Coquelet <b.coquelet@eleve.leschartreux.net>
 */
@@ -10,11 +11,11 @@ class FiltreCaserne{
     public function __construct($formData){
         $this->formData=$formData;
     }
-    public function acceptCaserne(string $key,AbstractCaserne $visitor){
+    public function acceptCaserne(string $key,AbstractCaserne $caserne){
         $data=$this->formData;
         foreach($data as $keys=>$value){
             if ($keys==$key){
-                $datas=$visitor->visit($value);
+                $datas=$caserne->checkCaserne($value);
             }
         }
         return $datas;
@@ -25,20 +26,29 @@ class FiltreCaserne{
         $datas=array();
         foreach($data as $key){
             switch ($key) {
-                case "pass":
-                    $datas[$key]=$this->acceptVisitors("pass",new PasswordVisitor());
+                case "num":
+                    $datas[$key]=$this->acceptCaserne("num",new NumCaserne());
                     break;
-                case "phone":
-                    $datas[$key]=$this->acceptVisitors("phone",new PhoneVisitor());
+                case "ville":
+                    $datas[$key]=$this->acceptCaserne("ville",new VilleCaserne());
                     break;
+                case "cp":
+                    $datas[$key]=$this->acceptCaserne("cp",new CPCaserne());
+                    break;
+                case "codetypec":
+                    $datas[$key]=$this->acceptCaserne("codetypec",new CodeTypeCCaserne());
+                    break;
+                case "addresse":
+                    $datas[$key]=$this->acceptCaserne("addresse",new AdresseCaserne());
+                    break;        
             }
         }
         return $datas;
     }
     public function getStatus(string $key){
-        $datas=$this->visit();
+        $datas=$this->caser();
         $value=$datas[$key];
         return $value;
     }
 }
-}
+

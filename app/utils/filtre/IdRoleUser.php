@@ -3,7 +3,7 @@ namespace app\utils\filtre;
 /*
 * @author Baptiste Coquelet <b.coquelet@eleve.leschartreux.net>
 */
-class IdRoleUser {
+class IdRoleUser extends AbstractUser{
     public function checkUser(string $data) : bool {
         $isValid=false;
         $SQL = 'SELECT * FROM Role

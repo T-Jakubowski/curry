@@ -3,7 +3,7 @@ namespace app\utils\filtre;
 /*
 * @author Baptiste Coquelet <b.coquelet@eleve.leschartreux.net>
 */
-class PasswordUser {
+class PasswordUser extends AbstractUser{
     public function checkUser(string $data) : bool {
         $majuscule = preg_match('@[A-Z]@', $data);
         $minuscule = preg_match('@[a-z]@', $data);

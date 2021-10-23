@@ -3,7 +3,7 @@ namespace app\utils\filtre;
 /*
 * @author Baptiste Coquelet <b.coquelet@eleve.leschartreux.net>
 */
-class AdresseCaserne {
+class AdresseCaserne extends AbstractCaserne{
     public function checkCaserne(string $data) : bool {
         $isValid=true;
         $SQL = 'SELECT * FROM Caserne

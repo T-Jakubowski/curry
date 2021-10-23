@@ -5,6 +5,8 @@ use app\utils\SingletonDBMaria;
 use app\utils\Renderer;
 use app\models\Caserne;
 
+use app\utils\filtre\FiltreCaserne;
+
 class Casernecontroller extends BaseController{
     private DAOCaserne $daocaserne;
 
@@ -26,8 +28,22 @@ class Casernecontroller extends BaseController{
         echo $page;
     }
     public function insert(){
-
-        //A AJOUTER SECURITER VERIFIACTION DATA
+        $NumCaserne = htmlspecialchars($_POST['AddCaserne_NumCaserne']);
+        $Addresse = htmlspecialchars($_POST['AddCaserne_Addresse']);
+        $CP = htmlspecialchars($_POST['AddCaserne_CP']);
+        $Ville = htmlspecialchars($_POST['AddCaserne_Ville']);
+        $CodeTypeC = htmlspecialchars($_POST['AddCaserne_CodeTypeC']);
+        $data = array(
+            "num" => $NumCaserne,
+            "addresse" => $Addresse,
+            "cp" => $CP,
+            "ville" => $Ville,
+            "codetypec" => $CodeTypeC
+        );
+        $c=new FiltreCaserne($data);
+        $isSuccess=$c->caser();
+        //TODO ilre issuccess (tableau) et dire ce qui est true ou false
+        //A AJOUTER SECURITER VERIFIACTION DATA TODO
         $caserneToAdd = new Caserne(htmlspecialchars($_POST['AddCaserne_NumCaserne']),htmlspecialchars($_POST['AddCaserne_Addresse']),htmlspecialchars($_POST['AddCaserne_CP']),htmlspecialchars($_POST['AddCaserne_Ville']),htmlspecialchars($_POST['AddCaserne_CodeTypeC']));
         $isSuccess=$this->DAOCaserne->save($caserneToAdd);
         $page=Renderer::render("view_AddCaserne.php", compact("isSuccess"));
@@ -45,6 +61,10 @@ class Casernecontroller extends BaseController{
 
     }
     public function update() : void{
+
+        
+
+
         //$CaserneDetail = $this->DAOCaserne->remove();//TODO METHODE UPDATE
         //$page=Renderer::render("view_caserne.php", compact("LstCaserne"));
         //echo $page;
@@ -54,7 +74,26 @@ class Casernecontroller extends BaseController{
         //faille CSRF
         //pensé la sécurité
         //Gestion des erreur PDO (try catch)
+        $matricule = htmlspecialchars($_POST['AddCaserne_NumCaserne']);//pas sur numaddresse pour le update
+        $prenom = htmlspecialchars($_POST['AddCaserne_Addresse']);
+        $nom = htmlspecialchars($_POST['AddCaserne_CP']);
+        $chefAgret = htmlspecialchars($_POST['AddCaserne_Ville']);
+        $dateNaissance = htmlspecialchars($_POST['AddCaserne_CodeTypeC']);
+
+        $p = new Caserne(htmlspecialchars($_POST['AddCaserne_NumCaserne']),htmlspecialchars($_POST['AddCaserne_Addresse']),htmlspecialchars($_POST['AddCaserne_CP']),htmlspecialchars($_POST['AddCaserne_Ville']),htmlspecialchars($_POST['AddCaserne_CodeTypeC']));
+        $pompier = $this->daoPompier->save($p);
+        
+        $page = \app\utils\Renderer::render('view_pompier_add.php', compact('pompier'));
+        echo $page;
     }
+
+
+        
+
+
+
+
+
     public function delete($id) : void{//methode del du protocole http
         $CaserneDetail = $this->DAOCaserne->remove($id);
         $page=Renderer::render("view_caserne.php", compact("LstCaserne"));

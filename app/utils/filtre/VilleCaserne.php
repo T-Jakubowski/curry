@@ -3,7 +3,7 @@ namespace app\utils\filtre;
 /*
 * @author Baptiste Coquelet <b.coquelet@eleve.leschartreux.net>
 */
-class VilleCaserne{
+class VilleCaserne extends AbstractCaserne{
     public function checkCaserne(string $data) : bool {
         $Lettre = preg_match('@[a-z]@i', $data);
         $noNumber = preg_match('@[0-9]@',$data);
