@@ -8,80 +8,64 @@ class DAORole {
         $this->cnx = $cnx;
     }
 
-    public function find($id) : Role{
-        $sql = 'SELECT * FROM Roles WHERE id=:id;';
-        $urepared_Statement = $this->cnx->prepare($sql);
-        $urepared_Statement->bindParam("id", $id);
-        $urepared_Statement->execute();
-        while($row = $urepared_Statement->fetch(\PDO::FETCH_ASSOC)){
-            $Role = new Role($row['id'],$row['role'],$row['permission']);
+    public function find($Id) : Role{
+        $sql = 'SELECT * FROM Roles WHERE Id=:Id;';
+        $prepared_Statement = $this->cnx->prepare($sql);
+        $prepared_Statement->bindParam("Id", $Id);
+        $prepared_Statement->execute();
+        while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
+            $Role = new Role($row['Id'],$row['Role'],$row['Permission']);
         }
         return $Role;
     }
 
-    public function save(Role $u): void {
-        $sql = "INSERT INTO Roles(id, role, permission)
-                Values (:id, :role, :pssermission);";
-        $id = $u->getId();
-        $role = $u->getRole();
-        $permission = $u->getPermission();
+    public function save(Role $r): void {
+        $sql = "INSERT INTO Roles(Id, Role, Permission)
+                Values (:Id, :Role, :Permission);";
+        $Id = $r->getId();
+        $Role = $r->getRole();
+        $Permission = $r->getPermission();
 
-        $urepared_Statement = $this->cnx->prepare($sql);
-        $urepared_Statement->bindParam("id", $id);
-        $urepared_Statement->bindParam("role", $role);
-        $urepared_Statement->bindParam("permission", $permission);
+        $prepared_Statement = $this->cnx->prepare($sql);
+        $prepared_Statement->bindParam("Id", $Id);
+        $prepared_Statement->bindParam("Role", $Role);
+        $prepared_Statement->bindParam("Permission", $Permission);
 
-        $urepared_Statement->execute();
+        $prepared_Statement->execute();
     }
     
-    public function edit(Role $u) : void{
-        
+    public function edit(Role $r) : void{
         $sql = 'UPDATE Roles
-                SET id=:id, role=:role, permission=:permission, ChefAgret=:chefAgret, DateNaissance=:dateNaissance, NumCaserne=:numCaserne, CodeGrade=:codeGrade, idRespo=:idRespo
-                Where id=:id';
-        
-        $id = $u->getid();
-        $urenom = $u->getPrenom();
-        $nom = $u->getNom();
-        $chefAgret = $u->getChefAgret();
-        $dateNaissance = $u->getDateNaissance();
-        $numCaserne = $u->getNumCaserne();
-        $codeGrade = $u->getCodeGrade();
-        $idRespo = $u->getidRespo();
-        
-        $urepared_Statement = $this->cnx->prepare($sql);
-        
-        $urepared_Statement->bindParam("id", $id);
-        $urepared_Statement->bindParam("prenom", $urenom);
-        $urepared_Statement->bindParam("nom", $nom);
-        $urepared_Statement->bindParam("chefAgret", $chefAgret);
-        $urepared_Statement->bindParam("dateNaissance", $dateNaissance);
-        $urepared_Statement->bindParam("numCaserne", $numCaserne);
-        $urepared_Statement->bindParam("codeGrade", $codeGrade);
-        $urepared_Statement->bindParam("idRespo", $idRespo);
-        
-        $urepared_Statement->execute();
+                SET Role=:Role, Permission=:Permission, Role=:Role, DateNaissance=:dateNaissance, NumCaserne=:numCaserne, CodeGrade=:codeGrade, idRespo=:idRespo
+                Where Id=:Id';
+        $Id = $r->getid();
+        $Role = $r->getRole();
+        $Permission = $r->getPermission();
+        $prepared_Statement = $this->cnx->prepare($sql);
+        $prepared_Statement->bindParam("Id", $Id);
+        $prepared_Statement->bindParam("Role", $Role);
+        $prepared_Statement->bindParam("Permission", $Permission);
+        $prepared_Statement->execute();
     }
 
-    public function remove($id): void {
-
-        $sqldelete2 = 'delete from Roles WHERE id=:id;';
-        $urepared_Statement = $this->cnx->prepare($sqldelete2);
-        $urepared_Statement->bindParam("id", $id);
-        $urepared_Statement->execute();
+    public function remove($Id): void {
+        $sqldelete2 = 'DELETE from Roles WHERE Id=:id;';
+        $prepared_Statement = $this->cnx->prepare($sqldelete2);
+        $prepared_Statement->bindParam("Id", $Id);
+        $prepared_Statement->execute();
     }
 
     public function findAll($offset = 0, $limit = 10): Array {
 
         $sql = 'SELECT * FROM Roles LIMIT :limit OFFSET :offset';
-        $urepared_Statement = $this->cnx->prepare($sql);
-        $urepared_Statement->bindValue(':limit', $limit, \PDO::PARAM_INT);
-        $urepared_Statement->bindValue(':offset', $offset, \PDO::PARAM_INT);
-        $urepared_Statement->execute();
+        $prepared_Statement = $this->cnx->prepare($sql);
+        $prepared_Statement->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $prepared_Statement->bindValue(':offset', $offset, \PDO::PARAM_INT);
+        $prepared_Statement->execute();
         
         $desRoles=array();
-        while($row = $urepared_Statement->fetch(\PDO::FETCH_ASSOC)){
-            $desRoles[] = new Role($row['id'],$row['Prenom'],$row['Nom'],$row['ChefAgret'],$row['DateNaissance'],$row['NumCaserne'],$row['CodeGrade'],$row['idRespo']);
+        while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
+            $desRoles[] = new Role($row['Id'],$row['Role'],$row['Permission']);
         }
         return $desRoles;
     }
