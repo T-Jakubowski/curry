@@ -5,17 +5,9 @@ namespace app\utils\filtre;
 */
 class NumCaserne extends AbstractCaserne{
     public function checkCaserne(string $data) : bool {
-        $isValid=true;
-        $SQL = 'SELECT * FROM casernes
-        WHERE NumCaserne=:id;';
-        $cnx=$this->cnx;
-        $preparedStatement=$cnx->prepare($SQL);
-        $preparedStatement->bindParam("id",$data);
-        $preparedStatement->execute();
-        while($row = $preparedStatement->fetch(\PDO::FETCH_ASSOC)){
-            $isValid=false;
-        }
-        if ($isValid==true){
+        $isValid=false;
+        $IsExistInDB=$this->DAOCaserne->findIfNumCaserneExist($data);
+        if ($IsExistInDB==false){
             $chiffre = preg_match('@[0-9]@', $data);
             $noMajuscule = preg_match('@[A-Z]@', $data);
             $noMinuscule = preg_match('@[a-z]@', $data);

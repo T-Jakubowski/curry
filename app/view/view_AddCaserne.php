@@ -42,24 +42,26 @@ namespace app\views;
             </nav>
         </header>
 <?php
-if (isset($isSuccess)){
-  if ($isSuccess==1){
+if (isset($resultMessage)){
+  if ($resultMessage==1){
     ?>
-
-
 <div class="alert alert-success mt-5" role="alert">
 <h2><img class="fit-picture" src="/img/check_black_24dp.svg" alt="success">Caserne ajouter avec succes !</h2>
 </div>
-
-
-
     <?php
   }
   else{
     ?>
     <h2>Nous avons actuellement des probléme technique veuillez reessayer plus tard</h2>
     <?php
+    }
   }
+  elseif(isset($valueError)){
+    ?>
+    <h2>La valeur <?php $valueError ?> n'est pas valide</h2>
+    <?php
+}else{
+  echo "Erreur";
 }
 ?>
 

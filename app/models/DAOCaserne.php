@@ -117,14 +117,63 @@ class DAOCaserne{
         $nbCaserne = $nbCaserne['nbCaserne'];
         return $nbCaserne;
     }
-/*
-$pompiers = getCountPompiers();
-echo $pompiers['nbPompiers'] .'<br>';
-echo "<br>Done !";
 
-*/
-
+    /*
+        Renvoie si l'Addresse entré en argument existe déja pour une caserne dans la BDD ou non
+        @param string $Addresse
+        @return bool
+    */
+    public function findIfAdresseExist($Adresse){
+        $SQL = 'SELECT * FROM casernes WHERE Adresse=:Adresse;';
+        $cnx=$this->cnx;
+        $preparedStatement=$cnx->prepare($SQL);
+        $preparedStatement->bindParam("Adresse",$Adresse);
+        
+        $preparedStatement->execute();
+        $isExist=false;
+        while($row = $preparedStatement->fetch(\PDO::FETCH_ASSOC)){
+            $isExist=true;
+        }
+        
+        return $isExist;
     }
+    /*
+        Renvoie si le numéro entré en argument existe déja pour une caserne dans la BDD ou non
+        @param int $Num
+        @return bool
+    */
+    public function findIfNumCaserneExist($Num){
+        $SQL = 'SELECT * FROM casernes
+        WHERE NumCaserne=:id;';
+        $cnx=$this->cnx;
+        $preparedStatement=$cnx->prepare($SQL);
+        $preparedStatement->bindParam("id",$Num);
+        $preparedStatement->execute();
+        $isExist=false;
+        while($row = $preparedStatement->fetch(\PDO::FETCH_ASSOC)){
+            $isExist=true;
+        }
+        return $isExist;
+    }
+    /*
+        Renvoie si le Type de caserne entré en argument existe dans la BDD ou non
+        @param int $CodeTypeC
+        @return bool
+    */
+    public function findIfTypeCaserneExist($CodeTypeC){
+        $SQL = 'SELECT * FROM typecasernes
+        WHERE CodeTypeC=:CodeTypeC;';
+        $cnx=$this->cnx;
+        $preparedStatement=$cnx->prepare($SQL);
+        $preparedStatement->bindParam("CodeTypeC",$CodeTypeC);
+        $preparedStatement->execute();
+        $isExist=false;
+        while($row = $preparedStatement->fetch(\PDO::FETCH_ASSOC)){
+            $isExist=true;
+        }
+        return $isExist;
+    }
+}
 
     
 

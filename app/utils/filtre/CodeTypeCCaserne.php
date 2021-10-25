@@ -5,17 +5,8 @@ namespace app\utils\filtre;
 */
 class CodeTypeCCaserne extends AbstractCaserne{
     public function checkCaserne(string $data) : bool {
-        $isValid=false;
-        $SQL = 'SELECT * FROM typecasernes
-        WHERE CodeTypeC=:CodeTypeC;';
-        $cnx=$this->cnx;
-        $preparedStatement=$cnx->prepare($SQL);
-        $preparedStatement->bindParam("CodeTypeC",$data);
-        $preparedStatement->execute();
-        while($row = $preparedStatement->fetch(\PDO::FETCH_ASSOC)){
-            $isValid=true;
-        }
-        return $isValid;
+        $IsExistInDB=$this->DAOCaserne->findIfTypeCaserneExist($data);
+        return $IsExistInDB;
     }
 }
 ?>

@@ -1,12 +1,14 @@
 <?php
 namespace app\utils\filtre;
 use app\utils\filtre\AbstractCaserne;
+
 /*
 * @author Baptiste Coquelet <b.coquelet@eleve.leschartreux.net>
 */
 class FiltreCaserne{
     private $formData=[];
     private $results=[];
+
 
     public function __construct($formData){
         $this->formData=$formData;
@@ -24,7 +26,7 @@ class FiltreCaserne{
     public function caser() : array {
         $data=$this->formData;
         $datas=array();
-        foreach($data as $key){
+        foreach($data as $key=>$value){
             switch ($key) {
                 case "num":
                     $datas[$key]=$this->acceptCaserne("num",new NumCaserne());

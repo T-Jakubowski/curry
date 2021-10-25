@@ -40,16 +40,34 @@ class Casernecontroller extends BaseController{
             "ville" => $Ville,
             "codetypec" => $CodeTypeC
         );
-        $c=new FiltreCaserne($data);
-        $isSuccess=$c->caser();
+
+        $f=new FiltreCaserne($data);
+        
+        $data=$f->caser();
+        var_dump($data);
+        $isSuccess=true;
+        foreach($data as $key=>$value){
+            if ($value==false){
+                $isSuccess=false;
+                $valueError=$key;
+                echo $value;
+            }
+        }
         //TODO ilre issuccess (tableau) et dire ce qui est true ou false
         //A AJOUTER SECURITER VERIFIACTION DATA TODO
-        $caserneToAdd = new Caserne(htmlspecialchars($_POST['AddCaserne_NumCaserne']),htmlspecialchars($_POST['AddCaserne_Addresse']),htmlspecialchars($_POST['AddCaserne_CP']),htmlspecialchars($_POST['AddCaserne_Ville']),htmlspecialchars($_POST['AddCaserne_CodeTypeC']));
-        $isSuccess=$this->DAOCaserne->save($caserneToAdd);
-        $page=Renderer::render("view_AddCaserne.php", compact("isSuccess"));
-        echo $page;
-
-        
+        if ($isSuccess==true){
+            /*
+            $caserneToAdd = new Caserne(htmlspecialchars($_POST['AddCaserne_NumCaserne']),htmlspecialchars($_POST['AddCaserne_Addresse']),htmlspecialchars($_POST['AddCaserne_CP']),htmlspecialchars($_POST['AddCaserne_Ville']),htmlspecialchars($_POST['AddCaserne_CodeTypeC']));
+            $resultMessage=$this->DAOCaserne->save($caserneToAdd);
+            */
+            $resultMessage="testttt";
+            echo $isSuccess;
+            $page=Renderer::render("view_AddCaserne.php", compact("resultMessage"));
+            }else{
+                $page=Renderer::render("view_AddCaserne.php", compact("valueError"));
+            }
+            echo $page;
+        }
         //$page=Renderer::render("view_caserne.php", compact("isSuccess"));
         //echo $page;
 
@@ -59,7 +77,7 @@ class Casernecontroller extends BaseController{
         //methode get du protocole http
         //pareil que update ...
 
-    }
+    
     public function update() : void{
 
         
