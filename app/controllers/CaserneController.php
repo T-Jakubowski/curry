@@ -22,9 +22,14 @@ class Casernecontroller extends BaseController{
         //renvoie la page avec la liste de tout les pompier
         //plus pagination offset ...
         //sécurité
-        
-        $LstCaserne = $this->DAOCaserne->findAll();
-        $page=Renderer::render("view_caserne.php", compact("LstCaserne"));
+        if (isset($_GET["page"])){
+            $Offset=($_GET["page"]*10)-10;
+          }else{
+            $Offset=1;
+          }
+        $LstCaserne = $this->DAOCaserne->findAll($Offset,10);
+        $CountCaserne = $this->DAOCaserne->count();
+        $page=Renderer::render("view_caserne.php", compact("LstCaserne","CountCaserne"));
         echo $page;
     }
     public function insert(){

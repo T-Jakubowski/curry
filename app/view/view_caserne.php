@@ -5,63 +5,43 @@ namespace app\views;
 <html>
 <?php include "Head.php" ;?>
 
-    <body>
-      <?php $ActivePageName="caserne"; include "view_NavBarre.php"; ?>
-        
-<?php
-if (isset($isSuccess)){
-  if ($isSuccess==1){
-    ?>
-
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-<img class="fit-picture" src="/img/check_black_24dp.svg" alt="success"><strong>Success Action !</strong>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-
-    <?php
-  }
-  else{
-    
-  }
-}
-?>
-
-   <br>
+  <body>
+    <?php $ActivePageName="caserne"; include "view_NavBarre.php"; ?>
+    <br>
     <div class="container">
-        <div class="row justify-content-end">
-            <div class="col-1">
-                <span data-bs-toggle="tooltip" data-bs-placement="top" title="Ajout de Caserne">
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createCaserneModal">+</button>
-                </span>
-            </div>
-        </div>
+      <div class="row justify-content-end">
+          <div class="col-1">
+              <span data-bs-toggle="tooltip" data-bs-placement="top" title="Ajout de Caserne">
+                  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createCaserneModal">+</button>
+              </span>
+          </div>
+      </div>
     </div>
+    <br>
+    <div><h3>Liste des Casernes :</h3></div>
 
-
-
-
-        <div>
-
-
-        </div>
-        <span>  <?php //echo $name ?></span>
-        <br>
-        <div><h3>Liste des Casernes :</h3></div>
-        <table id="tableCaserne" class="table table-striped table-hover table-Secondary .table-responsive" >
-        <thead>
-    <tr>
-      <th data-bs-toggle="tooltip" data-bs-placement="top" title="NumCaserne Int(11)">#</th>
-      <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(15)">Addresse</th>
-      <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(5)">CP</th>
-      <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(10)">Ville</th>
-      <th data-bs-toggle="tooltip" data-bs-placement="top" title="Int(11)">CodeTypeC</th>
-      <th>Edit</th>
-      <th>Delete</th>
-    </tr>
-  </thead>
-  <tbody>
     <?php 
-foreach ($LstCaserne as $Caserne){
+    if (isset($_GET["page"])){
+      $NumPage=$_GET["page"];
+    }else{
+      $NumPage=1;
+    }
+    ?>
+    <table id="tableCaserne" class="table table-striped table-hover table-Secondary .table-responsive" >
+      <thead>
+        <tr>
+          <th data-bs-toggle="tooltip" data-bs-placement="top" title="NumCaserne Int(11)">#</th>
+          <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(15)">Addresse</th>
+          <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(5)">CP</th>
+          <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(10)">Ville</th>
+          <th data-bs-toggle="tooltip" data-bs-placement="top" title="Int(11)">CodeTypeC</th>
+          <th>Edit/Delete</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+      <?php 
+      foreach ($LstCaserne as $Caserne){
   /* @var Caserne $Caserne */
   ?>
   <tr>
@@ -70,8 +50,8 @@ foreach ($LstCaserne as $Caserne){
     <td><?php echo $Caserne->getCP(); ?></td>
     <td><?php echo $Caserne->getVille(); ?></td>
     <td><?php echo $Caserne->getCodeTypeC(); ?></std>
-    <td><button id="<?php echo $id."edit"; ?>" type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#editCaserneModal"><img class="fit-picture" src="/img/edit_black_24dp.svg" alt="edit"></button></td>
-      <td><button id="<?php echo $id."del"; ?>" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteCaserneModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button></td>
+    <td><button id="<?php echo $id.":edit"; ?>" type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#editCaserneModal"><img class="fit-picture" src="/img/edit_black_24dp.svg" alt="edit"></button>
+      <button id="<?php echo $id.":del"; ?>" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteCaserneModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button></td>
   </tr>
   <?php
 
@@ -214,26 +194,58 @@ foreach ($LstCaserne as $Caserne){
 
 
 
+<?php
+function round_up($number, $precision = 1)
+{
+    $fig = (int) str_pad('1', $precision, '0');
+    return (ceil($number * $fig) / $fig);
+}
+$Preview=0;
+$next=0;
+$nbPage=round_up($CountCaserne/10);
+$index=1;
+$classPreview="";
+$classNext="";
+if($NumPage==1){
+  $classPreview="disabled";
+}
+if(strval($NumPage)==strval($nbPage)){
+  $classNext="disabled";
+}
+?>
 
-    <footer>
-    <nav aria-label="Page navigation example">
-  <ul class="pagination justify-content-center">
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next">
+<footer>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <li class="page-item <?php echo $classPreview;?>">
+        <a class="page-link" href="?page=<?php echo $NumPage-1;?>" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <?php 
+      $pageLimit=$index+20;
+      while($index<=$nbPage){
+        $isactive="";
+        if ($index == $NumPage){
+          $isactive="active";
+        }
+        ?>
+        <li class="page-item <?php echo $isactive ?>"><a class="page-link" href="?page=<?php echo $index;?>"><?php echo $index;?></a></li>
+        <?php
+        $index+=1;
+      }
+
+      ?>
+
+      <li class="page-item <?php echo $classNext ?>">
+        <a class="page-link" href="?page=<?php echo $NumPage+1;?>" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
+        </a>
+      </li>
   </ul>
 </nav>
-    </footer>
+</footer>
+
     <script>
 
 
