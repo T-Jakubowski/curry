@@ -16,31 +16,8 @@ namespace app\views;
 
 
     <body>
-        <header>
-            <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #ff8787;">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="#">Navigation</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <a class="nav-link" href="/">Home</a>
-                        <a class="nav-link" href="/pompier/affiche">Pompier</a>
-                        <a class="nav-link active" aria-current="page" href="/caserne/affiche">Caserne</a>
-                        <a class="nav-link disabled">Prochainement...</a>
-                        
-                    </div>
-                    
-                    </div>
-                    
-                </div><form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-success" type="submit">Search</button>
-      </form>
-                
-            </nav>
-        </header>
+      <?php $ActivePageName="caserne"; include "view_NavBarre.php"; ?>
+        
 <?php
 if (isset($isSuccess)){
   if ($isSuccess==1){

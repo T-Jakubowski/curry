@@ -26,10 +26,11 @@ namespace app\views;
                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
                         <a class="nav-link" href="/">Home</a>
-                        <a class="nav-link" href="/pompier/affichse">Pompier</a>
+                        <a class="nav-link" href="/pompier/affiche">Pompier</a>
                         <a class="nav-link" href="/caserne/affiche">Caserne</a>
+
                         <a class="nav-link disabled">Prochainement...</a>
-                        
+
                     </div>
                     
                     </div>
