@@ -4,6 +4,7 @@ require_once '../autoloader.php';
 use app\controllers\BaseController;
 use app\controllers\CaserneController;
 use app\controllers\PompierController;
+use app\controllers\UserController;
 
 
 //https://www.youtube.com/watch?v=tbYa0rJQyoM
@@ -51,6 +52,17 @@ switch ($control) {
         }
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             caserneRoutes_post($fragments);
+        }
+        break;
+    }
+    case "user" :    //Si page user
+    {
+        //echo "Gestion des routes pour user<hr>";
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            userRoutes_get($fragments);
+        }
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            userRoutes_post($fragments);
         }
         break;
     }
@@ -174,4 +186,46 @@ function caserneRoutes_post($fragments)
             break;
     }
 }
+
+function userRoutes_get($fragments)
+{
+    $action = array_shift($fragments);
+    switch ($action) {
+        case "affiche":
+            call_user_func_array([new UserController(), "show"], $fragments);
+            break;
+        case "detail" :
+            call_user_func_array([new UserController(), "showDetails"], $fragments);
+            break;
+        case "add" :
+            call_user_func_array([new UserController(), "add"], $fragments);
+            break;
+        case "delete" :
+            call_user_func_array([new UserController(), "delete"], $fragments);
+            break;
+
+        default:
+            echo "Action '$action' non defini <hr>";
+            break;
+    }
+}
+
+function userRoutes_post($fragments)
+{
+    $action = array_shift($fragments);
+    switch ($action) {
+        case "delete" :
+            call_user_func_array([new userController(), "delete"], $fragments);
+            break;
+        case "add" :
+            call_user_func_array([new userController(), "insert"], $fragments);
+            break;
+        case "edit" :
+            call_user_func_array([new userController(), "edit"], $fragments);
+            break;
+        default:
+            break;
+    }
+}
+
 ?>
