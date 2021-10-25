@@ -106,6 +106,29 @@ class DAOCaserne{
         }
         return $DesCaserne;
     }
+        /*
+        Renvoie Toute les caserne qui ont le numero $value
+        @param string $value
+        @param int $offset
+        @param int $limit
+        @return array<Caserne>
+    */
+    public function findAllWhereNum($value,$offset=0,$limit=10) : Array{
+        $SQL = "SELECT NumCaserne ,Adresse ,CP ,Ville ,CodeTypeC FROM casernes  WHERE NumCaserne LIKE :num LIMIT :lim OFFSET :offs;";
+        $cnx=$this->cnx;
+        $preparedStatement=$cnx->prepare($SQL);
+        $value="%$value%";
+        $preparedStatement->bindParam(':num', $value, PDO::PARAM_STR);
+        $preparedStatement->bindValue(':offs', $offset, PDO::PARAM_INT);
+        $preparedStatement->bindValue(':lim', $limit, PDO::PARAM_INT);
+        $preparedStatement->execute();
+        $DesCaserne=array();
+        while($row = $preparedStatement->fetch(\PDO::FETCH_ASSOC)){
+            $DesCaserne[] = new Caserne($row['NumCaserne'],$row['Adresse'],$row['CP'],$row['Ville'],$row['CodeTypeC']);
+        }
+        return $DesCaserne;
+    }
+
     /*
         Renvoie le nombre de caserne
         @return int
@@ -114,6 +137,23 @@ class DAOCaserne{
         $sql = 'SELECT COUNT(*) as nbCaserne from casernes;';
         $statement = $this->cnx->query($sql);
         $nbCaserne = $statement->fetch(\PDO::FETCH_ASSOC);
+        $nbCaserne = $nbCaserne['nbCaserne'];
+        return $nbCaserne;
+    }
+    
+        /*
+        Renvoie le nombre de caserne ou ce trouve la valeur $value
+        @param int $value
+        @return int
+    */
+    public function countWhereNum($value) : int {
+        $SQL = 'SELECT COUNT(*) as nbCaserne from casernes where NumCaserne LIKE :num;';
+        $cnx=$this->cnx;
+        $preparedStatement=$cnx->prepare($SQL);
+        $value="%$value%";
+        $preparedStatement->bindParam(':num', $value, PDO::PARAM_STR);
+        $preparedStatement->execute();
+        $nbCaserne = $preparedStatement->fetch(\PDO::FETCH_ASSOC);
         $nbCaserne = $nbCaserne['nbCaserne'];
         return $nbCaserne;
     }

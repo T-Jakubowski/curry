@@ -25,10 +25,18 @@ class Casernecontroller extends BaseController{
         if (isset($_GET["page"])){
             $Offset=($_GET["page"]*10)-10;
           }else{
-            $Offset=1;
+            $Offset=0;
           }
-        $LstCaserne = $this->DAOCaserne->findAll($Offset,10);
-        $CountCaserne = $this->DAOCaserne->count();
+          if (isset($_GET["search"])){
+            $NumC=($_GET["search"]);
+            $LstCaserne = $this->DAOCaserne->findAllWhereNum($NumC,$Offset,10);
+            $CountCaserne = $this->DAOCaserne->countWhereNum($NumC);
+          }else{
+            $LstCaserne = $this->DAOCaserne->findAll($Offset,10);
+            $CountCaserne = $this->DAOCaserne->count();
+          }
+        
+        
         $page=Renderer::render("view_caserne.php", compact("LstCaserne","CountCaserne"));
         echo $page;
     }

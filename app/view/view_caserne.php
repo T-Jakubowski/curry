@@ -26,6 +26,11 @@ namespace app\views;
     }else{
       $NumPage=1;
     }
+    if (isset($_GET["search"])){
+      $NumLikes="&search=".intval($_GET["search"]);
+    }else{
+      $NumLikes="";
+    }
     ?>
     <table id="tableCaserne" class="table table-striped table-hover table-Secondary .table-responsive" >
       <thead>
@@ -200,8 +205,7 @@ function round_up($number, $precision = 1)
     $fig = (int) str_pad('1', $precision, '0');
     return (ceil($number * $fig) / $fig);
 }
-$Preview=0;
-$next=0;
+
 $nbPage=round_up($CountCaserne/10);
 $index=1;
 $classPreview="";
@@ -218,7 +222,7 @@ if(strval($NumPage)==strval($nbPage)){
   <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
       <li class="page-item <?php echo $classPreview;?>">
-        <a class="page-link" href="?page=<?php echo $NumPage-1;?>" aria-label="Previous">
+        <a class="page-link" href="?page=<?php echo $NumPage-1,$NumLikes;?>" aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
         </a>
       </li>
@@ -230,7 +234,7 @@ if(strval($NumPage)==strval($nbPage)){
           $isactive="active";
         }
         ?>
-        <li class="page-item <?php echo $isactive ?>"><a class="page-link" href="?page=<?php echo $index;?>"><?php echo $index;?></a></li>
+        <li class="page-item <?php echo $isactive ?>"><a class="page-link" href="?page=<?php echo $index,$NumLikes;?>"><?php echo $index;?></a></li>
         <?php
         $index+=1;
       }
@@ -238,7 +242,7 @@ if(strval($NumPage)==strval($nbPage)){
       ?>
 
       <li class="page-item <?php echo $classNext ?>">
-        <a class="page-link" href="?page=<?php echo $NumPage+1;?>" aria-label="Next">
+        <a class="page-link" href="?page=<?php echo $NumPage+1,$NumLikes;?>" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
         </a>
       </li>

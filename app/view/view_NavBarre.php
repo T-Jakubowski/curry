@@ -46,8 +46,8 @@ if(isset($ActivePageName)){
                 </div>
             </div>
         </div>
-        <form class="d-flex" id="<?php echo $ActivePageName;?>FormSearch">
-            <input class="form-control me-2" id="<?php echo $ActivePageName;?>InputSearch" type="search" placeholder="Search" aria-label="Search">
+        <form class="d-flex" target="/<?php echo $ActivePageName ?>/affiche" id="<?php echo $ActivePageName;?>FormSearch">
+            <input class="form-control me-2" id="<?php echo $ActivePageName;?>InputSearch" name="search" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-success" type="submit">Search</button>
         </form>
     </nav>
