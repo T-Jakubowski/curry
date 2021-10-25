@@ -26,7 +26,7 @@ class PompierController extends BaseController {
 
     //Renvoie la page de tous les pompiers
     public function Show(): void {
-        $pompiers = $this->daoPompier->findAll('0', '100');
+        $pompiers = $this->daoPompier->findAll('0', '1000');
         $page = \app\utils\Renderer::render('view_pompier.php', compact('pompiers'));
         echo $page;
     }
