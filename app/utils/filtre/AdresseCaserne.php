@@ -11,7 +11,7 @@ class AdresseCaserne extends AbstractCaserne{
         $isValid = false;
         if ($IsExistInDB==false){
             $mot = preg_match('@\w@', $data);
-            if($mot && strlen($data) > 5)
+            if($mot && strlen($data) > 4 && strlen($data) < 16)
             {
                 $isValid = true;
             }

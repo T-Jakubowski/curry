@@ -8,7 +8,7 @@ class VilleCaserne extends AbstractCaserne{
         $Lettre = preg_match('@[a-z]@i', $data);
         $noNumber = preg_match('@[0-9]@',$data);
         $noSpecialChara = preg_match('#^[a-z0-9]+$#i', $data);
-        if($Lettre && !$noNumber && $noSpecialChara && strlen($data) > 0)
+        if($Lettre && !$noNumber && $noSpecialChara && strlen($data) > 0 && strlen($data) < 11)
         {
             return true;
         }

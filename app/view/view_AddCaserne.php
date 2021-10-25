@@ -58,8 +58,14 @@ if (isset($resultMessage)){
   }
   elseif(isset($valueError)){
     ?>
-    <h2>La valeur <?php $valueError ?> n'est pas valide</h2>
-    <?php
+    
+    <h2>vous avez entré une valeur non valide :</h2><br><h3>
+    <?php foreach($valueError as $key=>$value){ 
+      ?>
+      La valeur pour "<?php echo $value ?>" n'est pas valide<br>
+      <?php
+    }
+    ?></h3><?php
 }else{
   echo "Erreur";
 }

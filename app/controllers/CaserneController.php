@@ -44,13 +44,11 @@ class Casernecontroller extends BaseController{
         $f=new FiltreCaserne($data);
         
         $data=$f->caser();
-        var_dump($data);
         $isSuccess=true;
         foreach($data as $key=>$value){
             if ($value==false){
                 $isSuccess=false;
-                $valueError=$key;
-                echo $value;
+                $valueError[]=$key;
             }
         }
         //TODO ilre issuccess (tableau) et dire ce qui est true ou false

@@ -12,7 +12,7 @@ class NumCaserne extends AbstractCaserne{
             $noMajuscule = preg_match('@[A-Z]@', $data);
             $noMinuscule = preg_match('@[a-z]@', $data);
             $noSpecialChara = preg_match('#^[a-z0-9]+$#i', $data);
-            if($chiffre && !$noMajuscule && !$noMinuscule && $noSpecialChara && strlen($data) > 0)
+            if($chiffre && !$noMajuscule && !$noMinuscule && $noSpecialChara && strlen($data) > 0 && strlen($data) < 12)
             {
                 $isValid = true;
             }
