@@ -7,12 +7,12 @@ class DAOUser {
     }
 
     public function find($Id) : User{
-        $sql = 'SELECT * FROM User WHERE Id=:Id;';
+        $sql = 'SELECT * FROM user WHERE Id=:Id;';
         $prepared_Statement = $this->cnx->prepare($sql);
         $prepared_Statement->bindParam("Id", $Id);
         $prepared_Statement->execute();
         while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
-            $user = new User($row['IdUser'],$row['Identifiant'],$row['Password'],$row['Id']);
+            $user = new User($row['Id'],$row['Identifiant'],$row['Password'],$row['IdRole']);
         }
         return $user;
     }
