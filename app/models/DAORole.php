@@ -77,6 +77,18 @@ class DAORole {
         $nbRole = $nbRoles['nbRoles'];
         return $nbRole;
     }
+
+    public function findifRoleExist($roleName){
+        $sql = 'SELECT * FROM role WHERE Role=:roleName;';
+        $prepared_Statement = $this->cnx->prepare($sql);
+        $prepared_Statement->bindParam("roleName", $roleName);
+        $prepared_Statement->execute();
+        $isExist = false;
+        while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
+            $isExist = true;
+        }
+        return $isExist;
+    }
 }
 
 ?>

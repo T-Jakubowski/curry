@@ -7,12 +7,23 @@ class DAOUser {
     }
 
     public function find($Id) : User{
-        $sql = 'SELECT * FROM User WHERE IdUser=:Id;';
+        $sql = 'SELECT * FROM User WHERE Id=:Id;';
         $prepared_Statement = $this->cnx->prepare($sql);
         $prepared_Statement->bindParam("Id", $Id);
         $prepared_Statement->execute();
         while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
-            $user = new User($row['IdUser'],$row['Identifiant'],$row['Password'],$row['IdRole']);
+            $user = new User($row['IdUser'],$row['Identifiant'],$row['Password'],$row['Id']);
+        }
+        return $user;
+    }
+
+    public function findByidentifiant($Identifiant) : User{
+        $sql = 'SELECT * FROM User WHERE Identifiant=:Identifiant;';
+        $prepared_Statement = $this->cnx->prepare($sql);
+        $prepared_Statement->bindParam("Identifiant", $Identifiant);
+        $prepared_Statement->execute();
+        while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
+            $user = new User($row['IdUser'],$row['Identifiant'],$row['Password'],$row['Id']);
         }
         return $user;
     }
@@ -82,6 +93,31 @@ class DAOUser {
         $nbUser = $statement->fetch(\PDO::FETCH_ASSOC);
         $nbUser = $nbUser['nbUser'];
         return $nbUser;
+    }
+
+    public function findIfRoleExiste($idRole){
+        $SQL = 'SELECT * FROM role
+        WHERE Id=:Id;';
+        $cnx=$this->cnx;
+        $preparedStatement=$cnx->prepare($SQL);
+        $preparedStatement->bindParam("Id",$idRole);
+        $preparedStatement->execute();
+        $isExist=false;
+        while($row = $preparedStatement->fetch(\PDO::FETCH_ASSOC)){
+            $isExist=true;
+        }
+        return $isExist;
+    }
+    public function findifUserExist($Identifiant){
+        $sql = 'SELECT * FROM User WHERE Identifiant=:Identifiant;';
+        $prepared_Statement = $this->cnx->prepare($sql);
+        $prepared_Statement->bindParam("Identifiant", $Identifiant);
+        $prepared_Statement->execute();
+        $isExist = false;
+        while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
+            $isExist = true;
+        }
+        return $isExist;
     }
 
 }

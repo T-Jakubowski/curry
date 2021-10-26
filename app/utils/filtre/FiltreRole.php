@@ -21,23 +21,23 @@ class FiltreRole{
         return $datas;
     }
 
-    public function caser() : array {
+    public function rol() : array {
         $data=$this->formData;
         $datas=array();
-        foreach($data as $key){
+        foreach($data as $key=>$value){
             switch ($key) {
-                case "num":
+                case "role":
                     $datas[$key]=$this->acceptRole("role",new RoleRole());
                     break;
-                case "ville":
-                    $datas[$key]=$this->acceptRole("ville",new PermissionRole());
+                case "permission":
+                    $datas[$key]=$this->acceptRole("permission",new PermissionRole());
                     break;
             }
         }
         return $datas;
     }
     public function getStatus(string $key){
-        $datas=$this->caser();
+        $datas=$this->rol();
         $value=$datas[$key];
         return $value;
     }

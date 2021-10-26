@@ -9,7 +9,7 @@ class PasswordUser extends AbstractUser{
         $minuscule = preg_match('@[a-z]@', $data);
         $chiffre = preg_match('@[0-9]@', $data);
         $specialChara = preg_match('#^[a-z0-9]+$#i', $data);
-        if($majuscule && $minuscule && $chiffre && !$specialChara && strlen($data) > 7)
+        if($majuscule && $minuscule && $chiffre && !$specialChara && strlen($data) > 7 && strlen($data) < 21)
         {
             return true;
         }
