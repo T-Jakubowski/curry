@@ -7,18 +7,17 @@ namespace app\utils\filtre;
 class AdresseCaserne extends AbstractCaserne{
 
     public function checkCaserne(string $data) : bool {
-        $IsExistInDB=$this->DAOCaserne->findIfAdresseExist($data);
         $isValid = false;
-        if ($IsExistInDB==false){
-            $mot = preg_match('@\w@', $data);
-            if($mot && strlen($data) > 4 && strlen($data) < 16)
-            {
-                $isValid = true;
-            }
-            else {
-                $isValid = false;
-            }
+
+        $mot = preg_match('@\w@', $data);
+        if($mot && strlen($data) > 4 && strlen($data) < 16)
+        {
+            $isValid = true;
         }
+        else {
+            $isValid = false;
+        }
+
         return $isValid;
     }
 }

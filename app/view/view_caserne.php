@@ -8,6 +8,8 @@ namespace app\views;
   <body>
     <?php $ActivePageName="caserne"; include "view_NavBarre.php"; ?>
     <br>
+
+    
     <div class="container">
       <div class="row justify-content-end">
           <div class="col-1">

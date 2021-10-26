@@ -157,26 +157,6 @@ class DAOCaserne{
         $nbCaserne = $nbCaserne['nbCaserne'];
         return $nbCaserne;
     }
-
-    /*
-        Renvoie si l'Addresse entré en argument existe déja pour une caserne dans la BDD ou non
-        @param string $Addresse
-        @return bool
-    */
-    public function findIfAdresseExist($Adresse){
-        $SQL = 'SELECT * FROM casernes WHERE Adresse=:Adresse;';
-        $cnx=$this->cnx;
-        $preparedStatement=$cnx->prepare($SQL);
-        $preparedStatement->bindParam("Adresse",$Adresse);
-        
-        $preparedStatement->execute();
-        $isExist=false;
-        while($row = $preparedStatement->fetch(\PDO::FETCH_ASSOC)){
-            $isExist=true;
-        }
-        
-        return $isExist;
-    }
     /*
         Renvoie si le numéro entré en argument existe déja pour une caserne dans la BDD ou non
         @param int $Num
