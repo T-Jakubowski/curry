@@ -198,6 +198,23 @@ class DAOCaserne{
         }
         return $isExist;
     }
+    /*
+        Renvoie tout les pompier d'une caserne
+        @param int $Num
+        @return bool
+    */
+    public function findPompierFromCaserne($Num){
+        $sql = 'SELECT * FROM pompiers WHERE NumCaserne=:Num';
+        $prepared_Statement = $this->cnx->prepare($sql);
+        $prepared_Statement->bindParam("Num", $Num);
+        $prepared_Statement->execute();
+        
+        $desPompiers=array();
+        while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
+            $desPompiers[] = new Pompier($row['Matricule'],$row['Prenom'],$row['Nom'],$row['ChefAgret'],$row['DateNaissance'],$row['NumCaserne'],$row['CodeGrade'],$row['matriculeRespo']);
+        }
+        return $desPompiers;
+    }
 
 }
 
