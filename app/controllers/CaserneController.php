@@ -14,14 +14,10 @@ class Casernecontroller extends BaseController{
         $cnx=SingletonDBMaria::getInstance()->getConnection();
         $DAOCaserne=new DAOCaserne($cnx);
         $this->DAOCaserne = $DAOCaserne;
-
-
-        //initialisation du dao
     }
+
+    //renvoie la page avec la liste de tout les pompier
     public function show(){
-        //renvoie la page avec la liste de tout les pompier
-        //plus pagination offset ...
-        //sécurité
         if (isset($_GET["page"])){
             $Offset=($_GET["page"]*10)-10;
           }else{
@@ -35,11 +31,11 @@ class Casernecontroller extends BaseController{
             $LstCaserne = $this->DAOCaserne->findAll($Offset,10);
             $CountCaserne = $this->DAOCaserne->count();
           }
-        
-        
         $page=Renderer::render("view_caserne.php", compact("LstCaserne","CountCaserne"));
         echo $page;
     }
+
+    //
     public function insert(){
         $NumCaserne = htmlspecialchars($_POST['AddCaserne_NumCaserne']);
         $Addresse = htmlspecialchars($_POST['AddCaserne_Addresse']);
@@ -55,7 +51,6 @@ class Casernecontroller extends BaseController{
         );
         $f=new FiltreCaserne($data);
         $data=$f->caser();
-
         $isSuccess=true;
         foreach($data as $key=>$value){
             if ($value==false){
@@ -63,33 +58,55 @@ class Casernecontroller extends BaseController{
                 $valueError[]=$key;
             }
         }
-        //TODO ilre issuccess (tableau) et dire ce qui est true ou false
-        //A AJOUTER SECURITER VERIFIACTION DATA TODO
+
         if ($isSuccess==true){
-            /*
+            /*  Ajout dans la bdd
             $caserneToAdd = new Caserne(htmlspecialchars($_POST['AddCaserne_NumCaserne']),htmlspecialchars($_POST['AddCaserne_Addresse']),htmlspecialchars($_POST['AddCaserne_CP']),htmlspecialchars($_POST['AddCaserne_Ville']),htmlspecialchars($_POST['AddCaserne_CodeTypeC']));
-            $resultMessage=$this->DAOCaserne->save($caserneToAdd);
+            $this->DAOCaserne->save($caserneToAdd);
             */
-            $resultMessage="testttt";
-            echo $isSuccess;
+            $resultMessage="la caserne ".$NumCaserne."a bien été ajouter";
             $page=Renderer::render("view_AddCaserne.php", compact("resultMessage"));
-            }else{
-                $page=Renderer::render("view_AddCaserne.php", compact("valueError"));
-            }
-            echo $page;
+        }else{
+            $page=Renderer::render("view_AddCaserne.php", compact("valueError"));
         }
-        //$page=Renderer::render("view_caserne.php", compact("isSuccess"));
-        //echo $page;
+        echo $page;
+    }
 
-        //$page=Renderer::render("view_caserne.php"/*, compact("")*/);
-        //echo $page;
 
-        //methode get du protocole http
-        //pareil que update ...
-
-    
     public function update() : void{
+        $NumCaserne = htmlspecialchars($_POST['AddCaserne_NumCaserne']);
+        $Addresse = htmlspecialchars($_POST['AddCaserne_Addresse']);
+        $CP = htmlspecialchars($_POST['AddCaserne_CP']);
+        $Ville = htmlspecialchars($_POST['AddCaserne_Ville']);
+        $CodeTypeC = htmlspecialchars($_POST['AddCaserne_CodeTypeC']);
+        $data = array(
+            "num" => $NumCaserne,
+            "addresse" => $Addresse,
+            "cp" => $CP,
+            "ville" => $Ville,
+            "codetypec" => $CodeTypeC
+        );
+        $f=new FiltreCaserne($data);
+        $data=$f->caser();
+        $isSuccess=true;
+        foreach($data as $key=>$value){
+            if ($value==false){
+                $isSuccess=false;
+                $valueError[]=$key;
+            }
+        }
 
+        if ($isSuccess==true){
+            /*  update dans la bdd
+            $caserneToUpdate = new Caserne(htmlspecialchars($_POST['AddCaserne_NumCaserne']),htmlspecialchars($_POST['AddCaserne_Addresse']),htmlspecialchars($_POST['AddCaserne_CP']),htmlspecialchars($_POST['AddCaserne_Ville']),htmlspecialchars($_POST['AddCaserne_CodeTypeC']));
+            $this->DAOCaserne->update($caserneToUpdate);
+            */
+            $resultMessage="la caserne ".$NumCaserne."a bien été ajouter";
+            $page=Renderer::render("view_AddCaserne.php", compact("resultMessage"));
+        }else{
+            $page=Renderer::render("view_AddCaserne.php", compact("valueError"));
+        }
+        echo $page;
         
 
 
@@ -102,36 +119,7 @@ class Casernecontroller extends BaseController{
         //faille CSRF
         //pensé la sécurité
         //Gestion des erreur PDO (try catch)
-        $NumCaserne = htmlspecialchars($_POST['UpdateCaserne_NumCaserne']);
-        $Addresse = htmlspecialchars($_POST['UpdateCaserne_Addresse']);
-        $CP = htmlspecialchars($_POST['UpdateCaserne_CP']);
-        $Ville = htmlspecialchars($_POST['UpdateCaserne_Ville']);
-        $CodeTypeC = htmlspecialchars($_POST['UpdateCaserne_CodeTypeC']);
-        $data = array(
-            "num" => $NumCaserne,
-            "addresse" => $Addresse,
-            "cp" => $CP,
-            "ville" => $Ville,
-            "codetypec" => $CodeTypeC
-        );
-        $f=new FiltreCaserne($data);
-        $data=$f->caser();
-        
-        $isSuccess=true;
-        foreach($data as $key=>$value){
-            if ($value==false){
-                $isSuccess=false;
-                $valueError[]=$key;
-            }
-        }
-        if ($isSuccess==true){
-            $p = new Caserne(htmlspecialchars($_POST['AddCaserne_NumCaserne']),htmlspecialchars($_POST['AddCaserne_Addresse']),htmlspecialchars($_POST['AddCaserne_CP']),htmlspecialchars($_POST['AddCaserne_Ville']),htmlspecialchars($_POST['AddCaserne_CodeTypeC']));
-            $pompier = $this->DAOCaserne->save($p);
-            $page=Renderer::render("view_AddCaserne.php", compact("resultMessage"));
-        }else{
-            $page=Renderer::render("view_AddCaserne.php", compact("valueError"));
-        }
-        echo $page;
+
     }
 
     public function delete($id) : void{//methode del du protocole http
