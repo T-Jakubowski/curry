@@ -53,10 +53,9 @@ class Casernecontroller extends BaseController{
             "ville" => $Ville,
             "codetypec" => $CodeTypeC
         );
-
         $f=new FiltreCaserne($data);
-        
         $data=$f->caser();
+
         $isSuccess=true;
         foreach($data as $key=>$value){
             if ($value==false){
@@ -103,29 +102,47 @@ class Casernecontroller extends BaseController{
         //faille CSRF
         //pensé la sécurité
         //Gestion des erreur PDO (try catch)
-        $matricule = htmlspecialchars($_POST['AddCaserne_NumCaserne']);//pas sur numaddresse pour le update
-        $prenom = htmlspecialchars($_POST['AddCaserne_Addresse']);
-        $nom = htmlspecialchars($_POST['AddCaserne_CP']);
-        $chefAgret = htmlspecialchars($_POST['AddCaserne_Ville']);
-        $dateNaissance = htmlspecialchars($_POST['AddCaserne_CodeTypeC']);
-
-        $p = new Caserne(htmlspecialchars($_POST['AddCaserne_NumCaserne']),htmlspecialchars($_POST['AddCaserne_Addresse']),htmlspecialchars($_POST['AddCaserne_CP']),htmlspecialchars($_POST['AddCaserne_Ville']),htmlspecialchars($_POST['AddCaserne_CodeTypeC']));
-        $pompier = $this->daoPompier->save($p);
+        $NumCaserne = htmlspecialchars($_POST['UpdateCaserne_NumCaserne']);
+        $Addresse = htmlspecialchars($_POST['UpdateCaserne_Addresse']);
+        $CP = htmlspecialchars($_POST['UpdateCaserne_CP']);
+        $Ville = htmlspecialchars($_POST['UpdateCaserne_Ville']);
+        $CodeTypeC = htmlspecialchars($_POST['UpdateCaserne_CodeTypeC']);
+        $data = array(
+            "num" => $NumCaserne,
+            "addresse" => $Addresse,
+            "cp" => $CP,
+            "ville" => $Ville,
+            "codetypec" => $CodeTypeC
+        );
+        $f=new FiltreCaserne($data);
+        $data=$f->caser();
         
-        $page = \app\utils\Renderer::render('view_pompier_add.php', compact('pompier'));
+        $isSuccess=true;
+        foreach($data as $key=>$value){
+            if ($value==false){
+                $isSuccess=false;
+                $valueError[]=$key;
+            }
+        }
+        if ($isSuccess==true){
+            $p = new Caserne(htmlspecialchars($_POST['AddCaserne_NumCaserne']),htmlspecialchars($_POST['AddCaserne_Addresse']),htmlspecialchars($_POST['AddCaserne_CP']),htmlspecialchars($_POST['AddCaserne_Ville']),htmlspecialchars($_POST['AddCaserne_CodeTypeC']));
+            $pompier = $this->DAOCaserne->save($p);
+            $page=Renderer::render("view_AddCaserne.php", compact("resultMessage"));
+        }else{
+            $page=Renderer::render("view_AddCaserne.php", compact("valueError"));
+        }
         echo $page;
     }
 
-
-        
-
-
-
-
-
     public function delete($id) : void{//methode del du protocole http
-        $CaserneDetail = $this->DAOCaserne->remove($id);
-        $page=Renderer::render("view_caserne.php", compact("LstCaserne"));
+        
+        $isExist = $this->DAOCaserne->findIfNumCaserneExist($id);
+        if ($isExist==true){
+            $CaserneDetail = $this->DAOCaserne->remove($id);
+            $page=Renderer::render("view_AddCaserne.php", compact("LstCaserne"));//TODO
+        }else{
+            $page=Renderer::render("view_AddCaserne.php", compact("valueError"));
+        }
         echo $page;
 
     }

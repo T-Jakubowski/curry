@@ -5,7 +5,11 @@ class DAOUser {
     public function __construct($cnx) {
         $this->cnx = $cnx;
     }
-
+    /*
+        Renvoie un user par rapport a son id
+        @param int $Id
+        @return User $user
+    */
     public function find($Id) : User{
         $sql = 'SELECT * FROM user WHERE Id=:Id;';
         $prepared_Statement = $this->cnx->prepare($sql);
@@ -16,7 +20,11 @@ class DAOUser {
         }
         return $user;
     }
-
+    /*
+        Renvoie un user par rapport a son identifaint
+        @param string $Identifiant
+        @return User $user
+    */
     public function findByidentifiant($Identifiant) : User{
         $sql = 'SELECT * FROM User WHERE Identifiant=:Identifiant;';
         $prepared_Statement = $this->cnx->prepare($sql);
@@ -27,11 +35,15 @@ class DAOUser {
         }
         return $user;
     }
-
+    /*
+        Enregistre un user dans la bdd
+        @param User $u
+        @return void
+    */
     public function save(User $u): void {
         $sql = "INSERT INTO user(Identifiant, Password, IdRole)
                 Values (:Identifiant, :Password, :IdRole);";
-        $Identifiant = $u->getId();
+        $Identifiant = $u->getIdentifiant();
         $Password = $u->getPassword();
         $IdRole = $u->getidRole();
 
@@ -43,7 +55,11 @@ class DAOUser {
         $prepared_Statement->execute();
     }
 
-    
+    /*
+        Met a jour un user existant
+        @param User $u
+        @return void
+    */
     public function edit(User $u) : void{
         
         $sql = 'UPDATE user
@@ -64,14 +80,23 @@ class DAOUser {
         
         $prepared_Statement->execute();
     }
-
+    /*
+        Supprime un user
+        @param int $Id
+        @return void
+    */
     public function remove($Id): void {
         $sql = 'delete from user WHERE Id=:Id;';
         $prepared_Statement = $this->cnx->prepare($sql);
         $prepared_Statement->bindParam("Id", $Id);
         $prepared_Statement->execute();
     }
-
+    /*
+        Renvoie Tout les user
+        @param int $offset
+        @param int $limit
+        @return array<User>
+    */
     public function findAll($offset = 0, $limit = 10): Array {
 
         $sql = 'SELECT * FROM user LIMIT :limit OFFSET :offset';
@@ -86,7 +111,10 @@ class DAOUser {
         }
         return $desUser;
     }
-
+    /*
+        Renvoie le nombre de user
+        @return int
+    */
     public function count(): int {
         $sql = 'SELECT COUNT(*) as nbUser from user u ;';
         $statement = $this->cnx->prepare($sql);
@@ -94,7 +122,11 @@ class DAOUser {
         $nbUser = $nbUser['nbUser'];
         return $nbUser;
     }
-
+    /*
+        Renvoie Si le role en entré existe
+        @param int $idRole
+        @return bool
+    */
     public function findIfRoleExiste($idRole){
         $SQL = 'SELECT * FROM role
         WHERE Id=:Id;';
@@ -108,6 +140,11 @@ class DAOUser {
         }
         return $isExist;
     }
+    /*
+        Renvoie Si l'user' en entré existe
+        @param string $Identifiant
+        @return bool
+    */
     public function findifUserExist($Identifiant){
         $sql = 'SELECT * FROM User WHERE Identifiant=:Identifiant;';
         $prepared_Statement = $this->cnx->prepare($sql);

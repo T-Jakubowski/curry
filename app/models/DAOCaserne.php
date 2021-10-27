@@ -37,7 +37,7 @@ class DAOCaserne{
             return $Caserne;
     }
     /*
-        Enregistre une caserne dans la bdd Toute les caserne
+        Enregistre une caserne dans la bdd
         @param Caserne $Caserne
         @return void
     */
@@ -58,6 +58,11 @@ class DAOCaserne{
         $isSuccess=$prepared_Statement->execute();
         return $isSuccess;
     }
+    /*
+        Met a jour une caserne existante
+        @param Caserne $Caserne
+        @return void
+    */
     public function update(Caserne $Caserne) : void{
         $sql = 'UPDATE caserne SET';
         $NumCaserne=$Caserne->getNumCaserne();
@@ -106,7 +111,7 @@ class DAOCaserne{
         }
         return $DesCaserne;
     }
-        /*
+    /*
         Renvoie Toute les caserne qui ont le numero $value
         @param string $value
         @param int $offset
