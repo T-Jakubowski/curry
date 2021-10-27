@@ -107,27 +107,14 @@ class Casernecontroller extends BaseController{
             $page=Renderer::render("view_AddCaserne.php", compact("valueError"));
         }
         echo $page;
-        
-
-
-        //$CaserneDetail = $this->DAOCaserne->remove();//TODO METHODE UPDATE
-        //$page=Renderer::render("view_caserne.php", compact("LstCaserne"));
-        //echo $page;
-        //methode put du protocole http
-        //il faut filtrer les données (Faille XSS)
-        //validé les donnée (donnée coerentes)
-        //faille CSRF
-        //pensé la sécurité
-        //Gestion des erreur PDO (try catch)
-
     }
 
-    public function delete($id) : void{//methode del du protocole http
+    public function delete($id) : void{
         
         $isExist = $this->DAOCaserne->findIfNumCaserneExist($id);
         if ($isExist==true){
             $CaserneDetail = $this->DAOCaserne->remove($id);
-            $page=Renderer::render("view_AddCaserne.php", compact("LstCaserne"));//TODO
+            $page=Renderer::render(".php", compact(""));//TODO
         }else{
             $page=Renderer::render("view_AddCaserne.php", compact("valueError"));
         }
@@ -135,8 +122,15 @@ class Casernecontroller extends BaseController{
 
     }
     public function showDetails(string $id){
-        $CaserneDetail = $this->DAOCaserne->find($id);
-        $page=Renderer::render("view_DeleteCaserne.php", compact("LstCaserne"));
+        $isExist = $this->DAOCaserne->findIfNumCaserneExist($id);
+        if ($isExist==true){
+            $Caserne = $this->DAOCaserne->find($id);
+            $PompierOnCaserne = $this->DAOPompier->findPompierFromCaserne($id);//TODO
+            $page=Renderer::render("view_ShowDetail_Caserne.php", compact("Caserne","PompierOnCaserne"));
+        }else{
+            $errMessage="il n'existe pas de caserne avec le numero : ".$id;
+            $page=Renderer::render("view_ShowDetail_Caserne.php", compact("errMessage"));
+        }
         echo $page;
         //afficher plus de détail sur un pompier
     }
