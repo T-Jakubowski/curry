@@ -153,6 +153,7 @@ function caserneRoutes_get($fragments)
     $action = array_shift($fragments);
     switch ($action) {
         case "affiche":
+            //Access permission can be checked here too
             call_user_func_array([new CaserneController(), "show"], $fragments);
             break;
         case "detail" :
@@ -162,7 +163,11 @@ function caserneRoutes_get($fragments)
             call_user_func_array([new CaserneController(), "insert"], $fragments);
             break;
         case "delete" :
-            call_user_func_array([new CaserneController(), "insert"], $fragments);
+            call_user_func_array([new CaserneController(), "delete"], $fragments);
+            break;
+        case "update" :
+            var_dump("1");
+            call_user_func_array([new CaserneController(), "update"], $fragments);
             break;
 
         default:
@@ -179,8 +184,10 @@ function caserneRoutes_post($fragments)
             call_user_func_array([new CaserneController(), "delete"], $fragments);
             break;
         case "add" :
-            
             call_user_func_array([new CaserneController(), "insert"], $fragments);
+            break;
+        case "update" :
+            call_user_func_array([new CaserneController(), "update"], $fragments);
             break;
         default:
             break;

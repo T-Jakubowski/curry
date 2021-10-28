@@ -60,11 +60,10 @@ class Casernecontroller extends BaseController{
         }
 
         if ($isSuccess==true){
-            /*  Ajout dans la bdd
+
             $caserneToAdd = new Caserne(htmlspecialchars($_POST['AddCaserne_NumCaserne']),htmlspecialchars($_POST['AddCaserne_Addresse']),htmlspecialchars($_POST['AddCaserne_CP']),htmlspecialchars($_POST['AddCaserne_Ville']),htmlspecialchars($_POST['AddCaserne_CodeTypeC']));
             $this->DAOCaserne->save($caserneToAdd);
-            */
-            $resultMessage="la caserne ".$NumCaserne."a bien été ajouter";
+            $resultMessage="la caserne numéro '".$NumCaserne."' a bien été ajouter";
             $page=Renderer::render("view_AddCaserne.php", compact("resultMessage"));
         }else{
             $page=Renderer::render("view_AddCaserne.php", compact("valueError"));
@@ -74,49 +73,61 @@ class Casernecontroller extends BaseController{
 
 
     public function update() : void{
-        $NumCaserne = htmlspecialchars($_POST['AddCaserne_NumCaserne']);
-        $Addresse = htmlspecialchars($_POST['AddCaserne_Addresse']);
-        $CP = htmlspecialchars($_POST['AddCaserne_CP']);
-        $Ville = htmlspecialchars($_POST['AddCaserne_Ville']);
-        $CodeTypeC = htmlspecialchars($_POST['AddCaserne_CodeTypeC']);
-        $data = array(
-            "num" => $NumCaserne,
-            "addresse" => $Addresse,
-            "cp" => $CP,
-            "ville" => $Ville,
-            "codetypec" => $CodeTypeC
-        );
-        $f=new FiltreCaserne($data);
-        $data=$f->caser();
-        $isSuccess=true;
-        foreach($data as $key=>$value){
-            if ($value==false){
-                $isSuccess=false;
-                $valueError[]=$key;
+        $NumCaserne = htmlspecialchars($_POST['UpdateCaserne_NumCaserne']);
+        $isExist = $this->DAOCaserne->findIfNumCaserneExist($NumCaserne);
+        $isSuccess=false;
+        if($isExist==true){
+            $Addresse = htmlspecialchars($_POST['UpdateCaserne_Addresse']);
+            $CP = htmlspecialchars($_POST['UpdateCaserne_CP']);
+            $Ville = htmlspecialchars($_POST['UpdateCaserne_Ville']);
+            $CodeTypeC = htmlspecialchars($_POST['UpdateCaserne_CodeTypeC']);
+            $data = array(
+                "num" => $NumCaserne,
+                "addresse" => $Addresse,
+                "cp" => $CP,
+                "ville" => $Ville,
+                "codetypec" => $CodeTypeC
+            );
+            $f=new FiltreCaserne($data);
+            $data=$f->caser();
+            $isSuccess=true;
+            foreach($data as $key=>$value){
+                if ($value==false){
+                    if ($key!="num"){
+                        $isSuccess=false;
+                        $valueError[]=$key;
+                    }
+
+                }
             }
         }
-
         if ($isSuccess==true){
-            /*  update dans la bdd
-            $caserneToUpdate = new Caserne(htmlspecialchars($_POST['AddCaserne_NumCaserne']),htmlspecialchars($_POST['AddCaserne_Addresse']),htmlspecialchars($_POST['AddCaserne_CP']),htmlspecialchars($_POST['AddCaserne_Ville']),htmlspecialchars($_POST['AddCaserne_CodeTypeC']));
+            $caserneToUpdate = new Caserne(htmlspecialchars($_POST['UpdateCaserne_NumCaserne']),htmlspecialchars($_POST['UpdateCaserne_Addresse']),htmlspecialchars($_POST['UpdateCaserne_CP']),htmlspecialchars($_POST['UpdateCaserne_Ville']),htmlspecialchars($_POST['UpdateCaserne_CodeTypeC']));
             $this->DAOCaserne->update($caserneToUpdate);
-            */
-            $resultMessage="la caserne ".$NumCaserne."a bien été ajouter";
-            $page=Renderer::render("view_AddCaserne.php", compact("resultMessage"));
+            $resultMessage="la caserne numéro '".$NumCaserne."' a bien été modifier";
+            $page=Renderer::render("view_UpdateCaserne.php", compact("resultMessage"));
         }else{
-            $page=Renderer::render("view_AddCaserne.php", compact("valueError"));
+            $page=Renderer::render("view_UpdateCaserne.php", compact("valueError"));
         }
         echo $page;
     }
 
-    public function delete($id) : void{
-        
+    public function delete() : void{
+        $id = htmlspecialchars($_POST['idCaserneToDelete']);
         $isExist = $this->DAOCaserne->findIfNumCaserneExist($id);
         if ($isExist==true){
-            $CaserneDetail = $this->DAOCaserne->remove($id);
-            $page=Renderer::render(".php", compact(""));//TODO
+            $PompierOnCaserne = $this->DAOCaserne->findPompierFromCaserne($id);
+            if (empty($PompierOnCaserne)){
+                $resultMessage="la caserne numéro '".$id."' a bien été Supprimer";
+                $CaserneDetail = $this->DAOCaserne->remove($id);
+                $page=Renderer::render("view_DeleteCaserne.php", compact("resultMessage"));
+            }else{
+                $valueError="La caserne numéro ".$id." possede des pompier et ne peut donc pas etre supprimer";
+                $page=Renderer::render("view_DeleteCaserne.php", compact("valueError"));
+            }
         }else{
-            $page=Renderer::render("view_AddCaserne.php", compact("valueError"));
+            $valueError="Vous ne pouvez pas supprimer la caserne ".$id." pour l'instant";
+            $page=Renderer::render("view_DeleteCaserne.php", compact("valueError"));
         }
         echo $page;
 
@@ -125,7 +136,7 @@ class Casernecontroller extends BaseController{
         $isExist = $this->DAOCaserne->findIfNumCaserneExist($id);
         if ($isExist==true){
             $Caserne = $this->DAOCaserne->find($id);
-            $PompierOnCaserne = $this->DAOPompier->findPompierFromCaserne($id);//TODO
+            $PompierOnCaserne = $this->DAOCaserne->findPompierFromCaserne($id);//TODO
             $page=Renderer::render("view_ShowDetail_Caserne.php", compact("Caserne","PompierOnCaserne"));
         }else{
             $errMessage="il n'existe pas de caserne avec le numero : ".$id;

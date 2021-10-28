@@ -4,7 +4,30 @@ namespace app\views;
 ?>
 <html>
 <?php include "Head.php" ;?>
-
+<script>
+function ConfirmDelete(id){
+  var x = document.getElementById("idCaserneToDelete");
+  x.value = id;
+}
+function Edit(id){
+  var x = document.getElementById("UpdateCaserne_NumCaserne");
+  x.value = id;
+  x.innerHTML = id;
+  var Adresse = document.getElementById(id+":Adresse").innerHTML;
+  var CP = document.getElementById(id+":CP").innerHTML;
+  var Ville = document.getElementById(id+":Ville").innerHTML;
+  var CodeTypeC = document.getElementById(id+":CodeTypeC").innerHTML;
+  
+  document.getElementById("ULastValueCaserne_Adresse").value=Adresse;
+  document.getElementById("ULastValueCaserne_CP").value=CP;
+  document.getElementById("ULastValueCaserne_Ville").value=Ville;
+  document.getElementById("ULastValueCaserne_CodeTypeC").value=CodeTypeC;
+  document.getElementById("UpdateCaserne_Adresse").value=Adresse;
+  document.getElementById("UpdateCaserne_CP").value=CP;
+  document.getElementById("UpdateCaserne_Ville").value=Ville
+  document.getElementById("UpdateCaserne_CodeTypeC").value=CodeTypeC;
+}
+</script>
   <body>
     <?php $ActivePageName="caserne"; include "view_NavBarre.php"; ?>
     <br>
@@ -53,12 +76,12 @@ namespace app\views;
   ?>
   <tr>
     <td><?php $id = $Caserne->getNumCaserne();echo $id;?></td>
-    <td><?php echo $Caserne->getAdresse(); ?></td>
-    <td><?php echo $Caserne->getCP(); ?></td>
-    <td><?php echo $Caserne->getVille(); ?></td>
-    <td><?php echo $Caserne->getCodeTypeC(); ?></std>
-    <td><button id="<?php echo $id.":edit"; ?>" type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#editCaserneModal"><img class="fit-picture" src="/img/edit_black_24dp.svg" alt="edit"></button>
-      <button id="<?php echo $id.":del"; ?>" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteCaserneModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button></td>
+    <td id="<?php echo $id.":Adresse"; ?>"><?php echo $Caserne->getAdresse(); ?></td>
+    <td id="<?php echo $id.":CP"; ?>"><?php echo $Caserne->getCP(); ?></td>
+    <td id="<?php echo $id.":Ville"; ?>"><?php echo $Caserne->getVille(); ?></td>
+    <td id="<?php echo $id.":CodeTypeC"; ?>"><?php echo $Caserne->getCodeTypeC(); ?></std>
+    <td><button id="<?php echo $id.":edit"; ?>" onclick="Edit(<?php echo $id; ?>)" type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#editCaserneModal"><img class="fit-picture" src="/img/edit_black_24dp.svg" alt="edit"></button>
+      <button id="<?php echo $id.":del"; ?>" onclick="ConfirmDelete(<?php echo $id; ?>)" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteCaserneModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button></td>
   </tr>
   <?php
 
@@ -94,33 +117,33 @@ namespace app\views;
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form id="InsertCaserne" method="post" action="/caserne/add">
-      <div class="modal-body">
-      <div class="input-group mb-3">
+        <div class="modal-body">
+          <div class="input-group mb-3">
             <input id="AddCaserne_NumCaserne" name="AddCaserne_NumCaserne" type="text" class="form-control" placeholder="ex: 128" aria-label="Recipient's username" aria-describedby="basic-addon2">
             <span class="input-group-text" id="basic-addon2">NumCaserne</span>
-        </div>
-        <div class="input-group mb-3">
+          </div>
+          <div class="input-group mb-3">
             <input id="AddCaserne_Addresse" name="AddCaserne_Addresse" type="text" class="form-control" placeholder="ex: 12 rue arla" aria-label="Recipient's username" aria-describedby="basic-addon2">
             <span class="input-group-text" id="basic-addon2">Addresse</span>
-        </div>
-        <div class="input-group mb-3">
+          </div>
+          <div class="input-group mb-3">
             <input id="AddCaserne_Code Postal" name="AddCaserne_CP" type="text" class="form-control" placeholder="ex: 69100" aria-label="Recipient's username" aria-describedby="basic-addon2">
             <span class="input-group-text" id="basic-addon2">Code Postal</span>
-        </div>
-        <div class="input-group mb-3">
+          </div>
+          <div class="input-group mb-3">
             <input id="AddCaserne_Ville" name="AddCaserne_Ville" type="text" class="form-control" placeholder="ex: Lyon" aria-label="Recipient's username" aria-describedby="basic-addon2">
             <span class="input-group-text" id="basic-addon2">Ville</span>
-        </div>
-        <div class="input-group mb-3">
+          </div>
+          <div class="input-group mb-3">
             <input id="AddCaserne" name="AddCaserne_CodeTypeC" type="text" class="form-control" placeholder="ex: 2" aria-label="Recipient's username" aria-describedby="basic-addon2">
             <span class="input-group-text" id="basic-addon2">CodeTypeC</span>
+         </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <input type="submit" class="btn btn-primary" value="save">
-      </div>
-    </form>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <input type="submit" class="btn btn-primary" value="save">
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -134,37 +157,38 @@ namespace app\views;
         <h5 class="modal-title" id="createCaserneModalLabel">Edit</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="LastValue" aria-label="lastValue" readonly>
-                <span class="input-group-text">NumCaserne</span>
-            <input type="text" class="form-control" placeholder="Nouvelle valeur" aria-label="newValue">
-        </div>
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="LastValue" aria-label="lastValue" readonly>
-                <span class="input-group-text">Addresse</span>
-            <input type="text" class="form-control" placeholder="Nouvelle valeur" aria-label="newValue">
-        </div>
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="LastValue" aria-label="lastValue" readonly>
+      <form id="UpdateCaserne" method="post" action="/caserne/update">
+        <div class="modal-body">
+          <div class="input-group mb-3">
+            <input id="UpdateCaserne_NumCaserne" name="UpdateCaserne_NumCaserne" value="" type="text" class="form-control" placeholder="Value" readonly>
+            <span class="input-group-text">NumCaserne</span>
+          </div>
+          <div class="input-group mb-3">
+              <input id="ULastValueCaserne_Adresse" type="text" class="form-control" placeholder="LastValue" aria-label="lastValue" readonly>
+                  <span class="input-group-text">Addresse</span>
+              <input id="UpdateCaserne_Adresse" value="" name="UpdateCaserne_Addresse" type="text" class="form-control" placeholder="Nouvelle Addresse" aria-label="newValue">
+          </div>
+          <div class="input-group mb-3">
+            <input id="ULastValueCaserne_CP" type="text" class="form-control" placeholder="LastValue" aria-label="lastValue" readonly>
                 <span class="input-group-text">Code Postal</span>
-            <input type="text" class="form-control" placeholder="Nouvelle valeur" aria-label="newValue">
-        </div>
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="LastValue" aria-label="lastValue" readonly>
+            <input id="UpdateCaserne_CP" name="UpdateCaserne_CP" type="text" class="form-control" placeholder="Nouveau Code Postal" aria-label="newValue">
+          </div>
+          <div class="input-group mb-3">
+            <input id="ULastValueCaserne_Ville" type="text" class="form-control" placeholder="LastValue" aria-label="lastValue" readonly>
                 <span class="input-group-text">Ville</span>
-            <input type="text" class="form-control" placeholder="Nouvelle valeur" aria-label="newValue">
-        </div>
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="LastValue" aria-label="lastValue"readonly>
+            <input id="UpdateCaserne_Ville" name="UpdateCaserne_Ville" type="text" class="form-control" placeholder="Nouvelle Ville" aria-label="newValue">
+          </div>
+          <div class="input-group mb-3">
+            <input id="ULastValueCaserne_CodeTypeC" type="text" class="form-control" placeholder="LastValue" aria-label="lastValue"readonly>
                 <span class="input-group-text">CodeTypeC</span>
-            <input type="text" class="form-control" placeholder="Nouvelle valeur" aria-label="newValue">
+            <input id="UpdateCaserne_CodeTypeC" name="UpdateCaserne_CodeTypeC" type="text" class="form-control" placeholder="Nouveau Type Caserne" aria-label="newValue">
+          </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <input type="submit" class="btn btn-primary" value="Save changes">
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -183,7 +207,10 @@ namespace app\views;
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">NON</button>
-        <button type="button" class="btn btn-success">OUI</button>
+        <form id="DeleteCaserne" method="post" action="/caserne/delete">
+          <input id="idCaserneToDelete" name="idCaserneToDelete" value="none" hidden>
+          <button type="submit" class="btn btn-success">OUI</button>
+        </form>
       </div>
     </div>
   </div>
@@ -221,7 +248,7 @@ if(strval($NumPage)==strval($nbPage)){
 ?>
 
 <footer>
-  <nav aria-label="Page navigation example">
+  <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center">
       <li class="page-item <?php echo $classPreview;?>">
         <a class="page-link" href="?page=<?php echo $NumPage-1,$NumLikes;?>" aria-label="Previous">

@@ -64,7 +64,9 @@ class DAOCaserne{
         @return void
     */
     public function update(Caserne $Caserne) : void{
-        $sql = 'UPDATE caserne SET';
+        $sql = 'UPDATE casernes
+        SET Adresse=:Adresse, CP=:CP, Ville=:Ville, CodeTypeC=:CodeTypeC
+                Where NumCaserne=:NumCaserne';
         $NumCaserne=$Caserne->getNumCaserne();
         $Adresse=$Caserne->getadresse();
         $CP=$Caserne->getCP();
