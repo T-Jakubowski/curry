@@ -136,7 +136,7 @@ class DAOUser {
     */
     public function count(): int {
         $sql = 'SELECT COUNT(*) as nbUser from user u ;';
-        $statement = $this->cnx->prepare($sql);
+        $statement = $this->cnx->query($sql);
         $nbUser = $statement->fetch(\PDO::FETCH_ASSOC);
         $nbUser = $nbUser['nbUser'];
         return $nbUser;
