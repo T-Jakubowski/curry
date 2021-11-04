@@ -31,7 +31,7 @@ class DAOUser {
         $prepared_Statement->bindParam("Identifiant", $Identifiant);
         $prepared_Statement->execute();
         while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
-            $user = new User($row['IdUser'],$row['Identifiant'],$row['Password'],$row['Id']);
+            $user = new User($row['Id'],$row['Identifiant'],$row['Password'],$row['IdRole']);
         }
         return $user;
     }
@@ -107,7 +107,7 @@ class DAOUser {
         
         $desUser=array();
         while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
-            $desUser[] = new User($row['IdUser'],$row['Identifiant'],$row['Password'],$row['IdRole']);
+            $desUser[] = new User($row['Id'],$row['Identifiant'],$row['Password'],$row['IdRole']);
         }
         return $desUser;
     }
@@ -124,13 +124,8 @@ class DAOUser {
         $prepared_Statement = $this->cnx->prepare($sql);
         $value="%$value%";
         $prepared_Statement->bindValue(':Identifiant', $value, \PDO::PARAM_STR);
-        $prepared_Statement->bindValue(':limit', $limit, \PDO::PARAM_INT);
-        $prepared_Statement->bindValue(':offset', $offset, \PDO::PARAM_INT);
-        $prepared_Statement->execute();
-        
-        $desUser=array();
         while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
-            $desUser[] = new User($row['IdUser'],$row['Identifiant'],$row['Password'],$row['IdRole']);
+            $desUser[] = new User($row['Id'],$row['Identifiant'],$row['Password'],$row['IdRole']);
         }
         return $desUser;
     }
