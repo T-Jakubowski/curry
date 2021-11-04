@@ -89,8 +89,33 @@ class DAORole {
         return $desRoles;
     }
 
+        /*
+        Renvoie Tout les roles qui contienne $value
+        @param string $value
+        @param int $offset
+        @param int $limit
+        @return array<Role>
+    */
+    public function findAllWhereName($value,$offset = 0, $limit = 10): Array {
+
+        $sql = 'SELECT * FROM role WHERE Role=:Role LIMIT :limit OFFSET :offset';
+        $prepared_Statement = $this->cnx->prepare($sql);
+        $value="%$value%";
+        $prepared_Statement->bindParam(':Role', $value, \PDO::PARAM_STR);
+        $prepared_Statement->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $prepared_Statement->bindValue(':offset', $offset, \PDO::PARAM_INT);
+        $prepared_Statement->execute();
+
+        $desRoles=array();
+        while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
+            $desRoles[] = new Role($row['Id'],$row['Role'],$row['Permission']);
+        }
+        return $desRoles;
+    }
+
     /*
-        Renvoie le nombre de role
+        Renvoie le nombre de role qui contienne $value
+        @param string $value
         @return int
     */
     public function count(): int {
@@ -98,6 +123,16 @@ class DAORole {
         $statement = $this->cnx->prepare($sql);
         $nbRoles = $statement->fetch(\PDO::FETCH_ASSOC);
         $nbRole = $nbRoles['nbRoles'];
+        return $nbRole;
+    }
+    public function countWhere($value): int {
+        $sql = 'SELECT COUNT(*) as nbRoles from role WHERE Role=:Role  ;';
+        $prepared_Statement = $this->cnx->prepare($sql);
+        $value="%$value%";
+        $prepared_Statement->bindValue(':Role', $value, \PDO::PARAM_STR);
+        $prepared_Statement->execute();
+        $nbRole = $prepared_Statement->fetch(\PDO::FETCH_ASSOC);
+        $nbRole = $nbRole['nbRoles'];
         return $nbRole;
     }
     /*

@@ -111,8 +111,32 @@ class DAOUser {
         }
         return $desUser;
     }
+        /*
+        Renvoie Tout les user qui contienne value
+        @param string $value
+        @param int $offset
+        @param int $limit
+        @return array<User>
+    */
+    public function findAllWhereIdentifiant($value,$offset = 0, $limit = 10): Array {
+
+        $sql = 'SELECT * FROM user WHERE Identifiant=:Identifiant LIMIT :limit OFFSET :offset';
+        $prepared_Statement = $this->cnx->prepare($sql);
+        $value="%$value%";
+        $prepared_Statement->bindValue(':Identifiant', $value, \PDO::PARAM_STR);
+        $prepared_Statement->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $prepared_Statement->bindValue(':offset', $offset, \PDO::PARAM_INT);
+        $prepared_Statement->execute();
+        
+        $desUser=array();
+        while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
+            $desUser[] = new User($row['IdUser'],$row['Identifiant'],$row['Password'],$row['IdRole']);
+        }
+        return $desUser;
+    }
+
     /*
-        Renvoie le nombre de user
+        Renvoie le nombre de user 
         @return int
     */
     public function count(): int {
@@ -122,6 +146,22 @@ class DAOUser {
         $nbUser = $nbUser['nbUser'];
         return $nbUser;
     }
+        /*
+        Renvoie le nombre de user qui contienne value
+        @param string $value
+        @return int
+    */
+    public function countWhere($value): int {
+        $sql = 'SELECT COUNT(*) as nbUser from user WHERE Identifiant=:Identifiant ;';
+        $prepared_Statement = $this->cnx->prepare($sql);
+        $value="%$value%";
+        $prepared_Statement->bindValue(':Identifiant', $value, \PDO::PARAM_STR);
+        $prepared_Statement->execute();
+        $nbUser = $prepared_Statement->fetch(\PDO::FETCH_ASSOC);
+        $nbUser = $nbUser['nbUser'];
+        return $nbUser;
+    }
+
     /*
         Renvoie Si le role en entré existe
         @param int $idRole
