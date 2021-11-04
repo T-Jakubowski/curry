@@ -1,138 +1,177 @@
 <?php
-require_once '../autoloader.php';
 
-$cnx = app\utils\SingletonDBMaria::getInstance()->getConnection();
-$connexion = new app\models\DAOPompier($cnx);
+namespace app\views;
 ?>
-
-
-<!doctype html>
-<html lang="fr">
-    <head>
-        <meta charset="utf-8">
-        <title>Titre de la page</title>
-
-        <link href="/html/css/bootstrap.css" rel="stylesheet">
-        <script src="/html/js/bootstrap.bundle.js"></script>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
-
-
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-        <link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet">
-
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #ff8787;">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">Navigation</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <a class="nav-link" href="/">Home</a>
-                        <a class="nav-link active" aria-current="page" href="#">Pompier</a>
-                        <a class="nav-link" href="../caserne/affiche">Caserne</a>
-                        <a class="nav-link disabled">Prochainement...</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <br><br><br>
-
-
-    <center><button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#createUserModal">Ajouter un pompier</button>
-        <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#editUserModal">Modifier un pompier</button>
-        <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#confirmDeleteUserModal">Supprimer un pompier</button>
-    </center><br>
-
-
-    <div id="tableau" name="tableau">
-        <table id="table_id" class="display">
-            <thead>
-                <tr>
-                    <th>Matricule</th>
-                    <th>Prenom</th>
-                    <th>Nom</th>
-                    <th>Chef Agret</th>
-                    <th>DateNaissance</th>
-                    <th>Num Caserne</th>
-                    <th>Code Grade</th>
-                    <th>Matricule Responsable</th>
-                </tr>
-            </thead>
-            <tbody>
-
-
-                <?php foreach ($pompiers as $value) { ?>
-                    <tr>
-                        <td><?php echo $value->GetMatricule(); ?></td>
-                        <td><?php echo $value->GetPrenom(); ?></td>
-                        <td><?php echo $value->GetNom(); ?></td>
-                        <td><?php echo $value->GetChefAgret(); ?></td>
-                        <td><?php echo $value->GetDateNaissance(); ?></td>
-                        <td><?php echo $value->GetNumCaserne(); ?></td>
-                        <td><?php echo $value->GetCodeGrade(); ?></td>
-                        <td><?php echo $value->GetMatriculeRespo(); ?></td>
-                    </tr>
-                <?php } ?>
-            </tbody>
-        </table>
-    </div>
-
-
+<html>
+    <?php include "Head.php"; ?>
     <script>
-        $(document).ready(function () {
-            $('#table_id').DataTable();
-        });
+        function ConfirmDelete(id) {
+            var x = document.getElementById("idCaserneToDelete");
+            x.value = id;
+        }
+        function Edit(id) {
+            var x = document.getElementById("UpdateCaserne_NumCaserne");
+            x.value = id;
+            x.innerHTML = id;
+            var Adresse = document.getElementById(id + ":Adresse").innerHTML;
+            var CP = document.getElementById(id + ":CP").innerHTML;
+            var Ville = document.getElementById(id + ":Ville").innerHTML;
+            var CodeTypeC = document.getElementById(id + ":CodeTypeC").innerHTML;
+
+            document.getElementById("ULastValueCaserne_Adresse").value = Adresse;
+            document.getElementById("ULastValueCaserne_CP").value = CP;
+            document.getElementById("ULastValueCaserne_Ville").value = Ville;
+            document.getElementById("ULastValueCaserne_CodeTypeC").value = CodeTypeC;
+            document.getElementById("UpdateCaserne_Adresse").value = Adresse;
+            document.getElementById("UpdateCaserne_CP").value = CP;
+            document.getElementById("UpdateCaserne_Ville").value = Ville
+            document.getElementById("UpdateCaserne_CodeTypeC").value = CodeTypeC;
+        }
     </script>
+    <body>
+        <?php $ActivePageName = "caserne";
+        include "view_NavBarre.php"; ?>
+        <br>
 
 
-
-    <!-- Modal edit Pompier-->
-    <form id="editUser" method="post" action="/user/edit">
-        <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="createUserModalLabel">Edit</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="LastValue" aria-label="lastValue" readonly>
-                            <span class="input-group-text">id</span>
-                            <input name='editMatricule' type="text" class="form-control" placeholder="Nouvelle valeur" aria-label="newValue">
-                        </div>
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="LastValue" aria-label="lastValue" readonly>
-                            <span class="input-group-text">Identifiant</span>
-                            <input name='editPrenom' type="text" class="form-control" placeholder="Nouvelle valeur" aria-label="newValue">
-                        </div>
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="LastValue" aria-label="lastValue" readonly>
-                            <span class="input-group-text">Password</span>
-                            <input name='editNom' type="text" class="form-control" placeholder="Nouvelle valeur" aria-label="newValue">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <input type="submit" class="btn btn-primary" name="save_pompier" value="Save">
-                    </div>
+        <div class="container">
+            <div class="row justify-content-end">
+                <div class="col-1">
+                    <span data-bs-toggle="tooltip" data-bs-placement="top" title="Ajout de Caserne">
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createCaserneModal">+</button>
+                    </span>
                 </div>
             </div>
         </div>
-    </form>
+        <br>
+        <div><h3>Liste des Casernes :</h3></div>
 
-    <!-- Delete -->
-    <form id="deleteUser" method="post" action="/user/delete">
-        <div class="modal fade" id="confirmDeleteUserModal" tabindex="-1" aria-labelledby="confirmUserCaserneModalLabel" aria-hidden="true">
+        <?php
+        if (isset($_GET["page"])) {
+            $NumPage = $_GET["page"];
+        } else {
+            $NumPage = 1;
+        }
+        if (isset($_GET["search"])) {
+            $NumLikes = "&search=" . intval($_GET["search"]);
+        } else {
+            $NumLikes = "";
+        }
+        ?>
+        <table id="tableCaserne" class="table table-striped table-hover table-Secondary .table-responsive" >
+            <thead>
+                <tr>
+                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="NumCaserne Int(11)">#</th>
+                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(15)">Addresse</th>
+                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(5)">CP</th>
+                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(10)">Ville</th>
+                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="Int(11)">CodeTypeC</th>
+                    <th>Edit/Delete</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                foreach ($LstUser as $User) {
+                    /* @var Caserne $Caserne */
+                    ?>
+                    <tr>
+                        <td><?php $id = $User->getId();
+                    echo $id; ?></td>
+                        <td id="<?php echo $id . ":Identifiant"; ?>"><?php echo $User->getIdentifiant(); ?></td>
+                        <td id="<?php echo $id . ":Password"; ?>"><?php echo $User->getPassword(); ?></td>
+                        <td id="<?php echo $id . ":IdRole"; ?>"><?php echo $User->getIdRole(); ?></td>td>
+                        <td><button id="<?php echo $id . ":edit"; ?>" onclick="Edit(<?php echo $id; ?>)" type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#editCaserneModal"><img class="fit-picture" src="/img/edit_black_24dp.svg" alt="edit"></button>
+                            <button id="<?php echo $id . ":del"; ?>" onclick="ConfirmDelete(<?php echo $id; ?>)" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteCaserneModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button></td>
+                    </tr>
+                    <?php
+                }
+                ?>
+
+            </tbody>
+        </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Modal create Caserne-->
+        <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createUserModalLabel">Create User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form id="InsertUser" method="post" action="/User/add">
+                        <div class="modal-body">
+                            <div class="input-group mb-3">
+                                <input id="addidentifiant" name="addidentifiant" type="text" class="form-control" placeholder="ex: t.jakubowski" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <span class="input-group-text" id="basic-addon2">Identifiant</span>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input id="addpassword" name="addpassword" type="text" class="form-control" placeholder="ex: *******" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <span class="input-group-text" id="basic-addon2">Password</span>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input id="addidrole" name="addidrole" type="text" class="form-control" placeholder="ex: 1" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <span class="input-group-text" id="basic-addon2">Id Role</span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary" value="save">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal edit Caserne-->
+        <div class="modal fade" id="editCaserneModal" tabindex="-1" aria-labelledby="editCaserneModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createCaserneModalLabel">Edit</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form id="UpdateCaserne" method="post" action="/caserne/update">
+                        <div class="modal-body">
+                            <div class="input-group mb-3">
+                                <input id="editidentifiant" name="editidentifiant" type="text" class="form-control" placeholder="ex: t.jakubowski" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <span class="input-group-text" id="basic-addon2">Identifiant</span>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input id="editpassword" name="editpassword" type="text" class="form-control" placeholder="ex: *******" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <span class="input-group-text" id="basic-addon2">Password</span>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input id="editidrole" name="editidrole" type="text" class="form-control" placeholder="ex: 1" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <span class="input-group-text" id="basic-addon2">Id Role</span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary" value="Save changes">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal confirmDelete Caserne-->
+        <div class="modal fade" id="confirmDeleteCaserneModal" tabindex="-1" aria-labelledby="confirmDeleteCaserneModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -140,48 +179,90 @@ $connexion = new app\models\DAOPompier($cnx);
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <h3>Quelle user voulez vous supprimmer</h3>
-                    </div>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon2">id</span>
-                        <input name="deleteMatricule" type="text" class="form-control" placeholder="ex: Ma0021" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <h3>Etes-vous sur de vouloir supprimé la caserne <span id="wantToDelete"></span> ?</h3>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
-                        <input type="submit" class="btn btn-success" value="Valider"></input>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">NON</button>
+                        <form id="DeleteCaserne" method="post" action="/caserne/delete">
+                            <input id="idCaserneToDelete" name="idCaserneToDelete" value="none" hidden>
+                            <button type="submit" class="btn btn-success">OUI</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        <form>
-            <!-- Create -->
-            <!-- Modal create Pompier-->
-            <form id="addUser" method="post" action="/user/add">
-                <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="createUserModalLabel">Create User</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="input-group mb-3">
-                                    <input name="addMatricule" type="text" class="form-control" placeholder="ex: 128" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                                    <span class="input-group-text" id="basic-addon2">id</span>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <input name="addPrenom" type="text" class="form-control" placeholder="ex: 12 rue arla" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                                    <span class="input-group-text" id="basic-addon2">Identifiant</span>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <input type="submit" class="btn btn-primary" name="add_pompier" value="Save">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
 
-            </body>
-            </html>
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+
+function round_up($number, $precision = 1) {
+    $fig = (int) str_pad('1', $precision, '0');
+    return (ceil($number * $fig) / $fig);
+}
+
+$nbPage = round_up($CountCaserne / 10);
+$index = 1;
+$classPreview = "";
+$classNext = "";
+if ($NumPage == 1) {
+    $classPreview = "disabled";
+}
+if (strval($NumPage) == strval($nbPage)) {
+    $classNext = "disabled";
+}
+?>
+
+        <footer>
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item <?php echo $classPreview; ?>">
+                        <a class="page-link" href="?page=<?php echo $NumPage - 1, $NumLikes; ?>" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+<?php
+$pageLimit = $index + 20;
+while ($index <= $nbPage) {
+    $isactive = "";
+    if ($index == $NumPage) {
+        $isactive = "active";
+    }
+    ?>
+                        <li class="page-item <?php echo $isactive ?>"><a class="page-link" href="?page=<?php echo $index, $NumLikes; ?>"><?php echo $index; ?></a></li>
+                        <?php
+                        $index += 1;
+                    }
+                    ?>
+
+                    <li class="page-item <?php echo $classNext ?>">
+                        <a class="page-link" href="?page=<?php echo $NumPage + 1, $NumLikes; ?>" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </footer>
+
+        <script>
+
+
+
+
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            })
+        </script>
+    </body>
+</html>

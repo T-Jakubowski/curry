@@ -1,12 +1,11 @@
 <?php
 namespace app\controllers;
-use app\models\DAOUser;
 use app\utils\SingletonDBMaria;
 use app\utils\Renderer;
-use app\models\User;
+use app\models\Role;
 
-class UserController extends BaseController{
-    private DAOUser $daouser;
+class RoleController extends BaseController{
+    private DAORole $daouser;
 
     public function __construct(){
         $cnx=SingletonDBMaria::getInstance()->getConnection();

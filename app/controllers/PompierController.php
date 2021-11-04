@@ -16,7 +16,7 @@ use app\models\Pompier;
  */
 class PompierController extends BaseController {
     
-    private $daoPompier;
+    private DAOPompier $daoPompier;
 
     public function __construct() {
         $cnx = \app\utils\SingletonDBMaria::getInstance()->getConnection();
