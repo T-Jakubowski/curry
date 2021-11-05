@@ -201,6 +201,22 @@ class DAOUser {
         }
         return $isExist;
     }
+        /*
+        Renvoie Si l'user en entré existe
+        @param string $Identifiant
+        @return bool
+    */
+    public function findifUserIdExist($Identifiant){
+        $sql = 'SELECT * FROM user WHERE Id=:Id;';
+        $prepared_Statement = $this->cnx->prepare($sql);
+        $prepared_Statement->bindParam("Id", $Identifiant);
+        $prepared_Statement->execute();
+        $isExist = false;
+        while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
+            $isExist = true;
+        }
+        return $isExist;
+    }
 
 }
 
