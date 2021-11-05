@@ -1,13 +1,12 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace app\controllers;
+
+use app\models\DAOPompier;
+use app\utils\SingletonDBMaria;
+use app\utils\Renderer;
 use app\models\Pompier;
+use app\utils\filtre\FiltrePompier;
 
 /**
  * Description of PompierController
@@ -15,7 +14,6 @@ use app\models\Pompier;
  * @author student
  */
 class PompierController extends BaseController {
-    
     private DAOPompier $daoPompier;
 
     public function __construct() {

@@ -27,8 +27,8 @@ class Usercontroller extends BaseController {
         }
         if (isset($_GET["search"])) {
             $NumU = ($_GET["search"]);
-            $LstUser = $this->DAOUser->findAllWhereNum($NumU, $Offset, 10);
-            $CountUser = $this->DAOUser->countWhereNum($NumU);
+            $LstUser = $this->DAOUser->findAllWhereIdentifiant($NumU, 0, 10);
+            $CountUser = $this->DAOUser->countWhere($NumU);
         } else {
             $LstUser = $this->DAOUser->findAll($Offset, 10);
             $CountUser = $this->DAOUser->count();
@@ -39,12 +39,10 @@ class Usercontroller extends BaseController {
 
     //
     public function insert() {
-        $id = htmlspecialchars($_POST['addid']);
         $identifiant = htmlspecialchars($_POST['addidentifiant']);
         $password = htmlspecialchars($_POST['addpassword']);
         $role = htmlspecialchars($_POST['addidrole']);
         $data = array(
-            "id" => $id,
             "identifiant" => $identifiant,
             "password" => $password,
             "role" => $role,
@@ -56,14 +54,14 @@ class Usercontroller extends BaseController {
             if ($value == false) {
                 $isSuccess = false;
                 $valueError[] = $key;
+                
             }
         }
-
         if ($isSuccess == true) {
-
-            $userToAdd = new User(htmlspecialchars($_POST['addid']), htmlspecialchars($_POST['addidentifiant']), htmlspecialchars($_POST['addpassword']), htmlspecialchars($_POST['addidrole']));
+            $id = 0;
+            $userToAdd = new User($id, htmlspecialchars($_POST['addidentifiant']), htmlspecialchars($_POST['addpassword']), htmlspecialchars($_POST['addidrole']));
             $this->DAOUser->save($userToAdd);
-            $resultMessage = "le user numéro '" . $id . "' a bien été ajouter";
+            $resultMessage = "le user numéro a bien été ajouter";
             $page = Renderer::render("view_user_add.php", compact("resultMessage"));
         } else {
             $page = Renderer::render("view_user_add.php", compact("valueError"));

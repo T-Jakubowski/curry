@@ -123,13 +123,19 @@ class DAOUser {
     */
     public function findAllWhereIdentifiant($value,$offset = 0, $limit = 10): Array {
 
-        $sql = 'SELECT * FROM user WHERE Identifiant=:Identifiant LIMIT :limit OFFSET :offset';
+        $sql = 'SELECT Id, Identifiant, Password, IdRole FROM user WHERE Identifiant LIKE :Identifiant LIMIT :limit OFFSET :offset';
         $prepared_Statement = $this->cnx->prepare($sql);
         $value="%$value%";
+        var_dump($value);
         $prepared_Statement->bindValue(':Identifiant', $value, \PDO::PARAM_STR);
+        $prepared_Statement->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $prepared_Statement->bindValue(':offset', $offset, \PDO::PARAM_INT);
+        $desUser = [];
         while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
+            var_dump('aznda');
             $desUser[] = new User($row['Id'],$row['Identifiant'],$row['Password'],$row['IdRole']);
         }
+        var_dump($desUser);
         return $desUser;
     }
 
@@ -150,13 +156,14 @@ class DAOUser {
         @return int
     */
     public function countWhere($value): int {
-        $sql = 'SELECT COUNT(*) as nbUser from user WHERE Identifiant=:Identifiant ;';
+        $sql = 'SELECT COUNT(*) as nbUser from user where identifiant LIKE :Identifiant;';
         $prepared_Statement = $this->cnx->prepare($sql);
         $value="%$value%";
         $prepared_Statement->bindValue(':Identifiant', $value, \PDO::PARAM_STR);
         $prepared_Statement->execute();
         $nbUser = $prepared_Statement->fetch(\PDO::FETCH_ASSOC);
         $nbUser = $nbUser['nbUser'];
+        var_dump($nbUser);
         return $nbUser;
     }
 

@@ -79,7 +79,7 @@ namespace app\views;
                     echo $id; ?></td>
                         <td id="<?php echo $id . ":Identifiant"; ?>"><?php echo $User->getIdentifiant(); ?></td>
                         <td id="<?php echo $id . ":Password"; ?>"><?php echo $User->getPassword(); ?></td>
-                        <td id="<?php echo $id . ":IdRole"; ?>"><?php echo $User->getIdRole(); ?></td>td>
+                        <td id="<?php echo $id . ":IdRole"; ?>"><?php echo $User->getIdRole(); ?></td>
                         <td><button id="<?php echo $id.":edit"; ?>" onclick="Edit(<?php echo $id; ?>)" type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#editUserModal"><img class="fit-picture" src="/img/edit_black_24dp.svg" alt="edit"></button>
                             <button id="<?php echo $id.":del"; ?>" onclick="ConfirmDelete(<?php echo $id; ?>)" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteUserModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button></td>
                     </tr>
@@ -113,10 +113,6 @@ namespace app\views;
                     </div>
                     <form id="InsertUser" method="post" action="/user/add">
                         <div class="modal-body">
-                            <div class="input-group mb-3">
-                                <input id="addid" name="addid" type="text" class="form-control" placeholder="ex: 1" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                                <span class="input-group-text" id="basic-addon2">Id</span>
-                            </div>
                             <div class="input-group mb-3">
                                 <input id="addidentifiant" name="addidentifiant" type="text" class="form-control" placeholder="ex: t.jakubowski" aria-label="Recipient's username" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">Identifiant</span>
