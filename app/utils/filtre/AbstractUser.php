@@ -1,16 +1,16 @@
 <?php
 namespace app\utils\filtre;
-use app\models\DAOuser;
+use app\models\DAOUser;
 use app\utils\SingletonDBMaria;
 /*
 * @author Baptiste Coquelet <b.coquelet@eleve.leschartreux.net>
 */
 abstract class AbstractUser {
-    private DAOuser $DAOuser;
+    private DAOUser $daouser;
     public function __construct(){
         $cnx=SingletonDBMaria::getInstance()->getConnection();
-        $DAOuser=new DAOuser($cnx);
-        $this->DAOuser = $DAOuser;
+        $DAOUser=new DAOUser($cnx);
+        $this->DAOUser = $DAOUser;
     }
     abstract public function checkUser(string $data) : bool;
 }

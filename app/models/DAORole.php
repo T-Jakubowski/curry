@@ -120,7 +120,7 @@ class DAORole {
     */
     public function count(): int {
         $sql = 'SELECT COUNT(*) as nbRoles from role p ;';
-        $statement = $this->cnx->prepare($sql);
+        $statement = $this->cnx->query($sql);
         $nbRoles = $statement->fetch(\PDO::FETCH_ASSOC);
         $nbRole = $nbRoles['nbRoles'];
         return $nbRole;

@@ -1,5 +1,8 @@
 <?php
 namespace app\models;
+use PDO;
+use app\models\User;
+use app\utils\SingletonDBMaria;
 class DAOUser {
     private $cnx;
     public function __construct($cnx) {
@@ -26,7 +29,7 @@ class DAOUser {
         @return User $user
     */
     public function findByidentifiant($Identifiant) : User{
-        $sql = 'SELECT * FROM User WHERE Identifiant=:Identifiant;';
+        $sql = 'SELECT * FROM user WHERE Identifiant=:Identifiant;';
         $prepared_Statement = $this->cnx->prepare($sql);
         $prepared_Statement->bindParam("Identifiant", $Identifiant);
         $prepared_Statement->execute();
@@ -181,7 +184,7 @@ class DAOUser {
         @return bool
     */
     public function findifUserExist($Identifiant){
-        $sql = 'SELECT * FROM User WHERE Identifiant=:Identifiant;';
+        $sql = 'SELECT * FROM user WHERE Identifiant=:Identifiant;';
         $prepared_Statement = $this->cnx->prepare($sql);
         $prepared_Statement->bindParam("Identifiant", $Identifiant);
         $prepared_Statement->execute();

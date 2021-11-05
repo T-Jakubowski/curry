@@ -7,6 +7,7 @@ class IdentifiantUser extends AbstractUser{
     public function checkUser(string $data) : bool {
         $isValid = false;
         $isExist=false;
+
         $isExist=$this->DAOUser->findifUserExist($data);
         if ($isExist==false){
             $Lettre = preg_match('@[a-z]@i', $data);
