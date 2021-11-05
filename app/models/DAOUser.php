@@ -126,10 +126,10 @@ class DAOUser {
         $sql = 'SELECT Id, Identifiant, Password, IdRole FROM user WHERE Identifiant LIKE :Identifiant LIMIT :limit OFFSET :offset';
         $prepared_Statement = $this->cnx->prepare($sql);
         $value="%$value%";
-        var_dump($value);
         $prepared_Statement->bindValue(':Identifiant', $value, \PDO::PARAM_STR);
         $prepared_Statement->bindValue(':limit', $limit, \PDO::PARAM_INT);
         $prepared_Statement->bindValue(':offset', $offset, \PDO::PARAM_INT);
+        $prepared_Statement->execute();
         $desUser = [];
         while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
             var_dump('aznda');
