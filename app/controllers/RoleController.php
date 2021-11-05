@@ -5,12 +5,12 @@ use app\utils\Renderer;
 use app\models\Role;
 
 class RoleController extends BaseController{
-    private DAORole $daouser;
+    private DAORole $daorole;
 
     public function __construct(){
         $cnx=SingletonDBMaria::getInstance()->getConnection();
-        $daouser= new DAOUser($cnx);
-        $this->daouser = $daouser;
+        $daorole= new DAOUser($cnx);
+        $this->daorole = $daorole;
     }
     
     //renvoie la page avec la liste de tout les pompier
@@ -22,40 +22,40 @@ class RoleController extends BaseController{
           }
           if (isset($_GET["search"])){
             $NumC=($_GET["search"]);
-            $LstUser = $this->daouser->findAllWhereNum($NumC,$Offset,10);
-            $CountUser = $this->daouser->countWhereNum($NumC);
+            $LstRole = $this->daorole->findAllWhereNum($NumC,$Offset,10);
+            $CountRole = $this->daorole->countWhereNum($NumC);
           }else{
-            $LstUser = $this->daouser->findAll($Offset,10);
-            $CountUser = $this->daouser->count();
+            $LstRole = $this->daorole->findAll($Offset,10);
+            $CountRole = $this->daorole->count();
           }
-        $page=Renderer::render("view_user.php", compact("LstUser","CountUser"));
+        $page=Renderer::render("view_role.php", compact("LstRole","CountRole"));
         echo $page;
     }
 
     public function Add(): void {
 
-        $identifiant = htmlspecialchars($_POST['addidentifiant']);
-        $password = htmlspecialchars($_POST['addpassword']);
-        $idrole = htmlspecialchars($_POST['addidrole']);
+        $id = htmlspecialchars($_POST['addid']);
+        $role = htmlspecialchars($_POST['addrole']);
+        $permission = htmlspecialchars($_POST['addpermission']);
 
-        $u = new DAOUser($identifiant, $password, $idrole);
-        $user = $this->save($u);
+        $r = new Role($id, $role, $permission);
+        $role = $this->daorole->save($r);
         
-        $page = \app\utils\Renderer::render('view_user_add.php', compact('user'));
+        $page = \app\utils\Renderer::render('view_role_add.php', compact('role'));
         echo $page;
     }
 
     public function edit() {
         
-        $identifiant = htmlspecialchars($_POST['editidentifiant']);
-        $password = htmlspecialchars($_POST['editpassword']);
-        $idrole = htmlspecialchars($_POST['editidrole']);
+        $id = htmlspecialchars($_POST['editid']);
+        $role = htmlspecialchars($_POST['editrole']);
+        $permission = htmlspecialchars($_POST['editpermission']);
 
 
-        $u = new User($identifiant, $password, $idrole);
-        $user = $this->daouser->edit($u);
+        $r = new Role($id, $role, $permission);
+        $role = $this->daorole->edit($r);
         
-        $page = \app\utils\Renderer::render('view_user_edit.php', compact('user'));
+        $page = \app\utils\Renderer::render('view_role_edit.php', compact('role'));
         echo $page;
 
         //methode put
@@ -68,8 +68,8 @@ class RoleController extends BaseController{
         
         $id = htmlspecialchars($_POST['deleteid']);
         
-        $user = $this->daouser->remove($id);
-        $page = \app\utils\Renderer::render('view_user_delete.php', compact('user'));
+        $role = $this->daorole->remove($id);
+        $page = \app\utils\Renderer::render('view_role_delete.php', compact('role'));
         echo $page;
         //methode put
         //filtrer les données (failles xss)
