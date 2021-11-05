@@ -98,7 +98,7 @@ class DAORole {
     */
     public function findAllWhereName($value,$offset = 0, $limit = 10): Array {
 
-        $sql = 'SELECT * FROM role WHERE Role=:Role LIMIT :limit OFFSET :offset';
+        $sql = 'SELECT * FROM role WHERE Role LIKE :Role LIMIT :limit OFFSET :offset';
         $prepared_Statement = $this->cnx->prepare($sql);
         $value="%$value%";
         $prepared_Statement->bindParam(':Role', $value, \PDO::PARAM_STR);
@@ -126,7 +126,7 @@ class DAORole {
         return $nbRole;
     }
     public function countWhere($value): int {
-        $sql = 'SELECT COUNT(*) as nbRoles from role WHERE Role=:Role  ;';
+        $sql = 'SELECT COUNT(*) as nbRoles from role WHERE Role LIKE :Role  ;';
         $prepared_Statement = $this->cnx->prepare($sql);
         $value="%$value%";
         $prepared_Statement->bindValue(':Role', $value, \PDO::PARAM_STR);
