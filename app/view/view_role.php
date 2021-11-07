@@ -13,24 +13,12 @@ namespace app\views;
             var x = document.getElementById("editid");
             x.value = id;
             x.innerHTML = id;
-            var Adresse = document.getElementById(id + ":Adresse").innerHTML;
-            var CP = document.getElementById(id + ":CP").innerHTML;
-            var Ville = document.getElementById(id + ":Ville").innerHTML;
-            var CodeTypeC = document.getElementById(id + ":CodeTypeC").innerHTML;
-
-            document.getElementById("ULastValueCaserne_Adresse").value = Adresse;
-            document.getElementById("ULastValueCaserne_CP").value = CP;
-            document.getElementById("ULastValueCaserne_Ville").value = Ville;
-            document.getElementById("ULastValueCaserne_CodeTypeC").value = CodeTypeC;
-            document.getElementById("UpdateCaserne_Adresse").value = Adresse;
-            document.getElementById("UpdateCaserne_CP").value = CP;
-            document.getElementById("UpdateCaserne_Ville").value = Ville
-            document.getElementById("UpdateCaserne_CodeTypeC").value = CodeTypeC;
         }
     </script>
     <body>
         <?php $ActivePageName = "role";
-        include "view_NavBarre.php"; ?>
+        include "view_NavBarre.php";
+        ?>
         <br>
 
 
@@ -76,12 +64,13 @@ namespace app\views;
                     ?>
                     <tr>
                         <td><?php $id = $Role->getId();
-                    echo $id; ?></td>
+                    echo $id;
+                    ?></td>
                         <td id="<?php echo $id . ":Id"; ?>"><?php echo $Role->getId(); ?></td>
                         <td id="<?php echo $id . ":Role"; ?>"><?php echo $Role->getRole(); ?></td>
                         <td id="<?php echo $id . ":Permission"; ?>"><?php echo $Role->getPermission(); ?></td>
-                        <td><button id="<?php echo $id.":edit"; ?>" onclick="Edit(<?php echo $id; ?>)" type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#editRoleModal"><img class="fit-picture" src="/img/edit_black_24dp.svg" alt="edit"></button>
-                            <button id="<?php echo $id.":del"; ?>" onclick="ConfirmDelete(<?php echo $id; ?>)" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteRoleModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button></td>
+                        <td><button id="<?php echo $id . ":edit"; ?>" onclick="Edit(<?php echo $id; ?>)" type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#editRoleModal"><img class="fit-picture" src="/img/edit_black_24dp.svg" alt="edit"></button>
+                            <button id="<?php echo $id . ":del"; ?>" onclick="ConfirmDelete(<?php echo $id; ?>)" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteRoleModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button></td>
                     </tr>
                     <?php
                 }
@@ -147,8 +136,8 @@ namespace app\views;
                     <form id="UpdateRole" method="post" action="/role/edit">
                         <div class="modal-body">
                             <div class="input-group mb-3">
-                                <input id="editid" name="editid" type="text" class="form-control" placeholder="ex: 1" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                                <span class="input-group-text" id="basic-addon2">Id</span>
+                                <input id="editid" name="editid" value="" type="text" class="form-control" placeholder="Value" readonly>
+                                <span class="input-group-text">NumCaserne</span>
                             </div>
                             <div class="input-group mb-3">
                                 <input id="editrole" name="editrole" type="text" class="form-control" placeholder="ex: admin" aria-label="Recipient's username" aria-describedby="basic-addon2">
@@ -203,24 +192,24 @@ namespace app\views;
 
 
 
-<?php
+        <?php
 
-function round_up($number, $precision = 1) {
-    $fig = (int) str_pad('1', $precision, '0');
-    return (ceil($number * $fig) / $fig);
-}
+        function round_up($number, $precision = 1) {
+            $fig = (int) str_pad('1', $precision, '0');
+            return (ceil($number * $fig) / $fig);
+        }
 
-$nbPage = round_up($CountRole / 10);
-$index = 1;
-$classPreview = "";
-$classNext = "";
-if ($NumPage == 1) {
-    $classPreview = "disabled";
-}
-if (strval($NumPage) == strval($nbPage)) {
-    $classNext = "disabled";
-}
-?>
+        $nbPage = round_up($CountRole / 10);
+        $index = 1;
+        $classPreview = "";
+        $classNext = "";
+        if ($NumPage == 1) {
+            $classPreview = "disabled";
+        }
+        if (strval($NumPage) == strval($nbPage)) {
+            $classNext = "disabled";
+        }
+        ?>
 
         <footer>
             <nav aria-label="Page navigation">
@@ -230,14 +219,14 @@ if (strval($NumPage) == strval($nbPage)) {
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-<?php
-$pageLimit = $index + 20;
-while ($index <= $nbPage) {
-    $isactive = "";
-    if ($index == $NumPage) {
-        $isactive = "active";
-    }
-    ?>
+                    <?php
+                    $pageLimit = $index + 20;
+                    while ($index <= $nbPage) {
+                        $isactive = "";
+                        if ($index == $NumPage) {
+                            $isactive = "active";
+                        }
+                        ?>
                         <li class="page-item <?php echo $isactive ?>"><a class="page-link" href="?page=<?php echo $index, $NumLikes; ?>"><?php echo $index; ?></a></li>
                         <?php
                         $index += 1;

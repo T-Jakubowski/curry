@@ -80,7 +80,7 @@ class PompierController extends BaseController {
     }
 
     public function update(): void {
-        $matricule = htmlspecialchars($_POST['editmatricule']);
+        $matricule = htmlspecialchars($_POST['edimatricule']);
         $isExist = $this->DAOPompier->findIfMatriculePompierExist($matricule);
         $isSuccess = false;
         if ($isExist == true) {
