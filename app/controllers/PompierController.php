@@ -126,7 +126,6 @@ class PompierController extends BaseController {
 
     public function delete(): void {
         $id = htmlspecialchars($_POST['idPompierToDelete']);
-        var_dump($id);
         $isExist = $this->DAOPompier->findIfMatriculePompierExist($id);
         if ($isExist == true) {
             $resultMessage = "le pompier numéro '" . $id . "' a bien été Supprimer";

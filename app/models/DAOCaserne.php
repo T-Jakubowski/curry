@@ -65,14 +65,16 @@ class DAOCaserne{
     */
     public function update(Caserne $Caserne) : void{
         $sql = 'UPDATE casernes
-        SET Adresse=:Adresse, CP=:CP, Ville=:Ville, CodeTypeC=:CodeTypeC
+                SET Adresse=:Adresse, CP=:CP, Ville=:Ville, CodeTypeC=:CodeTypeC
                 Where NumCaserne=:NumCaserne';
         $NumCaserne=$Caserne->getNumCaserne();
         $Adresse=$Caserne->getadresse();
         $CP=$Caserne->getCP();
         $Ville=$Caserne->getville();
         $CodeTypeC=$Caserne->getCodeTypeC();
+
         $prepared_Statement = $this->cnx->prepare($sql);
+
         $prepared_Statement->bindParam("NumCaserne",$NumCaserne);
         $prepared_Statement->bindParam("Adresse",$Adresse);
         $prepared_Statement->bindParam("CP",$CP);

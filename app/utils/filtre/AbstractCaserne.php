@@ -6,7 +6,7 @@ use app\utils\SingletonDBMaria;
 * @author Baptiste Coquelet <b.coquelet@eleve.leschartreux.net>
 */
 abstract class AbstractCaserne{
-    private DAOCaserne $daocaserne;
+    protected DAOCaserne $daocaserne;
     public function __construct(){
         $cnx=SingletonDBMaria::getInstance()->getConnection();
         $DAOCaserne=new DAOCaserne($cnx);

@@ -76,8 +76,8 @@ namespace app\views;
                         <td id="<?php echo $id . ":NumCaserne"; ?>"><?php echo $Pompier->getNumCaserne(); ?></td>
                         <td id="<?php echo $id . ":CodeGrade"; ?>"><?php echo $Pompier->getCodeGrade(); ?></td>
                         <td id="<?php echo $id . ":MatriculeRespo"; ?>"><?php echo $Pompier->getMatriculeRespo(); ?></td>
-                        <td><button id="<?php echo $id . ":edit"; ?>" onclick="Edit(<?php echo $id; ?>)" type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#editPompierModal"><img class="fit-picture" src="/img/edit_black_24dp.svg" alt="edit"></button>
-                            <button id="<?php echo $id . ":del"; ?>" onclick="ConfirmDelete(<?php echo $id; ?>)" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDeletePompierModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button></td>
+                        <td><button id="<?php echo $id . ":edit"; ?>" onclick="Edit('<?php echo $id; ?>')" type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#editPompierModal"><img class="fit-picture" src="/img/edit_black_24dp.svg" alt="edit"></button>
+                            <button id="<?php echo $id . ":del"; ?>" onclick="ConfirmDelete('<?php echo $id; ?>')" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDeletePompierModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button></td>
                     </tr>
                     <?php
                 }

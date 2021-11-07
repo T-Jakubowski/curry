@@ -6,7 +6,7 @@ use app\utils\SingletonDBMaria;
 * @author Baptiste Coquelet <b.coquelet@eleve.leschartreux.net>
 */
 abstract class AbstractRole {
-    public DAORole $DAORole;
+    protected DAORole $DAORole;
     public function __construct(){
         $cnx=SingletonDBMaria::getInstance()->getConnection();
         $DAORole=new DAORole($cnx);

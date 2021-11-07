@@ -155,6 +155,7 @@ class DAORole {
 
     /*
       Renvoie Si le nom du role en entré existe
+      @param int $roleName
       @return bool
      */
 
@@ -169,7 +170,11 @@ class DAORole {
         }
         return $isExist;
     }
-
+    /*
+      Renvoie Si le nom du role en entré existe
+      @param int $Identifiant
+      @return bool
+     */
     public function findifRoleIdExist($Identifiant) {
         $sql = 'SELECT * FROM role WHERE Id=:Id;';
         $prepared_Statement = $this->cnx->prepare($sql);
@@ -181,6 +186,7 @@ class DAORole {
         }
         return $isExist;
     }
+
 
 }
 

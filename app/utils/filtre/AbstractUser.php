@@ -6,7 +6,7 @@ use app\utils\SingletonDBMaria;
 * @author Baptiste Coquelet <b.coquelet@eleve.leschartreux.net>
 */
 abstract class AbstractUser {
-    private DAOUser $daouser;
+    protected DAOUser $daouser;
     public function __construct(){
         $cnx=SingletonDBMaria::getInstance()->getConnection();
         $DAOUser=new DAOUser($cnx);
