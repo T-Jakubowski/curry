@@ -6,7 +6,7 @@ namespace app\utils\filtre;
 class RoleRole extends AbstractRole{
     public function checkRole(string $data) : bool {
         $isValid=false;
-        $isExist=$this->DAOUser->findifRoleExist($data);
+        $isExist=$this->DAORole->findIfRoleExist($data);
 
         if ($isExist==false) {
             $Lettre = preg_match('@[a-z]@i', $data);

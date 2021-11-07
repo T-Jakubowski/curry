@@ -21,6 +21,17 @@ class DAOPompier {
         }
         return $pompier;
     }
+    
+    public function findByNom($Nom) : Pompier{
+        $sql = 'SELECT * FROM pompiers WHERE Nom=:Nom;';
+        $prepared_Statement = $this->cnx->prepare($sql);
+        $prepared_Statement->bindParam("Nom", $Nom);
+        $prepared_Statement->execute();
+        while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
+            $pompier = new Pompier($row['Matricule'],$row['Prenom'],$row['Nom'],$row['ChefAgret'],$row['DateNaissance'],$row['NumCaserne'],$row['CodeGrade'],$row['matriculeRespo']);
+        }
+        return $pompier;
+    }
 
     public function save(Pompier $p): void {
         $sql = "INSERT INTO pompiers(Matricule, Prenom, Nom, ChefAgret, DateNaissance, NumCaserne, CodeGrade, matriculeRespo)
@@ -108,22 +119,79 @@ class DAOPompier {
         }
         return $desPompiers;
     }
+    
+    public function findAllWhereNom($value,$offset = 0, $limit = 10): Array {
 
-    public function count(): int {
-        $sql = 'SELECT COUNT(*) as nbPompiers from pompiers p ;';
-        $statement = $this->cnx->prepare($sql);
-        $nbPompiers = $statement->fetch(\PDO::FETCH_ASSOC);
-        $nbPompier = $nbPompiers['nbPompiers'];
-        return $nbPompier;
+        $sql = 'SELECT * FROM pompiers WHERE Nom LIKE :Nom LIMIT :limit OFFSET :offset';
+        $prepared_Statement = $this->cnx->prepare($sql);
+        $value="%$value%";
+        $prepared_Statement->bindValue(':Nom', $value, \PDO::PARAM_STR);
+        $prepared_Statement->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $prepared_Statement->bindValue(':offset', $offset, \PDO::PARAM_INT);
+        $prepared_Statement->execute();
+        $desPompiers = [];
+        while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
+            $desPompiers[] = new Pompier($row['Matricule'],$row['Prenom'],$row['Nom'],$row['ChefAgret'],$row['DateNaissance'],$row['NumCaserne'],$row['CodeGrade'],$row['matriculeRespo']);
+        }
+        return $desPompiers;
     }
 
-    public function findFireHouseFromFireman($matricule) {
-        $sql = 'SELECT NumCaserne FROM pompiers WHERE Matricule=:matricule;';
+    public function count(): int {
+        $sql = 'SELECT COUNT(*) as nbPompier from pompiers p ;';
+        $statement = $this->cnx->query($sql);
+        $nbPompiers = $statement->fetch(\PDO::FETCH_ASSOC);
+        $nbPompier = $nbPompiers['nbPompier'];
+        return $nbPompier;
+    }
+    
+    public function countWhere($value): int {
+        $sql = 'SELECT COUNT(*) as nbPompier from pompiers where Nom LIKE :Nom;';
         $prepared_Statement = $this->cnx->prepare($sql);
-        $prepared_Statement->bindParam("matricule", $matricule);
+        $value="%$value%";
+        $prepared_Statement->bindValue(':Nom', $value, \PDO::PARAM_STR);
         $prepared_Statement->execute();
-        $data = $prepared_Statement->fetch(\PDO::FETCH_ASSOC);
-        return $data;
+        $nbPompier = $prepared_Statement->fetch(\PDO::FETCH_ASSOC);
+        $nbPompier = $nbPompier['nbUser'];
+        return $nbPompier;
+    }
+    
+    public function findIfCaserneExist($numCaserne){
+        $SQL = 'SELECT * FROM casernes
+        WHERE NumCaserne=:num;';
+        $cnx=$this->cnx;
+        $preparedStatement=$cnx->prepare($SQL);
+        $preparedStatement->bindParam("num",$numCaserne);
+        $preparedStatement->execute();
+        $isExist=false;
+        while($row = $preparedStatement->fetch(\PDO::FETCH_ASSOC)){
+            $isExist=true;
+        }
+        return $isExist;
+    }
+    
+    public function findIfPompierExist($Nom){
+        $sql = 'SELECT * FROM pompiers WHERE Nom=:Nom;';
+        $prepared_Statement = $this->cnx->prepare($sql);
+        $prepared_Statement->bindParam("Nom", $Nom);
+        $prepared_Statement->execute();
+        $isExist = false;
+        while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
+            $isExist = true;
+        }
+        return $isExist;
+    }
+        public function findIfMatriculePompierExist($matricule){
+        $SQL = 'SELECT * FROM pompiers
+        WHERE matricule=:matricule;';
+        $cnx=$this->cnx;
+        $preparedStatement=$cnx->prepare($SQL);
+        $preparedStatement->bindParam("matricule",$matricule);
+        $preparedStatement->execute();
+        $isExist=false;
+        while($row = $preparedStatement->fetch(\PDO::FETCH_ASSOC)){
+            $isExist=true;
+        }
+        return $isExist;
     }
 
 }

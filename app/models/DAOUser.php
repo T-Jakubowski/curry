@@ -66,7 +66,7 @@ class DAOUser {
     public function edit(User $u) : void{
         
         $sql = 'UPDATE user
-                SET Identifiant=:Identifiant, Password=:Password, IdRole=:IdRoless
+                SET Identifiant=:Identifiant, Password=:Password, IdRole=:IdRole
                 Where Id=:Id';
         
         $Identifiant = $u->getIdentifiant();
@@ -74,13 +74,11 @@ class DAOUser {
         $IdRole = $u->getIdRole();
         $Id = $u->getId();
         
-        $prepared_Statement = $this->cnx->prepare($sql);
-        
+        $prepared_Statement = $this->cnx->prepare($sql); 
         $prepared_Statement->bindParam("Identifiant", $Identifiant);
         $prepared_Statement->bindParam("Password", $Password);
         $prepared_Statement->bindParam("IdRole", $IdRole);
         $prepared_Statement->bindParam("Id", $Id);
-        
         $prepared_Statement->execute();
     }
     /*
@@ -132,10 +130,8 @@ class DAOUser {
         $prepared_Statement->execute();
         $desUser = [];
         while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
-            var_dump('aznda');
             $desUser[] = new User($row['Id'],$row['Identifiant'],$row['Password'],$row['IdRole']);
         }
-        var_dump($desUser);
         return $desUser;
     }
 
@@ -172,7 +168,7 @@ class DAOUser {
         @param int $idRole
         @return bool
     */
-    public function findIfRoleExiste($idRole){
+    public function findIfRoleExist($idRole){
         $SQL = 'SELECT * FROM role
         WHERE Id=:Id;';
         $cnx=$this->cnx;

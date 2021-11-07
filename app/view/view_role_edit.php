@@ -2,7 +2,7 @@
 <html>
 <?php include "Head.php" ;?>
 <body>
-    <?php $ActivePageName="pompier"; include "view_NavBarre.php"; ?>
+    <?php $ActivePageName="role"; include "view_NavBarre.php"; ?>
     <br>
     <?php
     if (isset($resultMessage)){

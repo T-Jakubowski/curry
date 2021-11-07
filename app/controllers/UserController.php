@@ -10,7 +10,7 @@ use app\utils\filtre\FiltreUser;
 
 class Usercontroller extends BaseController {
 
-    private DAOUser $daousers;
+    private DAOUser $DAOUser;
 
     public function __construct() {
         $cnx = SingletonDBMaria::getInstance()->getConnection();
@@ -70,8 +70,8 @@ class Usercontroller extends BaseController {
     }
 
     public function update(): void {
-        $id = htmlspecialchars($_POST['addid']);
-        $isExist = $this->DAOUser->findIfNumUserExist($id);
+        $id = htmlspecialchars($_POST['editid']);
+        $isExist = $this->DAOUser->findIfUserIdExist($id);
         $isSuccess = false;
         if ($isExist == true) {
             $identifiant = htmlspecialchars($_POST['editidentifiant']);
@@ -88,7 +88,7 @@ class Usercontroller extends BaseController {
             $isSuccess = true;
             foreach ($data as $key => $value) {
                 if ($value == false) {
-                    if ($key != "num") {
+                    if ($key != "identifiant") {
                         $isSuccess = false;
                         $valueError[] = $key;
                     }
@@ -96,8 +96,8 @@ class Usercontroller extends BaseController {
             }
         }
         if ($isSuccess == true) {
-            $userToUpdate = new User(htmlspecialchars($_POST['editid']), htmlspecialchars($_POST['editidentifiant']), htmlspecialchars($_POST['editpassword']), htmlspecialchars($_POST['editrole']));
-            $this->DAOUser->update($userToUpdate);
+            $userToUpdate = new User(htmlspecialchars($_POST['editid']), htmlspecialchars($_POST['editidentifiant']), htmlspecialchars($_POST['editpassword']), htmlspecialchars($_POST['editidrole']));
+            $this->DAOUser->edit($userToUpdate);
             $resultMessage = "le user numéro '" . $id . "' a bien été modifier";
             $page = Renderer::render("view_user_edit.php", compact("resultMessage"));
         } else {
@@ -108,32 +108,17 @@ class Usercontroller extends BaseController {
 
     public function delete(): void {
         $id = htmlspecialchars($_POST['idUserToDelete']);
-        $isExist = $this->DAOUser->findIfNumUserExist($id);
+        $isExist = $this->DAOUser->findIfUserIdExist($id);
         if ($isExist == true) {
             $resultMessage = "le user numéro '" . $id . "' a bien été Supprimer";
-            $UserDetail = $this->DAOUser->remove($id);
-            $page = Renderer::render("view_user_delete.php", compact("resultMessage"), compact("UserDetail"));
+            $this->DAOUser->remove($id);
+            $page = Renderer::render("view_user_delete.php", compact("resultMessage"));
         } else {
             $valueError = "Vous ne pouvez pas supprimer le user " . $id . " pour l'instant";
             $page = Renderer::render("view_user_delete.php", compact("valueError"));
         }
         echo $page;
     }
-
-    /*public function showDetails(string $id) {
-        $isExist = $this->DAOCaserne->findIfNumCaserneExist($id);
-        if ($isExist == true) {
-            $Caserne = $this->DAOCaserne->find($id);
-            $PompierOnCaserne = $this->DAOCaserne->findPompierFromCaserne($id); //TODO
-            $page = Renderer::render("view_ShowDetail_Caserne.php", compact("Caserne", "PompierOnCaserne"));
-        } else {
-            $errMessage = "il n'existe pas de caserne avec le numero : " . $id;
-            $page = Renderer::render("view_ShowDetail_Caserne.php", compact("errMessage"));
-        }
-        echo $page;
-        //afficher plus de détail sur un pompier
-    }*/
-
 }
 
 ?>

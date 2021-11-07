@@ -1,84 +1,122 @@
 <?php
+
 namespace app\controllers;
+
+use app\models\DAORole;
 use app\utils\SingletonDBMaria;
 use app\utils\Renderer;
 use app\models\Role;
+use app\utils\filtre\FiltreRole;
 
-class RoleController extends BaseController{
-    private DAORole $daorole;
+class Rolecontroller extends BaseController {
 
-    public function __construct(){
-        $cnx=SingletonDBMaria::getInstance()->getConnection();
-        $daorole= new DAOUser($cnx);
-        $this->daorole = $daorole;
+    private DAORole $DAORole;
+
+    public function __construct() {
+        $cnx = SingletonDBMaria::getInstance()->getConnection();
+        $DAORole = new DAORole($cnx);
+        $this->DAORole = $DAORole;
     }
-    
+
     //renvoie la page avec la liste de tout les pompier
-    public function show(){
-        if (isset($_GET["page"])){
-            $Offset=($_GET["page"]*10)-10;
-          }else{
-            $Offset=0;
-          }
-          if (isset($_GET["search"])){
-            $NumC=($_GET["search"]);
-            $LstRole = $this->daorole->findAllWhereNum($NumC,$Offset,10);
-            $CountRole = $this->daorole->countWhereNum($NumC);
-          }else{
-            $LstRole = $this->daorole->findAll($Offset,10);
-            $CountRole = $this->daorole->count();
-          }
-        $page=Renderer::render("view_role.php", compact("LstRole","CountRole"));
+    public function show() {
+        if (isset($_GET["page"])) {
+            $Offset = ($_GET["page"] * 10) - 10;
+        } else {
+            $Offset = 0;
+        }
+        if (isset($_GET["search"])) {
+            $NumR = ($_GET["search"]);
+            $LstRole = $this->DAORole->findAllWhereIdentifiant($NumR, 0, 10);
+            $CountRole = $this->DAORole->countWhere($NumR);
+        } else {
+            $LstRole = $this->DAORole->findAll($Offset, 10);
+            $CountRole = $this->DAORole->count();
+        }
+        $page = Renderer::render("view_role.php", compact("LstRole", "CountRole"));
         echo $page;
     }
 
-    public function Add(): void {
-
+    //
+    public function insert() {
         $id = htmlspecialchars($_POST['addid']);
         $role = htmlspecialchars($_POST['addrole']);
         $permission = htmlspecialchars($_POST['addpermission']);
-
-        $r = new Role($id, $role, $permission);
-        $role = $this->daorole->save($r);
-        
-        $page = \app\utils\Renderer::render('view_role_add.php', compact('role'));
+        $data = array(
+            "id" => $id,
+            "role" => $role,
+            "permission" => $permission,
+        );
+        $f = new FiltreRole($data);
+        $data = $f->rol();
+        $isSuccess = true;
+        foreach ($data as $key => $value) {
+            if ($value == false) {
+                $isSuccess = false;
+                $valueError[] = $key;
+                
+            }
+        }
+        if ($isSuccess == true) {
+            $roleToAdd = new Role(htmlspecialchars($_POST['addid']), htmlspecialchars($_POST['addrole']), htmlspecialchars($_POST['addpermission']));
+            $this->DAORole->save($roleToAdd);
+            $resultMessage = "le role numéro a bien été ajouter";
+            $page = Renderer::render("view_role_add.php", compact("resultMessage"));
+        } else {
+            $page = Renderer::render("view_role_add.php", compact("valueError"));
+        }
         echo $page;
     }
 
-    public function edit() {
-        
+    public function update(): void {
         $id = htmlspecialchars($_POST['editid']);
-        $role = htmlspecialchars($_POST['editrole']);
-        $permission = htmlspecialchars($_POST['editpermission']);
-
-
-        $r = new Role($id, $role, $permission);
-        $role = $this->daorole->edit($r);
-        
-        $page = \app\utils\Renderer::render('view_role_edit.php', compact('role'));
+        $isExist = $this->DAORole->findIfRoleIdExist($id);
+        $isSuccess = false;
+        if ($isExist == true) {
+            $role = htmlspecialchars($_POST['editrole']);
+            $permission = htmlspecialchars($_POST['editpermission']);
+            $data = array(
+                "id" => $id,
+                "role" => $role,
+                "permission" => $permission,
+            );
+            $f = new FiltreRole($data);
+            $data = $f->rol();
+            $isSuccess = true;
+            foreach ($data as $key => $value) {
+                if ($value == false) {
+                    if ($key != "id") {
+                        $isSuccess = false;
+                        $valueError[] = $key;
+                    }
+                }
+            }
+        }
+        if ($isSuccess == true) {
+            $roleToUpdate = new Role(htmlspecialchars($_POST['editid']), htmlspecialchars($_POST['editrole']), htmlspecialchars($_POST['editpermission']));
+            $this->DAORole->edit($roleToUpdate);
+            $resultMessage = "le role numéro '" . $id . "' a bien été modifier";
+            $page = Renderer::render("view_role_edit.php", compact("resultMessage"));
+        } else {
+            $page = Renderer::render("view_role_edit.php", compact("valueError"));
+        }
         echo $page;
-
-        //methode put
-        //filtrer les données (failles xss)
-        //protéger des failles csrf
-        //gestion des erreurs try catch
     }
 
     public function delete(): void {
-        
-        $id = htmlspecialchars($_POST['deleteid']);
-        
-        $role = $this->daorole->remove($id);
-        $page = \app\utils\Renderer::render('view_role_delete.php', compact('role'));
+        $id = htmlspecialchars($_POST['idRoleToDelete']);
+        $isExist = $this->DAORole->findIfRoleIdExist($id);
+        if ($isExist == true) {
+            $resultMessage = "le role numéro '" . $id . "' a bien été Supprimer";
+            $this->DAORole->remove($id);
+            $page = Renderer::render("view_role_delete.php", compact("resultMessage"));
+        } else {
+            $valueError = "Vous ne pouvez pas supprimer le role " . $id . " pour l'instant";
+            $page = Renderer::render("view_role_delete.php", compact("valueError"));
+        }
         echo $page;
-        //methode put
-        //filtrer les données (failles xss)
-        //protéger des failles csrf
-        //gestion des erreurs try catch
     }
 
-    public function ShowDetails() {
-        
-    }
 }
+
 ?>

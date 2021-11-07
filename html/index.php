@@ -5,6 +5,7 @@ use app\controllers\BaseController;
 use app\controllers\CaserneController;
 use app\controllers\PompierController;
 use app\controllers\UserController;
+use app\controllers\RoleController;
 
 
 //https://www.youtube.com/watch?v=tbYa0rJQyoM
@@ -66,6 +67,17 @@ switch ($control) {
         }
         break;
     }
+     case "role" :    //Si page user
+    {
+        //echo "Gestion des routes pour user<hr>";
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            roleRoutes_get($fragments);
+        }
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            roleRoutes_post($fragments);
+        }
+        break;
+    }
     default :
     {
         //Gestion du probleme
@@ -105,13 +117,13 @@ function pompierRoutes_get($fragments)
         case "edit" :
         {
             //echo "Calling pompierController->del <hr>";
-            call_user_func_array([new PompierController(), "edit"], $fragments); // \app\controllers\PompierController
+            call_user_func_array([new PompierController(), "update"], $fragments); // \app\controllers\PompierController
             break;
         }
         case "add" :
         {   
             //echo "Calling pompierController->show <hr>";
-            call_user_func_array([new PompierController(), "add"], $fragments);//nomController , methode du controler ,fragment a passer
+            call_user_func_array([new PompierController(), "insert"], $fragments);//nomController , methode du controler ,fragment a passer
             break;
         }
         default :
@@ -133,12 +145,12 @@ function pompierRoutes_post($fragments)
         case "add" :
             //echo "Action '$action' ready <hr>";
             //Access permission can be checked here too
-            call_user_func_array([new PompierController(), "add"], $fragments);
+            call_user_func_array([new PompierController(), "insert"], $fragments);
             break;
         case "edit" :
         {
             //echo "Calling pompierController->del <hr>";
-            call_user_func_array([new PompierController(), "edit"], $fragments); // \app\controllers\PompierController
+            call_user_func_array([new PompierController(), "update"], $fragments); // \app\controllers\PompierController
             break;
         }
 
@@ -205,7 +217,7 @@ function userRoutes_get($fragments)
             call_user_func_array([new UserController(), "showDetails"], $fragments);
             break;
         case "add" :
-            call_user_func_array([new UserController(), "add"], $fragments);
+            call_user_func_array([new UserController(), "insert"], $fragments);
             break;
         case "delete" :
             call_user_func_array([new UserController(), "delete"], $fragments);
@@ -228,7 +240,48 @@ function userRoutes_post($fragments)
             call_user_func_array([new userController(), "insert"], $fragments);
             break;
         case "edit" :
-            call_user_func_array([new userController(), "edit"], $fragments);
+            call_user_func_array([new userController(), "update"], $fragments);
+            break;
+        default:
+            break;
+    }
+}
+
+function roleRoutes_get($fragments)
+{
+    $action = array_shift($fragments);
+    switch ($action) {
+        case "affiche":
+            call_user_func_array([new RoleController(), "show"], $fragments);
+            break;
+        case "detail" :
+            call_user_func_array([new RoleController(), "showDetails"], $fragments);
+            break;
+        case "add" :
+            call_user_func_array([new RoleController(), "insert"], $fragments);
+            break;
+        case "delete" :
+            call_user_func_array([new RoleController(), "delete"], $fragments);
+            break;
+
+        default:
+            echo "Action '$action' non defini <hr>";
+            break;
+    }
+}
+
+function roleRoutes_post($fragments)
+{
+    $action = array_shift($fragments);
+    switch ($action) {
+        case "delete" :
+            call_user_func_array([new RoleController(), "delete"], $fragments);
+            break;
+        case "add" :
+            call_user_func_array([new RoleController(), "insert"], $fragments);
+            break;
+        case "edit" :
+            call_user_func_array([new RoleController(), "update"], $fragments);
             break;
         default:
             break;

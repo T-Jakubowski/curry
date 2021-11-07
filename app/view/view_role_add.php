@@ -6,7 +6,7 @@ namespace app\views;
 <?php include "Head.php" ;?>
 
   <body>
-    <?php $ActivePageName="user"; include "view_NavBarre.php"; ?>
+    <?php $ActivePageName="role"; include "view_NavBarre.php"; ?>
     <br>
 <?php
 if (isset($resultMessage)){
