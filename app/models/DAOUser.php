@@ -197,7 +197,7 @@ class DAOUser {
         }
         return $isExist;
     }
-        /*
+    /*
         Renvoie Si l'user en entré existe
         @param string $Identifiant
         @return bool
@@ -213,7 +213,31 @@ class DAOUser {
         }
         return $isExist;
     }
-
+    /*
+        Renvoie null si l'utilisateur / mdp n'est pas valide ou son 
+        @param string $login
+        @param mixed $password
+        @return bool
+    */
+    public function CheckUser($login,$password){
+        $sql = 'SELECT Identifiant,Nom,Prenom FROM user WHERE Identifiant=:Identifiant AND password=:Password;';
+        $prepared_Statement = $this->cnx->prepare($sql);
+        $prepared_Statement->bindParam("Identifiant", $login);
+        $prepared_Statement->bindParam("Password", $password);
+        $prepared_Statement->execute();
+        $isExist = false;
+        while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
+            $user=new user($row['Id'],$row['Identifiant'],$row['Password'],$row['IdRole']);
+            $isExist = true;
+        }
+        if ($isExist==false){
+            return null;
+        }else{
+            
+            return $user;
+        }
+        return $isExist;
+    }
 }
 
 ?>

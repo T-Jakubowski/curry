@@ -1,8 +1,6 @@
 <?php
 namespace app\utils;
 
-
-
 class SingletonDBMaria{
     public $cnx;
     /** @var SingletonDBMaria */
