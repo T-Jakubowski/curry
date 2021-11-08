@@ -87,22 +87,36 @@ class DAOPompier {
     }
 
     public function remove($matricule): void {
-        /*$sqlupdate ='update pompiers
+          
+        
+        $sqldelete = 'delete from pompiers_dispos WHERE Matricule=:matricule;';
+        $prepared_Statement_delete = $this->cnx->prepare($sqldelete);
+        $prepared_Statement_delete->bindParam("matricule", $matricule);
+        $prepared_Statement_delete->execute();
+        
+        $sqldelete_intervention = 'delete from pompier_intervention WHERE Matricule=:matricule;';
+        $prepared_Statement_delete_intervention = $this->cnx->prepare($sqldelete_intervention);
+        $prepared_Statement_delete_intervention->bindParam("matricule", $matricule);
+        $prepared_Statement_delete_intervention->execute();
+        
+        $sqldelete_qualification = 'delete from pompier_qualification WHERE Matricule=:matricule;';
+        $prepared_Statement_delete_qualification = $this->cnx->prepare($sqldelete_qualification);
+        $prepared_Statement_delete_qualification->bindParam("matricule", $matricule);
+        $prepared_Statement_delete_qualification->execute();
+        
+        $sqlupdate ='update pompiers
             set matriculeRespo = ""
             Where matriculeRespo=:matricule';
         $prepared_Statement_Update = $this->cnx->prepare($sqlupdate);
         $prepared_Statement_Update->bindParam("matricule", $matricule);
-        $prepared_Statement_Update->execute();
-                
-        $sqldelete1 = 'delete from pompiers_qualification WHERE Matricule=:matricule;';
-        $prepared_Statement_delete1 = $this->cnx->prepare($sqldelete1);
-        $prepared_Statement_delete1->bindParam("matricule", $matricule);
-        $prepared_Statement_delete1->execute();*/
+        $prepared_Statement_Update->execute(); 
         
         $sqldelete2 = 'delete from pompiers WHERE Matricule=:matricule;';
         $prepared_Statement = $this->cnx->prepare($sqldelete2);
         $prepared_Statement->bindParam("matricule", $matricule);
         $prepared_Statement->execute();
+        
+        
     }
 
     public function findAll($offset = 0, $limit = 10): Array {

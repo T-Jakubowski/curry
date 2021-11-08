@@ -246,7 +246,7 @@ namespace app\views;
             return (ceil($number * $fig) / $fig);
         }
 
-        $nbPage = round_up($CountPompier / 10);
+        $nbPage = round_up($CountPompier / 20);
         $index = 1;
         $classPreview = "";
         $classNext = "";
