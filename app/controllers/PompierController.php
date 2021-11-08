@@ -21,16 +21,16 @@ class PompierController extends BaseController {
     //renvoie la page avec la liste de tout les pompier
     public function show() {
         if (isset($_GET["page"])) {
-            $Offset = ($_GET["page"] * 10) - 10;
+            $Offset = ($_GET["page"] * 20) - 20;
         } else {
             $Offset = 0;
         }
         if (isset($_GET["search"])) {
             $NumP = ($_GET["search"]);
-            $LstPompier = $this->DAOPompier->findAllWhereNom($NumP, 0, 10);
+            $LstPompier = $this->DAOPompier->findAllWhereNom($NumP, 0, 20);
             $CountPompier = $this->DAOPompier->countWhere($NumP);
         } else {
-            $LstPompier = $this->DAOPompier->findAll($Offset, 10);
+            $LstPompier = $this->DAOPompier->findAll($Offset, 20);
             $CountPompier = $this->DAOPompier->count();
         }
         $page = Renderer::render("view_pompier.php", compact("LstPompier", "CountPompier"));
