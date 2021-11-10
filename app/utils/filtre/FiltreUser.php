@@ -30,10 +30,10 @@ class FiltreUser{
                     $datas[$key]=$this->acceptUser("identifiant",new IdentifiantUser());
                     break;
                 case "nom":
-                    $datas[$key]=$this->acceptUser("nom",new IdentifiantUser());
+                    $datas[$key]=$this->acceptUser("nom",new NomUser());
                     break;
                 case "prenom":
-                    $datas[$key]=$this->acceptUser("prenom",new IdentifiantUser());
+                    $datas[$key]=$this->acceptUser("prenom",new Prenom());
                     break;
                 case "password":
                     $datas[$key]=$this->acceptUser("password",new PasswordUser());
