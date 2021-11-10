@@ -67,7 +67,7 @@ switch ($control) {
         }
         break;
     }
-     case "role" :    //Si page user
+    case "role" :    //Si page user
     {
         //echo "Gestion des routes pour user<hr>";
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
@@ -75,6 +75,17 @@ switch ($control) {
         }
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             roleRoutes_post($fragments);
+        }
+        break;
+    }
+    case "login" :    //Si page login
+    {
+        //echo "Gestion des routes pour login<hr>";
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            loginRoutes_get($fragments);
+        }
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            loginRoutes_post($fragments);
         }
         break;
     }
@@ -286,6 +297,16 @@ function roleRoutes_post($fragments)
         default:
             break;
     }
+}
+
+function loginRoutes_get($fragments)
+{
+    call_user_func_array([new LoginController(), "login"], $fragments);
+}
+
+function loginRoutes_post($fragments)
+{
+    call_user_func_array([new LoginController(), "login"], $fragments);
 }
 
 ?>
