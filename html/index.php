@@ -6,6 +6,7 @@ use app\controllers\CaserneController;
 use app\controllers\PompierController;
 use app\controllers\UserController;
 use app\controllers\RoleController;
+use app\controllers\LoginController;
 
 
 //https://www.youtube.com/watch?v=tbYa0rJQyoM
