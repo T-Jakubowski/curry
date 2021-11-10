@@ -8,7 +8,7 @@ use app\utils\Renderer;
 use app\models\User;
 use app\utils\filtre\FiltreUser;
 
-class Usercontroller extends BaseController {
+class UserController extends BaseController {
 
     private DAOUser $DAOUser;
 
@@ -40,12 +40,16 @@ class Usercontroller extends BaseController {
     //
     public function insert() {
         $identifiant = htmlspecialchars($_POST['addidentifiant']);
+        $nom = htmlspecialchars($_POST['addnom']);
+        $prenom = htmlspecialchars($_POST['addprenom']);
         $password = htmlspecialchars($_POST['addpassword']);
         $role = htmlspecialchars($_POST['addidrole']);
         $data = array(
             "identifiant" => $identifiant,
+            "nom" => $nom,
+            "prenom" => $prenom,
             "password" => $password,
-            "role" => $role,
+            "idRole" => $role,
         );
         $f = new FiltreUser($data);
         $data = $f->use();
@@ -58,8 +62,7 @@ class Usercontroller extends BaseController {
             }
         }
         if ($isSuccess == true) {
-            $id = 0;
-            $userToAdd = new User($id, htmlspecialchars($_POST['addidentifiant']), htmlspecialchars($_POST['addpassword']), htmlspecialchars($_POST['addidrole']));
+            $userToAdd = new User($identifiant, $nom, $prenom, $password, $role);
             $this->DAOUser->save($userToAdd);
             $resultMessage = "le user numéro a bien été ajouter";
             $page = Renderer::render("view_user_add.php", compact("resultMessage"));
@@ -70,18 +73,20 @@ class Usercontroller extends BaseController {
     }
 
     public function update(): void {
-        $id = htmlspecialchars($_POST['editid']);
-        $isExist = $this->DAOUser->findIfUserIdExist($id);
+        $identifiant = htmlspecialchars($_POST['editidentifiant']);
+        $isExist = $this->DAOUser->findIfUserIdentifiantExist($identifiant);
         $isSuccess = false;
         if ($isExist == true) {
-            $identifiant = htmlspecialchars($_POST['editidentifiant']);
+            $nom = htmlspecialchars($_POST['editnom']);
+            $prenom = htmlspecialchars($_POST['editprenom']);
             $password = htmlspecialchars($_POST['editpassword']);
             $role = htmlspecialchars($_POST['editidrole']);
             $data = array(
-                "id" => $id,
                 "identifiant" => $identifiant,
+                "nom" => $nom,
+                "prenom" => $prenom,
                 "password" => $password,
-                "role" => $role,
+                "idRole" => $role,
             );
             $f = new FiltreUser($data);
             $data = $f->use();
@@ -96,9 +101,9 @@ class Usercontroller extends BaseController {
             }
         }
         if ($isSuccess == true) {
-            $userToUpdate = new User(htmlspecialchars($_POST['editid']), htmlspecialchars($_POST['editidentifiant']), htmlspecialchars($_POST['editpassword']), htmlspecialchars($_POST['editidrole']));
+            $userToUpdate = new User($identifiant, $nom, $prenom, $password, $role);
             $this->DAOUser->edit($userToUpdate);
-            $resultMessage = "le user numéro '" . $id . "' a bien été modifier";
+            $resultMessage = "le user numéro '" . $identifiant . "' a bien été modifier";
             $page = Renderer::render("view_user_edit.php", compact("resultMessage"));
         } else {
             $page = Renderer::render("view_user_edit.php", compact("valueError"));
@@ -107,14 +112,14 @@ class Usercontroller extends BaseController {
     }
 
     public function delete(): void {
-        $id = htmlspecialchars($_POST['idUserToDelete']);
-        $isExist = $this->DAOUser->findIfUserIdExist($id);
+        $identifiant = htmlspecialchars($_POST['idUserToDelete']);
+        $isExist = $this->DAOUser->findifUserIdentifiantExist($identifiant);
         if ($isExist == true) {
-            $resultMessage = "le user numéro '" . $id . "' a bien été Supprimer";
-            $this->DAOUser->remove($id);
+            $resultMessage = "le user numéro '" . $identifiant . "' a bien été Supprimer";
+            $this->DAOUser->remove($identifiant);
             $page = Renderer::render("view_user_delete.php", compact("resultMessage"));
         } else {
-            $valueError = "Vous ne pouvez pas supprimer le user " . $id . " pour l'instant";
+            $valueError = "Vous ne pouvez pas supprimer le user " . $identifiant . " pour l'instant";
             $page = Renderer::render("view_user_delete.php", compact("valueError"));
         }
         echo $page;

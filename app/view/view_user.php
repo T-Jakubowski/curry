@@ -49,8 +49,9 @@ namespace app\views;
         <table id="tableUser" class="table table-striped table-hover table-Secondary .table-responsive" >
             <thead>
                 <tr>
-                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="NumUser Int(11)">#</th>
-                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(15)">Identifiant</th>
+                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="varchar(20)">Identifiant</th>
+                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(20)">Nom</th>
+                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(20)">Prenom</th>
                     <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(20)">Password</th>
                     <th data-bs-toggle="tooltip" data-bs-placement="top" title="Int (8)">idRole</th>
                     <th>Edit/Delete</th>
@@ -67,6 +68,8 @@ namespace app\views;
                     echo $id;
                     ?></td>
                         <td id="<?php echo $id . ":Identifiant"; ?>"><?php echo $User->getIdentifiant(); ?></td>
+                        <td id="<?php echo $id . ":Nom"; ?>"><?php echo $User->getNom(); ?></td>
+                        <td id="<?php echo $id . ":Prenom"; ?>"><?php echo $User->getPrenom(); ?></td>
                         <td id="<?php echo $id . ":Password"; ?>"><?php echo $User->getPassword(); ?></td>
                         <td id="<?php echo $id . ":IdRole"; ?>"><?php echo $User->getIdRole(); ?></td>
                         <td><button id="<?php echo $id . ":edit"; ?>" onclick="Edit(<?php echo $id; ?>)" type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#editUserModal"><img class="fit-picture" src="/img/edit_black_24dp.svg" alt="edit"></button>
@@ -107,6 +110,14 @@ namespace app\views;
                                 <span class="input-group-text" id="basic-addon2">Identifiant</span>
                             </div>
                             <div class="input-group mb-3">
+                                <input id="addnom" name="addnom" type="text" class="form-control" placeholder="ex: t.jakubowski" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <span class="input-group-text" id="basic-addon2">Nom</span>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input id="addprenom" name="addprenom" type="text" class="form-control" placeholder="ex: t.jakubowski" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <span class="input-group-text" id="basic-addon2">Prenom</span>
+                            </div>
+                            <div class="input-group mb-3">
                                 <input id="addpassword" name="addpassword" type="text" class="form-control" placeholder="ex: *******" aria-label="Recipient's username" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">Password</span>
                             </div>
@@ -136,12 +147,16 @@ namespace app\views;
                     <form id="UpdateUser" method="post" action="/user/edit">
                         <div class="modal-body">
                             <div class="input-group mb-3">
-                                <input id="editid" name="editid" value="" type="text" class="form-control" placeholder="Value" readonly>
+                                <input id="editidentifiant" name="editidentifiant" value="" type="text" class="form-control" placeholder="Value" readonly>
                                 <span class="input-group-text">Id</span>
                             </div>
                             <div class="input-group mb-3">
-                                <input id="editidentifiant" name="editidentifiant" type="text" class="form-control" placeholder="ex: t.jakubowski" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                                <span class="input-group-text" id="basic-addon2">Identifiant</span>
+                                <input id="editnom" name="editnom" value="" type="text" class="form-control" placeholder="Value" readonly>
+                                <span class="input-group-text">Nom</span>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input id="editprenom" name="editprenom" type="text" class="form-control" placeholder="ex: t.jakubowski" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <span class="input-group-text" id="basic-addon2">Prenom</span>
                             </div>
                             <div class="input-group mb-3">
                                 <input id="editpassword" name="editpassword" type="text" class="form-control" placeholder="ex: *******" aria-label="Recipient's username" aria-describedby="basic-addon2">

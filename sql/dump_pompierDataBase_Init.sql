@@ -3958,6 +3958,7 @@ Create table user(
 	Prenom varchar(20),
 	Nom varchar(20),
 	IdRole int,
+	password varchar(256),
 	foreign key (IdRole) references role(Id)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;

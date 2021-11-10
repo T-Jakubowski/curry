@@ -5,7 +5,7 @@ namespace app\utils\filtre;
 */
 class IdRoleUser extends AbstractUser{
     public function checkUser(string $data) : bool {
-        $IsExistInDB=$this->DAOUser->findIfRoleExiste($data);
+        $IsExistInDB=$this->DAOUser->findIfRoleExist($data);
     return $IsExistInDB;
     }
 }

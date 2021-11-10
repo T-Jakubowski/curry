@@ -1,40 +1,49 @@
 <?php
 namespace app\models;
 class User{
-    private $id;
     private $identifiant;
+    private $nom;
+    private $prenom;
     private $password;
     private $IdRole;
 
-    public function __construct($id="",$identifiant,$password,$IdRole)
+    public function __construct($identifiant,$nom, $prenom, $password,$IdRole)
     {
-        $this->id = $id;
         $this->identifiant = $identifiant;
+        $this->nom = $nom;
+        $this->prenom = $prenom;
         $this->password = $password;
         $this->IdRole = $IdRole;
-    }
-    public function getId() {
-        return $this->id;
-    }
-    public function getPassword() {
-        return $this->password;
     }
     public function getIdentifiant() {
         return $this->identifiant;
     }
+    public function getNom() {
+        return $this->nom;
+    }
+    public function getPrenom() {
+        return $this->prenom;
+    }
+    public function getPassword() {
+        return $this->password;
+    }
     public function getIdRole() {
         return $this->IdRole;
     }
-    public function setId($id) {
-        $this->id = $id;
-        return $this;
-    }
-    public function setPassword($id) {
-        $this->id = $id;
-        return $this;
-    }
     public function setIdentifiant($identifiant) {
         $this->identifiant = $identifiant;
+        return $this;
+    }
+    public function setNom($nom) {
+        $this->nom = $nom;
+        return $this;
+    }
+    public function setPrenom($prenom) {
+        $this->prenom = $prenom;
+        return $this;
+    }
+    public function setPassword($password) {
+        $this->password = $password;
         return $this;
     }
     public function setIdRoless($IdRole) {

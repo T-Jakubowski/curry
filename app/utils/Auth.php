@@ -2,9 +2,6 @@
 namespace app\utils;
 use app\utils\SingletonDBMaria;
 use app\models\User;
-/*
-* @author Baptiste Coquelet <b.coquelet@eleve.leschartreux.net>
-*/
 
 
 class Auth{
@@ -13,14 +10,19 @@ class Auth{
     * @param User $user
     */
     public static function login(User $user) {
-
+        
+        $identifiant = $user->getIdentifiant();
+        $_SESSION['identifiant']=$identifiant;
     }
     /*
     * detruit la session de l'utilisateur en entré
     * @param User $user
     */
-    public static function logout(User $user) {
-
+    public static function logout() {
+        if ($_SESSION['identifiant']){
+            session_destroy();
+            header('Location: view_login.php');
+        }
     }
     /*
     * Vérifie qu'il y ait bien une variable de session User
