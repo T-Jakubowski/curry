@@ -11,12 +11,12 @@ use app\utils\Renderer;
  * Description of LoginController
  * @author student
  */
-class DefaultController extends BaseController {
+class HomeController extends BaseController {
     public function __construct() {
 
     }
     public function index(){
-        $page=Renderer::render("view_login.php");
+        $page=Renderer::render("view_home.php");
         echo $page;
     }
 }

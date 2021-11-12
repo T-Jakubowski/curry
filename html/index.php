@@ -7,7 +7,8 @@ use app\controllers\PompierController;
 use app\controllers\UserController;
 use app\controllers\RoleController;
 use app\controllers\LoginController;
-
+use app\controllers\DefaultController;
+use app\controllers\HomeController;
 
 //https://www.youtube.com/watch?v=tbYa0rJQyoM
 //https://www.youtube.com/watch?v=-iW6lo6wq1Y
@@ -106,17 +107,17 @@ switch ($control) {
 
 function defaultRoutes_get($fragments)
 {
-    call_user_func_array([new LoginController(), "login"], $fragments);
+    call_user_func_array([new DefaultController(), "index"], $fragments);
 }
 
 function homeRoutes_get($fragments)
 {
-    call_user_func_array([new BaseController(), "index"], $fragments);
+    call_user_func_array([new HomeController(), "index"], $fragments);
 }
 
 function homeRoutes_post($fragments)
 {
-    call_user_func_array([new BaseController(), "index"], $fragments);
+    call_user_func_array([new HomeController(), "index"], $fragments);
 }
 
 
