@@ -41,15 +41,14 @@ class Auth{
     * @return bool
     */
     public static function is_logged() : bool {
-        if (isset($_SESSION('identifiant')))
-        {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
             return true;
         }
         return false;
     }
     
     public static function start_session(){
-        if (session_status() !== PHP_SESSION_ACTIVE) {
+        if (!self::is_logged()) {
             session_start();
         }
     }

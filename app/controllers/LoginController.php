@@ -37,7 +37,7 @@ class LoginController {
             $user = $this->DAOAuth->findUserByLogin($identifiant, $password);
             $auth = new Auth();
             $auth->login($user);
-            $page=Renderer::render("home.php", compact($auth));
+            $page=Renderer::render("view_home.php", compact($auth));
             echo $page;
         }
     }
