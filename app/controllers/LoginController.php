@@ -8,17 +8,37 @@
 
 namespace app\controllers;
 use app\utils\Renderer;
+use app\models\DAOAuth;
+use app\utils\Auth;
+use app\utils\SingletonDBMaria;
 /*
  * Description of LoginController
  * @author student
  */
 class LoginController {
-    public function __construct() {
+    
+    private DAOAuth $DAOAuth;
 
+    public function __construct() {
+        $cnx = SingletonDBMaria::getInstance()->getConnection();
+        $DAOAuth = new DAOAuth($cnx);
+        $this->DAOAuth = $DAOAuth;
     }
-    public function login(){
+    public function show(){
         
         $page=Renderer::render("view_login.php");
         echo $page;
+    }
+    
+    public function login() : void {
+        $identifiant = htmlspecialchars($_POST['identifiant']);
+        $password =  htmlspecialchars($_POST['password']);
+        if ($this->DAOAuth->isLoginValide($identifiant, $password)){
+            $user = $this->DAOAuth->findUserByLogin($identifiant, $password);
+            $auth = new Auth();
+            $auth->login($user);
+            $page=Renderer::render("home.php", compact($auth));
+            echo $page;
+        }
     }
 }
