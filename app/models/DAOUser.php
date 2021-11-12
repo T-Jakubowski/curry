@@ -14,13 +14,15 @@ class DAOUser {
         $this->cnx = $cnx;
     }
 
-    /*
+    /**
       Renvoie un user par rapport a son id
-      @param int $Id
+      
+      @param int $Identifiant
+      
       @return User $user
      */
-
-    public function find($Identifiant): User {
+    public function find($Identifiant): User 
+    {
         $sql = 'SELECT * FROM user WHERE Identifiant=:Identifiant;';
         $prepared_Statement = $this->cnx->prepare($sql);
         $prepared_Statement->bindParam("Identifiant", $Identifiant);
@@ -37,7 +39,8 @@ class DAOUser {
       @return User $user
      */
 
-    public function findByidentifiant($Identifiant): User {
+    public function findByidentifiant($Identifiant): User
+    {
         $sql = 'SELECT * FROM user WHERE Identifiant=:Identifiant;';
         $prepared_Statement = $this->cnx->prepare($sql);
         $prepared_Statement->bindParam("Identifiant", $Identifiant);
@@ -54,7 +57,8 @@ class DAOUser {
       @return void
      */
 
-    public function save(User $u): void {
+    public function save(User $u): void
+    {
         $sql = "INSERT INTO user(Identifiant, Nom, Prenom, Password, IdRole)
                 Values (:Identifiant, :Nom, :Prenom, :Password, :IdRole);";
         $Identifiant = $u->getIdentifiant();
@@ -79,7 +83,8 @@ class DAOUser {
       @return void
      */
 
-    public function edit(User $u): void {
+    public function edit(User $u): void
+    {
 
         $sql = 'UPDATE user
                 SET Identifiant=:Identifiant, Nom=:Nom, Prenom=:Prenom, Password=:Password, IdRole=:IdRole
@@ -106,7 +111,8 @@ class DAOUser {
       @return void
      */
 
-    public function remove($Identifiant): void {
+    public function remove($Identifiant): void
+    {
         $sql = 'delete from user WHERE Identifiant=:Identifiant;';
         $prepared_Statement = $this->cnx->prepare($sql);
         $prepared_Statement->bindParam("Identifiant", $Identifiant);
@@ -119,8 +125,8 @@ class DAOUser {
       @param int $limit
       @return array<User>
      */
-
-    public function findAll($offset = 0, $limit = 10): Array {
+    public function findAll($offset = 0, $limit = 10) : array
+    {
 
         $sql = 'SELECT * FROM user LIMIT :limit OFFSET :offset';
         $prepared_Statement = $this->cnx->prepare($sql);
@@ -130,7 +136,8 @@ class DAOUser {
 
         $desUser = array();
         while ($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)) {
-            $desUser = new User($row['Identifiant'], $row['Nom'], $row['Prenom'], $row['Password'], $row['IdRole']);
+            var_dump($row['Identifiant'], $row['Nom'], $row['Prenom'], $row['Password'], $row['IdRole']);
+            $desUser[] = new User($row['Identifiant'], $row['Nom'], $row['Prenom'], $row['Password'], $row['IdRole']);
         }
         return $desUser;
     }

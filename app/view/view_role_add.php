@@ -3,13 +3,13 @@ namespace app\views;
 
 ?>
 <html>
-<?php include "Head.php" ;?>
+<?php require "Head.php" ;?>
 
   <body>
-    <?php $ActivePageName="role"; include "view_NavBarre.php"; ?>
+    <?php $ActivePageName="role"; require "view_NavBarre.php"; ?>
     <br>
 <?php
-if (isset($resultMessage)){
+if (isset($resultMessage)) {
   ?>
     <div class="alert alert-success mt-5" role="alert">
       <h2><img class="fit-picture" src="/img/check_black_24dp.svg" alt="success"><?php echo $resultMessage;?></h2>

@@ -3,7 +3,7 @@ namespace app\views;
 
 ?>
 <html>
-<?php include "Head.php" ;?>
+<?php require "Head.php" ;?>
 <script>
 function ConfirmDelete(id){
   var x = document.getElementById("idCaserneToDelete");
@@ -119,7 +119,9 @@ function Edit(id){
       <form id="InsertCaserne" method="post" action="/caserne/add">
         <div class="modal-body">
           <div class="input-group mb-3">
-            <input id="AddCaserne_NumCaserne" name="AddCaserne_NumCaserne" type="text" class="form-control" placeholder="ex: 128" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <input id="AddCaserne_NumCaserne" name="AddCaserne_NumCaserne" 
+            type="text" class="form-control" placeholder="ex: 128" 
+            aria-label="Recipient's username" aria-describedby="basic-addon2">
             <span class="input-group-text" id="basic-addon2">NumCaserne</span>
           </div>
           <div class="input-group mb-3">

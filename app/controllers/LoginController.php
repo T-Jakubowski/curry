@@ -8,8 +8,8 @@
 
 namespace app\controllers;
 use app\utils\Renderer;
-/**s
- * Description of BaseController
+/*
+ * Description of LoginController
  * @author student
  */
 class LoginController {

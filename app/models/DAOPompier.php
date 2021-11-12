@@ -174,7 +174,7 @@ class DAOPompier {
         WHERE NumCaserne=:num;';
         $cnx=$this->cnx;
         $preparedStatement=$cnx->prepare($SQL);
-        $preparedStatement->bindParam("num",$numCaserne);
+        $preparedStatement->bindParam("num", $numCaserne);
         $preparedStatement->execute();
         $isExist=false;
         while($row = $preparedStatement->fetch(\PDO::FETCH_ASSOC)){

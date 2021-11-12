@@ -3,90 +3,57 @@ namespace app\views;
 ?>
 
 <html>
-<?php include "Head.php" ;?>
+  <?php include "Head.php" ;?>
+  <body>
+    <script type="text/javascript">
+    function TurnVisibility() {
+      var x = document.getElementById("inputPassword");
+      var y = document.getElementById("VisibilityImg")
+      
+      if (x.type === "password") {
+        x.type = "text";
+        y.src="/img/visibility_off_black_24dp.svg"
+      } else {
+        x.type = "password";
+        y.src="/img/visibility_black_24dp.svg"
+      }
+    }
+    </script>
+    <style>
+      body {
+        background-color:#e60000;
+      }
+      #turnVisibilityPass:hover {
+      background-color: #ccc;
+      cursor: pointer;
+      }
+    </style>
 
-<section class="vh-100">
-  <div class="container-fluid h-custom">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-md-9 col-lg-6 col-xl-5">
-        <img src="https://mdbootstrap.com/img/Photos/new-templates/bootstrap-login-form/draw2.png" class="img-fluid"
-          alt="Icon">
+
+
+      <div class="d-flex justify-content-center" style="margin-top: 5rem;">
+        <div class="card text-center bg-light" style="width: 35rem;">
+          <div class="card-header">
+            <img src="/img/iconFireman.png" class="img-fluid" alt="Icon">
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Identifiant</h5>
+            <input type="text" class="form-control" id="inputidentifiant">
+            <h5 class="card-title">Password</h5>
+            <div class="input-group mb-3">
+              <input type="password" class="form-control" id="inputPassword">
+              <span id="turnVisibilityPass" onclick="TurnVisibility()" class="input-group-text"><img id="VisibilityImg" class="fit-picture" src="/img/visibility_black_24dp.svg" alt="Turn Visibility"></span>
+            </div>
+          </div>
+          <div class="card-footer text-muted">
+            <div class="d-grid gap-2 col-6 mx-auto">
+              <button type="button" class="btn btn-success btn-lg">Connexion</button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-        <form>
-          <!-- Identifiant input -->
-          <div class="form-outline mb-4">
-            <input type="text" id="form3Example3" class="form-control form-control-lg"
-              placeholder="Enter a valid email address" />
-            <label class="form-label" for="form3Example3">Identifiant</label>
-          </div>
-
-          <!-- Password input -->
-          <div class="form-outline mb-3">
-            <input type="password" id="form3Example4" class="form-control form-control-lg"
-              placeholder="Enter password" />
-            <label class="form-label" for="form3Example4">Mot de passe</label>
-          </div>
 
 
-          <div class="text-center text-lg-start mt-4 pt-2">
-            <button type="button" class="btn btn-primary btn-lg"
-              style="padding-left: 2.5rem; padding-right: 2.5rem;">Connexion</button>
-          </div>
-
-        </form>
-      </div>
-    </div>
-  </div>
-  <div class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
-    <!-- Copyright -->
-    <div class="text-white mb-3 mb-md-0">
-      Copyright © 2020. All rights reserved.
-    </div>
-    <!-- Copyright -->
-
-    <!-- Right -->
-    <div>
-      <a href="#!" class="text-white me-4">
-        <i class="fab fa-facebook-f"></i>
-      </a>
-      <a href="#!" class="text-white me-4">
-        <i class="fab fa-twitter"></i>
-      </a>
-      <a href="#!" class="text-white me-4">
-        <i class="fab fa-google"></i>
-      </a>
-      <a href="#!" class="text-white">
-        <i class="fab fa-linkedin-in"></i>
-      </a>
-    </div>
-    <!-- Right -->
-  </div>
-</section>
-<style type="text/css">
-
-.divider:after,
-.divider:before {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: #eee;
-}
-.h-custom {
-  height: calc(100% - 73px);
-}
-@media (max-width: 450px) {
-  .h-custom {
-    height: 100%;
-  }
-}
-</style>
-
-<script>
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl)
-})
-</script>
-    </body>
+    
+  </body>
 </html>

@@ -88,7 +88,8 @@ class DAORole {
       @return array<Role>
      */
 
-    public function findAll($offset = 0, $limit = 10): Array {
+    public function findAll($offset = 0, $limit = 10): Array
+    {
 
         $sql = 'SELECT * FROM role LIMIT :limit OFFSET :offset';
         $prepared_Statement = $this->cnx->prepare($sql);
