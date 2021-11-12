@@ -36,21 +36,22 @@ if(isset($ActivePageName)){
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link <?php echo $IsActive1; ?>" href="/">Home</a>
+                    <a class="nav-link <?php echo $IsActive1; ?>" href="/home">Home</a>
                     <a class="nav-link <?php echo $IsActive2; ?>" href="/pompier/affiche">Pompier</a>
                     <a class="nav-link <?php echo $IsActive3; ?>" href="/caserne/affiche">Caserne</a>
                     <a class="nav-link <?php echo $IsActive4; ?>" href="/user/affiche">User</a>
                     <a class="nav-link <?php echo $IsActive5; ?>" href="/role/affiche">Role</a>
-                    
                     <a class="nav-link disabled">Prochainement...</a>
                 </div>
             </div>
+            <a class="btn btn-danger" type="submit">Deconnexion</a>
         </div>
+        
         <?php if($ActivePageName!="home"){ ?>
         <form class="d-flex" target="/<?php echo $ActivePageName ?>/affiche" id="<?php echo $ActivePageName;?>FormSearch">
             <input class="form-control me-2" id="<?php echo $ActivePageName;?>InputSearch" name="search" type="search" placeholder="Search <?php echo $ActivePageName ?>" aria-label="Search">
             <button class="btn btn-success" type="submit">Search</button>
         </form>
-        <?php } ?>
+        <?php }?>
     </nav>
 </header>
