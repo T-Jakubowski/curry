@@ -90,15 +90,31 @@ switch ($control) {
         }
         break;
     }
-    default :
+    case "home" :    //Si page home
     {
-        //Gestion du probleme
-        echo "Erreur URL";
+        //echo "Gestion des routes pour login<hr>";
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            homeRoutes_get($fragments);
+        }
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            homeRoutes_post($fragments);
+        }
+        break;
     }
 }
 
 
 function defaultRoutes_get($fragments)
+{
+    call_user_func_array([new LoginController(), "login"], $fragments);
+}
+
+function homeRoutes_get($fragments)
+{
+    call_user_func_array([new BaseController(), "index"], $fragments);
+}
+
+function homeRoutes_post($fragments)
 {
     call_user_func_array([new BaseController(), "index"], $fragments);
 }

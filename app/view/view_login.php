@@ -21,7 +21,7 @@ namespace app\views;
     </script>
     <style>
       body {
-        background-color:#e60000;
+        background-color:#ff3333;
       }
       #turnVisibilityPass:hover {
       background-color: #ccc;
