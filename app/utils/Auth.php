@@ -2,7 +2,7 @@
 namespace app\utils;
 use app\utils\SingletonDBMaria;
 use app\models\User;
-
+use app\models\DAOAuth;
 
 class Auth{
     
