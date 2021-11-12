@@ -1,4 +1,5 @@
 <?php
+
 require_once '../autoloader.php';
 
 use app\controllers\BaseController;
@@ -8,11 +9,9 @@ use app\controllers\UserController;
 use app\controllers\RoleController;
 use app\controllers\LoginController;
 
-
 //https://www.youtube.com/watch?v=tbYa0rJQyoM
 //https://www.youtube.com/watch?v=-iW6lo6wq1Y
 //https://openclassrooms.com/fr/courses/2078536-developpez-votre-site-web-avec-le-framework-symfony2-ancienne-version/2079345-le-routeur-de-symfony2
-
 //echo "<pre>" . print_r($_SERVER, true) . "<pre>";
 
 if (isset($_SERVER["PATH_INFO"])) {
@@ -22,165 +21,151 @@ if (isset($_SERVER["PATH_INFO"])) {
 }
 
 
-$fragments = explode("/", $path);//cree tableau de caractére
-
+$fragments = explode("/", $path); //cree tableau de caractére
 //var_dump($fragment);
 
 $control = array_shift($fragments);
 //echo "control : $control <hr>";
 switch ($control) {
     case '' :   // si juste la racine du site
-    { //l'url est /
-        defaultRoutes_get($fragments);
-        break;
-    }
+        { //l'url est /
+            defaultRoutes_get($fragments);
+            break;
+        }
     case "pompier" :    //Si page pompier
-    {
-        //echo "Gestion des routes pour pompier <hr>";
-        //calling function to prevend all hard code here
-        if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            pompierRoutes_get($fragments);
+        {
+            //echo "Gestion des routes pour pompier <hr>";
+            //calling function to prevend all hard code here
+            if ($_SERVER["REQUEST_METHOD"] == "GET") {
+                pompierRoutes_get($fragments);
+            }
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                pompierRoutes_post($fragments);
+            }
+            break;
         }
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            pompierRoutes_post($fragments);
-        }
-        break;
-    }
     case "caserne" :    //Si page caserne
-    {
-        //echo "Gestion des routes pour caserne<hr>";
-        if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            caserneRoutes_get($fragments);
+        {
+            //echo "Gestion des routes pour caserne<hr>";
+            if ($_SERVER["REQUEST_METHOD"] == "GET") {
+                caserneRoutes_get($fragments);
+            }
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                caserneRoutes_post($fragments);
+            }
+            break;
         }
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            caserneRoutes_post($fragments);
-        }
-        break;
-    }
     case "user" :    //Si page user
-    {
-        //echo "Gestion des routes pour user<hr>";
-        if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            userRoutes_get($fragments);
+        {
+            //echo "Gestion des routes pour user<hr>";
+            if ($_SERVER["REQUEST_METHOD"] == "GET") {
+                userRoutes_get($fragments);
+            }
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                userRoutes_post($fragments);
+            }
+            break;
         }
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            userRoutes_post($fragments);
-        }
-        break;
-    }
     case "role" :    //Si page user
-    {
-        //echo "Gestion des routes pour user<hr>";
-        if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            roleRoutes_get($fragments);
+        {
+            //echo "Gestion des routes pour user<hr>";
+            if ($_SERVER["REQUEST_METHOD"] == "GET") {
+                roleRoutes_get($fragments);
+            }
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                roleRoutes_post($fragments);
+            }
+            break;
         }
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            roleRoutes_post($fragments);
-        }
-        break;
-    }
     case "login" :    //Si page login
-    {
-        //echo "Gestion des routes pour login<hr>";
-        if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            loginRoutes_get($fragments);
+        {
+            //echo "Gestion des routes pour login<hr>";
+            if ($_SERVER["REQUEST_METHOD"] == "GET") {
+                loginRoutes_get($fragments);
+            }
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                loginRoutes_post($fragments);
+            }
+            break;
         }
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            loginRoutes_post($fragments);
-        }
-        break;
-    }
     case "home" :    //Si page home
-    {
-        //echo "Gestion des routes pour login<hr>";
-        if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            homeRoutes_get($fragments);
+        {
+            //echo "Gestion des routes pour login<hr>";
+            if ($_SERVER["REQUEST_METHOD"] == "GET") {
+                homeRoutes_get($fragments);
+            }
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                homeRoutes_post($fragments);
+            }
+            break;
         }
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            homeRoutes_post($fragments);
-        }
-        break;
-    }
 }
 
-
-function defaultRoutes_get($fragments)
-{
-    call_user_func_array([new LoginController(), "login"], $fragments);
+function defaultRoutes_get($fragments) {
+    call_user_func_array([new LoginController(), "show"], $fragments);
 }
 
-function homeRoutes_get($fragments)
-{
+function homeRoutes_get($fragments) {
     call_user_func_array([new BaseController(), "index"], $fragments);
 }
 
-function homeRoutes_post($fragments)
-{
+function homeRoutes_post($fragments) {
     call_user_func_array([new BaseController(), "index"], $fragments);
 }
 
-
-function pompierRoutes_get($fragments)
-{
+function pompierRoutes_get($fragments) {
 
     //var_dump($fragment);
 
-    $action = array_shift($fragments);//action c'est ce que je veut faire sur les pompier
+    $action = array_shift($fragments); //action c'est ce que je veut faire sur les pompier
     //var_dump($action);
 
     switch ($action) {
-        case "affiche" :
-        {
-            //echo "Calling pompierController->show <hr>";
-            call_user_func_array([new PompierController(), "show"], $fragments);//nomController , methode du controler ,fragment a passer
-            break;
-        }
-        case "delete" :
-        {
-            //echo "Calling pompierController->del <hr>";
-            //Access permission can be checked here too
-            call_user_func_array([new PompierController(), "delete"], $fragments);
-            break;
-        }
-        case "edit" :
-        {
-            //echo "Calling pompierController->del <hr>";
-            call_user_func_array([new PompierController(), "update"], $fragments); // \app\controllers\PompierController
-            break;
-        }
-        case "add" :
-        {   
-            //echo "Calling pompierController->show <hr>";
-            call_user_func_array([new PompierController(), "insert"], $fragments);//nomController , methode du controler ,fragment a passer
-            break;
-        }
-        default :
-        {
-            echo "Action '$action' non defini <hr>";
-            //Gestion du probleme
-        }
+        case "affiche" : {
+                //echo "Calling pompierController->show <hr>";
+                call_user_func_array([new PompierController(), "show"], $fragments); //nomController , methode du controler ,fragment a passer
+                break;
+            }
+        case "delete" : {
+                //echo "Calling pompierController->del <hr>";
+                //Access permission can be checked here too
+                call_user_func_array([new PompierController(), "delete"], $fragments);
+                break;
+            }
+        case "edit" : {
+                //echo "Calling pompierController->del <hr>";
+                call_user_func_array([new PompierController(), "update"], $fragments); // \app\controllers\PompierController
+                break;
+            }
+        case "add" : {
+                //echo "Calling pompierController->show <hr>";
+                call_user_func_array([new PompierController(), "insert"], $fragments); //nomController , methode du controler ,fragment a passer
+                break;
+            }
+        default : {
+                echo "Action '$action' non defini <hr>";
+                //Gestion du probleme
+            }
     }
 }
 
-function pompierRoutes_post($fragments)
-{
+function pompierRoutes_post($fragments) {
     $action = array_shift($fragments);
     switch ($action) {
         case "delete":
             //Access permission can be checked here too
-            call_user_func_array([new PompierController(), "delete"], $fragments);// \app\controllers\PompierController
+            call_user_func_array([new PompierController(), "delete"], $fragments); // \app\controllers\PompierController
             break;
         case "add" :
             //echo "Action '$action' ready <hr>";
             //Access permission can be checked here too
             call_user_func_array([new PompierController(), "insert"], $fragments);
             break;
-        case "edit" :
-        {
-            //echo "Calling pompierController->del <hr>";
-            call_user_func_array([new PompierController(), "update"], $fragments); // \app\controllers\PompierController
-            break;
-        }
+        case "edit" : {
+                //echo "Calling pompierController->del <hr>";
+                call_user_func_array([new PompierController(), "update"], $fragments); // \app\controllers\PompierController
+                break;
+            }
 
         default:
             echo "Action '$action' non defini <hr>";
@@ -188,8 +173,7 @@ function pompierRoutes_post($fragments)
     }
 }
 
-function caserneRoutes_get($fragments)
-{
+function caserneRoutes_get($fragments) {
     $action = array_shift($fragments);
     switch ($action) {
         case "affiche":
@@ -216,8 +200,7 @@ function caserneRoutes_get($fragments)
     }
 }
 
-function caserneRoutes_post($fragments)
-{
+function caserneRoutes_post($fragments) {
     $action = array_shift($fragments);
     switch ($action) {
         case "delete" :
@@ -234,8 +217,7 @@ function caserneRoutes_post($fragments)
     }
 }
 
-function userRoutes_get($fragments)
-{
+function userRoutes_get($fragments) {
     $action = array_shift($fragments);
     switch ($action) {
         case "affiche":
@@ -257,8 +239,7 @@ function userRoutes_get($fragments)
     }
 }
 
-function userRoutes_post($fragments)
-{
+function userRoutes_post($fragments) {
     $action = array_shift($fragments);
     switch ($action) {
         case "delete" :
@@ -275,8 +256,7 @@ function userRoutes_post($fragments)
     }
 }
 
-function roleRoutes_get($fragments)
-{
+function roleRoutes_get($fragments) {
     $action = array_shift($fragments);
     switch ($action) {
         case "affiche":
@@ -298,8 +278,7 @@ function roleRoutes_get($fragments)
     }
 }
 
-function roleRoutes_post($fragments)
-{
+function roleRoutes_post($fragments) {
     $action = array_shift($fragments);
     switch ($action) {
         case "delete" :
@@ -316,14 +295,34 @@ function roleRoutes_post($fragments)
     }
 }
 
-function loginRoutes_get($fragments)
-{
-    call_user_func_array([new LoginController(), "login"], $fragments);
+
+function loginRoutes_get($fragments) {
+    $action = array_shift($fragments);
+    switch ($action) {
+        case "affiche":
+            call_user_func_array([new LoginController(), "show"], $fragments);
+            break;
+        case "login" :
+            call_user_func_array([new LoginController(), "login"], $fragments);
+            break;
+        default:
+            echo "Action '$action' non defini <hr>";
+            break;
+    }
 }
 
-function loginRoutes_post($fragments)
-{
-    call_user_func_array([new LoginController(), "login"], $fragments);
+function loginRoutes_post($fragments) {
+    $action = array_shift($fragments);
+    switch ($action) {
+        case "affiche":
+            call_user_func_array([new LoginController(), "show"], $fragments);
+            break;
+        case "login" :
+            call_user_func_array([new LoginController(), "login"], $fragments);
+            break;
+        default:
+            echo "Action '$action' non defini <hr>";
+            break;
+    }
 }
-
 ?>
