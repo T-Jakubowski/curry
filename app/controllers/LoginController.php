@@ -39,6 +39,11 @@ class LoginController {
             $auth->login($user);
             $page=Renderer::render("view_home.php", compact($auth));
             echo $page;
+        }else{
+            $WrongConnection = true;
+            $page=Renderer::render("view_login.php", compact($WrongConnection));
+            echo $page;
+            //NE marche pas je ne sais pas pourquoi
         }
     }
 }

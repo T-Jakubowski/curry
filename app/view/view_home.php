@@ -22,7 +22,9 @@ namespace app\views;
    <div class="row row-cols-1 row-cols-md-4 g-4">
   <div class="col">
     <div class="card">
-      <img src="/img/PompierImg.jpg" class="card-img-top" alt="Icon Pompier" height="200">
+      <a href="/pompier/affiche">
+        <img src="/img/firefighter_black_24dp.svg" class="card-img-top" alt="Icon Pompier" height="200">
+      </a>
       <div class="card-body">
         <h5 class="card-title">Pompier</h5>
         <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
@@ -31,7 +33,9 @@ namespace app\views;
   </div>
   <div class="col">
     <div class="card">
-      <img src="/img/CaserneImg.png" class="card-img-top" alt="Icon Caserne" height="200">
+      <a href="/caserne/affiche">
+        <img src="/img/caserne_black_24dp.svg" class="card-img-top" alt="Icon Caserne" height="200">
+      </a>
       <div class="card-body">
         <h5 class="card-title">Caserne</h5>
         <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
@@ -40,7 +44,9 @@ namespace app\views;
   </div>
   <div class="col">
     <div class="card">
-      <img src="/img/user_black_24dp.svg" class="card-img-top" alt="Icon User" height="200">
+      <a href="/user/affiche">
+        <img src="/img/user_black_24dp.svg" class="card-img-top" alt="Icon User" height="200">
+      </a>
       <div class="card-body">
         <h5 class="card-title">User</h5>
         <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
@@ -49,7 +55,9 @@ namespace app\views;
   </div>
   <div class="col">
     <div class="card">
-      <img src="/img/role_black_24dp.svg" class="card-img-top" alt="Icon Role" height="200">
+      <a href="/role/affiche">
+        <img src="/img/role_black_24dp.svg" class="card-img-top" alt="Icon Role" height="200">
+      </a>
       <div class="card-body">
         <h5 class="card-title">Role</h5>
         <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
@@ -59,18 +67,5 @@ namespace app\views;
 </div>
 
 
-
-
-    <div class="d-flex justify-content-center">
-    <span class="mx-4"><a type="button" href="/caserne/affiche" class="btn btn-danger"><img class="fit-picture" src="/img/CaserneImg.png" width="400" height="500" alt="Caserne"></a></span>
-    <span class="mx-4"><a type="button" href="/pompier/affiche" class="btn btn-danger"><img class="fit-picture" src="/img/PompierImg.jpg" width="400" height="500" alt="Pompier"></a></span>
-    </div>
-
-    <script>
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl)
-})
-</script>
     </body>
 </html>

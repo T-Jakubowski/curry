@@ -21,13 +21,13 @@ class Rolecontroller extends BaseController {
     //renvoie la page avec la liste de tout les pompier
     public function show() {
         if (isset($_GET["page"])) {
-            $Offset = ($_GET["page"] * 10) - 10;
+            $Offset = (htmlspecialchars($_GET["page"]) * 10) - 10;
         } else {
             $Offset = 0;
         }
         if (isset($_GET["search"])) {
-            $NumR = ($_GET["search"]);
-            $LstRole = $this->DAORole->findAllWhereIdentifiant($NumR, 0, 10);
+            $NumR = (htmlspecialchars($_GET["search"]));
+            $LstRole = $this->DAORole->findAllWhereName($NumR, 0, 10);
             $CountRole = $this->DAORole->countWhere($NumR);
         } else {
             $LstRole = $this->DAORole->findAll($Offset, 10);

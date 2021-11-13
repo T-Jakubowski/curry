@@ -29,7 +29,7 @@ namespace app\views;
                 cursor: pointer;
             }
         </style>
-        <div class="d-flex justify-content-center" style="margin-top: 5rem;">
+        <div class="d-flex justify-content-center" style="margin-top: 2rem;">
             <div class="card text-center bg-light" style="width: 35rem;">
                 <div class="card-header">
                     <img src="/img/iconFireman.png" class="img-fluid" alt="Icon">
@@ -49,6 +49,12 @@ namespace app\views;
                         <div class="d-grid gap-2 col-6 mx-auto">
                             <button type="submit" class="btn btn-success btn-lg">Login</button>
                         </div>
+                        <?php if (isset($WrongConnection)){?>
+                        <br>
+                        <div class="alert alert-danger" role="alert">
+                            Echec de la connection
+                        </div>
+                        <?php }?>
                     </div>
                 </form>
             </div>

@@ -3969,18 +3969,9 @@ Create table user(
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-insert into user (Identifiant, IdRole, Password) values ('rolland0', 3, '?=4HJu^PBUzg+6Y');
-insert into user (Identifiant, IdRole, Password) values ('tbackson1', 3, 'awMw3T*X!9fzcFr');
-insert into user (Identifiant, IdRole, Password) values ('mspriggs2', 3, '2x3,!!?uZ5ahP[)');
-insert into user (Identifiant, IdRole, Password) values ('tguile3', 2, 'aZ:mq<G~zzE7}M`');
-insert into user (Identifiant, IdRole, Password) values ('kglassford4', 2, 'LgR-!d-n2W?T3He');
-insert into user (Identifiant, IdRole, Password) values ('rolsson5', 2, '_38?sbj!Y=zucT,');
-insert into user (Identifiant, IdRole, Password) values ('dboarer6', 1, 'v59Gk\VbW9=LqHa');
-insert into user (Identifiant, IdRole, Password) values ('msnoden7', 1, 'F.*6N8qE$%m^6PE');
-insert into user (Identifiant, IdRole, Password) values ('rdrennan8', 1, 'VMJUWcm5_2<)cs');
-insert into user (Identifiant, IdRole, Password) values ('hbourtoumieux9', 1, 's$AbD[S3k4xy7');
-insert into user (Identifiant, IdRole, Password) values ('kmeaa', 1, 'V]4[W%k7EXv!$fH');
-insert into user (Identifiant, IdRole, Password) values ('bbalchb', 1, 'h_n4"y8gD\5h~u');
+insert into user (Identifiant, IdRole, Prenom, Nom, Password) values ('rolland0', 1, 'baptiste', 'Coquelet', '1Aa%1Aa%222');
+insert into user (Identifiant, IdRole, Prenom, Nom, Password) values ('aleddd', 2, 'paul', 'Maurice', '77777PBUzg+6Y');
+insert into user (Identifiant, IdRole, Prenom, Nom, Password) values ('dfsfdsfds', 3, 'thomas', 'Jakubo', '?=4HJu^dsfdf');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 

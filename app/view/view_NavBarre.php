@@ -4,6 +4,10 @@ namespace app\view;
 * @author Baptiste Coquelet <b.coquelet@eleve.leschartreux.net>
 * @param string $ActivePageName
 */
+
+//FAKE VALUE TEST
+$permEdit=true;
+
 $IsActive1="";$IsActive2="";$IsActive3="";$IsActive4="";$IsActive5="";
 if(isset($ActivePageName)){
     switch ($ActivePageName) {
@@ -39,8 +43,10 @@ if(isset($ActivePageName)){
                     <a class="nav-link <?php echo $IsActive1; ?>" href="/home">Home</a>
                     <a class="nav-link <?php echo $IsActive2; ?>" href="/pompier/affiche">Pompier</a>
                     <a class="nav-link <?php echo $IsActive3; ?>" href="/caserne/affiche">Caserne</a>
+                    <?php if ($permEdit==true){?>
                     <a class="nav-link <?php echo $IsActive4; ?>" href="/user/affiche">User</a>
                     <a class="nav-link <?php echo $IsActive5; ?>" href="/role/affiche">Role</a>
+                    <?php }?>
                     <a class="nav-link disabled">Prochainement...</a>
                 </div>
             </div>

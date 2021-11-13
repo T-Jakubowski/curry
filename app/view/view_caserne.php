@@ -60,11 +60,11 @@ function Edit(id){
     <table id="tableCaserne" class="table table-striped table-hover table-Secondary .table-responsive" >
       <thead>
         <tr>
-          <th data-bs-toggle="tooltip" data-bs-placement="top" title="NumCaserne Int(11)">#</th>
-          <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(15)">Addresse</th>
-          <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(5)">CP</th>
-          <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(10)">Ville</th>
-          <th data-bs-toggle="tooltip" data-bs-placement="top" title="Int(11)">CodeTypeC</th>
+          <th>#</th>
+          <th>Addresse</th>
+          <th>CP</th>
+          <th>Ville</th>
+          <th>CodeTypeC</th>
           <th>Edit/Delete</th>
           
         </tr>

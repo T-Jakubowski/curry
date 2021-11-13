@@ -103,10 +103,10 @@ switch ($control) {
         }
 }
 
-    call_user_func_array([new DefaultController(), "index"], $fragments);
+    
 function defaultRoutes_get($fragments)
 {
-
+    call_user_func_array([new DefaultController(), "index"], $fragments);
 }
 
 function homeRoutes_get($fragments)
