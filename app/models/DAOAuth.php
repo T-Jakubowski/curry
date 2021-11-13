@@ -48,7 +48,7 @@ class DAOAuth {
         $prepared_Statement->bindParam("password", $password);
         $prepared_Statement->execute();
         while ($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)) {
-            $user = new User ($row['Identifiant'], $row['Nom'], $row['Prenom'], $row['password'], $row['idRole']);
+            $user = new User ($row['Identifiant'], $row['Nom'], $row['Prenom'], $row['password'], $row['IdRole']);
         }
         return $user;
     }
