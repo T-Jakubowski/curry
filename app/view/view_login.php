@@ -54,7 +54,14 @@ namespace app\views;
                         <div class="alert alert-danger" role="alert">
                             Echec de la connection
                         </div>
-                        <?php }?>
+                        <?php }
+                        if (isset($DestroyConnection)){?>
+                        <br>
+                        <div class="alert alert-success" role="alert">
+                            Déconnexion réussi
+                        </div>
+                        <?php } ?>
+                        
                     </div>
                 </form>
             </div>

@@ -41,16 +41,16 @@ class LoginController {
             echo $page;
         }else{
             $WrongConnection = true;
-            $page=Renderer::render("view_login.php", compact($WrongConnection));
+            $page=Renderer::render("view_login.php", compact('WrongConnection'));
             echo $page;
-            //NE marche pas je ne sais pas pourquoi
         }
     }
 
     public function logout() : void {
         $auth = new Auth();
         $auth->logout();
-        $page=Renderer::render("view_login.php");
+        $DestroyConnection=true;
+        $page=Renderer::render("view_login.php", compact('DestroyConnection'));
         echo $page;
     }
     
