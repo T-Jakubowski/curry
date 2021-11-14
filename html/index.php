@@ -90,6 +90,17 @@ switch ($control) {
             }
             break;
         }
+    case "logout" :    //Si page logout
+        {
+            //echo "Gestion des routes pour logout<hr>";
+            if ($_SERVER["REQUEST_METHOD"] == "GET") {
+                logoutRoutes_get($fragments);
+            }
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                logoutRoutes_post($fragments);
+            }
+            break;
+        }
     case "home" :    //Si page home
         {
             //echo "Gestion des routes pour login<hr>";
@@ -330,5 +341,12 @@ function loginRoutes_post($fragments) {
             echo "Action '$action' non defini <hr>";
             break;
     }
+}
+
+function logoutRoutes_post($fragments) {
+    call_user_func_array([new LoginController(), "logout"], $fragments);
+}
+function logoutRoutes_get($fragments) {
+    call_user_func_array([new LoginController(), "logout"], $fragments);
 }
 ?>

@@ -46,4 +46,12 @@ class LoginController {
             //NE marche pas je ne sais pas pourquoi
         }
     }
+
+    public function logout() : void {
+        $auth = new Auth();
+        $auth->logout();
+        $page=Renderer::render("view_login.php");
+        echo $page;
+    }
+    
 }

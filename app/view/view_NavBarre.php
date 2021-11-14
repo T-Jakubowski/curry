@@ -50,7 +50,7 @@ if(isset($ActivePageName)){
                     <a class="nav-link disabled">Prochainement...</a>
                 </div>
             </div>
-            <a class="btn btn-danger" type="submit">Deconnexion</a>
+            <a class="btn btn-danger" href="/logout"><img src="/img/logout_black_24dp.svg" alt="Deconnexion"></a>
         </div>
         
         <?php if($ActivePageName!="home"){ ?>
