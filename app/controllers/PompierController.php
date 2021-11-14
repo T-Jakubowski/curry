@@ -6,7 +6,7 @@ use app\models\DAOPompier;
 use app\utils\SingletonDBMaria;
 use app\utils\Renderer;
 use app\models\Pompier;
-use app\utils\filtre\FiltrePompier;
+use app\utils\filtre\filtrePompier\FiltrePompier;
 
 class PompierController extends BaseController {
 

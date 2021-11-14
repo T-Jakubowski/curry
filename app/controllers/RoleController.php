@@ -6,7 +6,7 @@ use app\models\DAORole;
 use app\utils\SingletonDBMaria;
 use app\utils\Renderer;
 use app\models\Role;
-use app\utils\filtre\FiltreRole;
+use app\utils\filtre\filtreRole\FiltreRole;
 
 class Rolecontroller extends BaseController {
 

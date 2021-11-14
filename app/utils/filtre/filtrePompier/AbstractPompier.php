@@ -1,5 +1,5 @@
 <?php
-namespace app\utils\filtre;
+namespace app\utils\filtre\filtrePompier;
 use app\models\DAOPompier;
 use app\utils\SingletonDBMaria;
 

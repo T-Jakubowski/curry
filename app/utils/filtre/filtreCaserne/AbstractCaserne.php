@@ -1,5 +1,5 @@
 <?php
-namespace app\utils\filtre;
+namespace app\utils\filtre\filtreCaserne;
 use app\models\DAOCaserne;
 use app\utils\SingletonDBMaria;
 /*

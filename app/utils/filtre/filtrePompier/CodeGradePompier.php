@@ -1,6 +1,5 @@
 <?php
-
-namespace app\utils\filtre;
+namespace app\utils\filtre\filtrePompier;
 
 class CodeGradePompier extends AbstractPompier {
 

@@ -1,6 +1,5 @@
 <?php
-namespace app\utils\filtre;
-use app\utils\filtre\AbstractUser;
+namespace app\utils\filtre\filtreUser;
 /*
 * @author Baptiste Coquelet <b.coquelet@eleve.leschartreux.net>
 */
@@ -33,7 +32,7 @@ class FiltreUser{
                     $datas[$key]=$this->acceptUser("nom",new NomUser());
                     break;
                 case "prenom":
-                    $datas[$key]=$this->acceptUser("prenom",new Prenom());
+                    $datas[$key]=$this->acceptUser("prenom",new PrenomUser());
                     break;
                 case "password":
                     $datas[$key]=$this->acceptUser("password",new PasswordUser());

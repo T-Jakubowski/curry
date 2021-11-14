@@ -1,5 +1,5 @@
 <?php
-namespace app\utils\filtre;
+namespace app\utils\filtre\filtreCaserne;
 /*
 * @author Baptiste Coquelet <b.coquelet@eleve.leschartreux.net>
 */

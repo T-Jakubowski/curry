@@ -1,5 +1,5 @@
 <?php
-namespace app\utils\filtre;
+namespace app\utils\filtre\filtreRole;
 use app\models\DAORole;
 use app\utils\SingletonDBMaria;
 /*

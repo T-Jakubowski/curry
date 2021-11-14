@@ -1,7 +1,5 @@
 <?php
-namespace app\utils\filtre;
-use app\utils\filtre\AbstractPompier;
-
+namespace app\utils\filtre\filtrePompier;
 
 class FiltrePompier{
     private $formData=[];

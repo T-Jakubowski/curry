@@ -4,8 +4,7 @@ use app\models\DAOCaserne;
 use app\utils\SingletonDBMaria;
 use app\utils\Renderer;
 use app\models\Caserne;
-
-use app\utils\filtre\FiltreCaserne;
+use app\utils\filtre\filtreCaserne\FiltreCaserne;
 
 class Casernecontroller extends BaseController{
     private DAOCaserne $daocaserne;

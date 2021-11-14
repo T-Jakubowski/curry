@@ -6,7 +6,7 @@ use app\models\DAOUser;
 use app\utils\SingletonDBMaria;
 use app\utils\Renderer;
 use app\models\User;
-use app\utils\filtre\FiltreUser;
+use app\utils\filtre\filtreUser\FiltreUser;
 
 class UserController extends BaseController {
 

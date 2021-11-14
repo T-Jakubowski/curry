@@ -1,26 +1,26 @@
 <?php
-namespace app\utils\filtre;
+namespace app\utils\filtre\filtreRole;
+
 /*
 * @author Baptiste Coquelet <b.coquelet@eleve.leschartreux.net>
 */
-class IdentifiantUser extends AbstractUser{
-    public function checkUser(string $data) : bool {
-        $isValid = false;
-        $isExist=false;
+class RoleRole extends AbstractRole{
+    public function checkRole(string $data) : bool {
+        $isValid=false;
+        $isExist=$this->DAORole->findIfRoleExist($data);
 
-        $isExist=$this->DAOUser->findifUserExist($data);
-        if ($isExist==false){
+        if ($isExist==false) {
             $Lettre = preg_match('@[a-z]@i', $data);
             $noSpecialChara = preg_match('#^[a-z0-9]+$#i', $data);
             if($Lettre && $noSpecialChara && strlen($data) > 0 && strlen($data) < 21)
             {
-                $isValid = true;
+                $isValid= true;
             }
             else {
-                $isValid = false;
+                $isValid= false;
             }
         }
-    return $isValid;
+        return $isValid;
     }
 }
 ?>

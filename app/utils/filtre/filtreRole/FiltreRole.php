@@ -1,6 +1,6 @@
 <?php
-namespace app\utils\filtre;
-use app\utils\filtre\AbstractRole;
+namespace app\utils\filtre\filtreRole;
+
 /*
 * @author Baptiste Coquelet <b.coquelet@eleve.leschartreux.net>
 */
