@@ -49,11 +49,11 @@ namespace app\views;
         <table id="tableUser" class="table table-striped table-hover table-Secondary .table-responsive" >
             <thead>
                 <tr>
-                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="varchar(20)">Identifiant</th>
-                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(20)">Nom</th>
-                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(20)">Prenom</th>
-                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(20)">Password</th>
-                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="Int (8)">idRole</th>
+                    <th>Identifiant</th>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Password</th>
+                    <th>idRole</th>
                     <th>Edit/Delete</th>
 
                 </tr>
@@ -64,9 +64,7 @@ namespace app\views;
                     /* @var User $User */
                     ?>
                     <tr>
-                        <td><?php $id = $User->getId();
-                    echo $id;
-                    ?></td>
+                        <?php $id = $User->getIdentifiant();?>
                         <td id="<?php echo $id . ":Identifiant"; ?>"><?php echo $User->getIdentifiant(); ?></td>
                         <td id="<?php echo $id . ":Nom"; ?>"><?php echo $User->getNom(); ?></td>
                         <td id="<?php echo $id . ":Prenom"; ?>"><?php echo $User->getPrenom(); ?></td>
@@ -261,15 +259,5 @@ namespace app\views;
             </nav>
         </footer>
 
-        <script>
-
-
-
-
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl)
-            })
-        </script>
     </body>
 </html>

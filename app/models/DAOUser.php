@@ -28,7 +28,7 @@ class DAOUser {
         $prepared_Statement->bindParam("Identifiant", $Identifiant);
         $prepared_Statement->execute();
         while ($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)) {
-            $user = new User($row['Identifiant'], $row['Nom'], $row['Prenom'], $row['Password'], $row['IdRole']);
+            $user = new User($row['Identifiant'], $row['Nom'], $row['Prenom'], $row['password'], $row['IdRole']);
         }
         return $user;
     }
@@ -46,7 +46,7 @@ class DAOUser {
         $prepared_Statement->bindParam("Identifiant", $Identifiant);
         $prepared_Statement->execute();
         while ($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)) {
-            $user = new User($row['Identifiant'], $row['Nom'], $row['Prenom'], $row['Password'], $row['IdRole']);
+            $user = new User($row['Identifiant'], $row['Nom'], $row['Prenom'], $row['password'], $row['IdRole']);
         }
         return $user;
     }
@@ -59,19 +59,19 @@ class DAOUser {
 
     public function save(User $u): void
     {
-        $sql = "INSERT INTO user(Identifiant, Nom, Prenom, Password, IdRole)
-                Values (:Identifiant, :Nom, :Prenom, :Password, :IdRole);";
+        $sql = "INSERT INTO user(Identifiant, Nom, Prenom, password, IdRole)
+                Values (:Identifiant, :Nom, :Prenom, :password, :IdRole);";
         $Identifiant = $u->getIdentifiant();
         $Nom = $u->getNom();
         $Prenom = $u->getPrenom();
-        $Password = $u->getPassword();
+        $password = $u->getpassword();
         $IdRole = $u->getidRole();
 
         $prepared_Statement = $this->cnx->prepare($sql);
         $prepared_Statement->bindParam("Identifiant", $Identifiant);
         $prepared_Statement->bindParam("Nom", $Nom);
         $prepared_Statement->bindParam("Prenom", $Prenom);
-        $prepared_Statement->bindParam("Password", $Password);
+        $prepared_Statement->bindParam("password", $password);
         $prepared_Statement->bindParam("IdRole", $IdRole);
 
         $prepared_Statement->execute();
@@ -87,20 +87,20 @@ class DAOUser {
     {
 
         $sql = 'UPDATE user
-                SET Identifiant=:Identifiant, Nom=:Nom, Prenom=:Prenom, Password=:Password, IdRole=:IdRole
+                SET Identifiant=:Identifiant, Nom=:Nom, Prenom=:Prenom, password=:password, IdRole=:IdRole
                 Where Id=:Id';
 
         $Identifiant = $u->getIdentifiant();
         $Nom = $u->getNom();
         $Prenom = $u->getPrenom();
-        $Password = $u->getPassword();
+        $password = $u->getpassword();
         $IdRole = $u->getidRole();
 
         $prepared_Statement = $this->cnx->prepare($sql);
         $prepared_Statement->bindParam("Identifiant", $Identifiant);
         $prepared_Statement->bindParam("Prenom", $Prenom);
         $prepared_Statement->bindParam("Nom", $Prenom);
-        $prepared_Statement->bindParam("Password", $Password);
+        $prepared_Statement->bindParam("password", $password);
         $prepared_Statement->bindParam("IdRole", $IdRole);
         $prepared_Statement->execute();
     }
@@ -136,8 +136,7 @@ class DAOUser {
 
         $desUser = array();
         while ($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)) {
-            var_dump($row['Identifiant'], $row['Nom'], $row['Prenom'], $row['Password'], $row['IdRole']);
-            $desUser[] = new User($row['Identifiant'], $row['Nom'], $row['Prenom'], $row['Password'], $row['IdRole']);
+            $desUser[] = new User($row['Identifiant'], $row['Nom'], $row['Prenom'], $row['password'], $row['IdRole']);
         }
         return $desUser;
     }
@@ -152,7 +151,7 @@ class DAOUser {
 
     public function findAllWhereIdentifiant($value, $offset = 0, $limit = 10): Array {
 
-        $sql = 'SELECT Identifiant, Nom, Prenom, Password, IdRole FROM user WHERE Identifiant LIKE :Identifiant LIMIT :limit OFFSET :offset';
+        $sql = 'SELECT Identifiant, Nom, Prenom, password, IdRole FROM user WHERE Identifiant LIKE :Identifiant LIMIT :limit OFFSET :offset';
         $prepared_Statement = $this->cnx->prepare($sql);
         $value = "%$value%";
         $prepared_Statement->bindValue(':Identifiant', $value, \PDO::PARAM_STR);
@@ -161,7 +160,7 @@ class DAOUser {
         $prepared_Statement->execute();
         $desUser = [];
         while ($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)) {
-            $desUser[] = new User($row['Id'], $row['Identifiant'], $row['Password'], $row['IdRole']);
+            $desUser[] = new User($row['Identifiant'], $row['Nom'], $row['Prenom'], $row['password'], $row['IdRole']);
         }
         return $desUser;
     }
@@ -261,14 +260,14 @@ class DAOUser {
      */
 
     public function CheckUser($login, $password) {
-        $sql = 'SELECT Identifiant,Nom,Prenom FROM user WHERE Identifiant=:Identifiant AND password=:Password;';
+        $sql = 'SELECT Identifiant,Nom,Prenom FROM user WHERE Identifiant=:Identifiant AND password=:password;';
         $prepared_Statement = $this->cnx->prepare($sql);
         $prepared_Statement->bindParam("Identifiant", $login);
-        $prepared_Statement->bindParam("Password", $password);
+        $prepared_Statement->bindParam("password", $password);
         $prepared_Statement->execute();
         $isExist = false;
         while ($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)) {
-            $user = new user($row['Id'], $row['Identifiant'], $row['Password'], $row['IdRole']);
+            $user = new user($row['Identifiant'], $row['Nom'], $row['Prenom'], $row['password'], $row['IdRole']);
             $isExist = true;
         }
         if ($isExist == false) {
