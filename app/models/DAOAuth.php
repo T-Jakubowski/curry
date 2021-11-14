@@ -18,7 +18,7 @@ class DAOAuth {
             return $row['role'];
         }
     }
-    public function findPermissionById(int $id) : int {
+    public function findPermissionById(int $Id) : int {
         $sql = 'SELECT * FROM role WHERE Id=:Id;';
         $prepared_Statement = $this->cnx->prepare($sql);
         $prepared_Statement->bindParam("Id", $Id);
@@ -29,6 +29,7 @@ class DAOAuth {
     }
     
     public function isLoginValide(string $identifiant, string $password) : bool {
+        $password=hash('sha256', $password);
         $sql = 'SELECT * FROM user WHERE Identifiant=:Identifiant and password=:password;';
         $prepared_Statement = $this->cnx->prepare($sql);
         $prepared_Statement->bindParam("Identifiant", $identifiant);
@@ -42,6 +43,7 @@ class DAOAuth {
     }
     
     public function findUserByLogin(string $identifiant, string $password) {
+        $password=hash('sha256', $password);
         $sql = 'SELECT * FROM user WHERE Identifiant=:Identifiant and password=:password;';
         $prepared_Statement = $this->cnx->prepare($sql);
         $prepared_Statement->bindParam("Identifiant", $identifiant);

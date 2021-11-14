@@ -62,6 +62,7 @@ class UserController extends BaseController {
             }
         }
         if ($isSuccess == true) {
+            $password=hash('sha256', $password);
             $userToAdd = new User($identifiant, $nom, $prenom, $password, $role);
             $this->DAOUser->save($userToAdd);
             $resultMessage = "le user numéro a bien été ajouter";
@@ -101,6 +102,7 @@ class UserController extends BaseController {
             }
         }
         if ($isSuccess == true) {
+            $password=hash('sha256', $password);
             $userToUpdate = new User($identifiant, $nom, $prenom, $password, $role);
             $this->DAOUser->edit($userToUpdate);
             $resultMessage = "le user numéro '" . $identifiant . "' a bien été modifier";
