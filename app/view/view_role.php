@@ -3,7 +3,7 @@
 namespace app\views;
 ?>
 <html>
-    <?php include "Head.php"; ?>
+    <?php require "Head.php"; ?>
     <script>
         function ConfirmDelete(id) {
             var x = document.getElementById("idRoleToDelete");
@@ -17,7 +17,7 @@ namespace app\views;
     </script>
     <body>
         <?php $ActivePageName = "role";
-        include "view_NavBarre.php";
+        require "view_NavBarre.php";
         ?>
         <br>
 

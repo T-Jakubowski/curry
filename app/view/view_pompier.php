@@ -3,7 +3,7 @@
 namespace app\views;
 ?>
 <html>
-    <?php include "Head.php"; ?>
+    <?php require "Head.php"; ?>
     <script>
         function ConfirmDelete(id) {
             var x = document.getElementById("idPompierToDelete");
@@ -18,7 +18,7 @@ namespace app\views;
     <body>
         <?php
         $ActivePageName = "pompier";
-        include "view_NavBarre.php";
+        require "view_NavBarre.php";
         ?>
         <br>
 

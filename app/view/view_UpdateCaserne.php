@@ -1,8 +1,8 @@
 <?php namespace app\views;?>
 <html>
-<?php include "Head.php" ;?>
+<?php require "Head.php" ;?>
 <body>
-    <?php $ActivePageName="caserne"; include "view_NavBarre.php"; ?>
+    <?php $ActivePageName="caserne"; require "view_NavBarre.php"; ?>
     <br>
     <?php
     if (isset($resultMessage)){

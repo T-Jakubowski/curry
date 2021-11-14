@@ -3,10 +3,10 @@ namespace app\views;
 
 ?>
 <html>
-<?php include "Head.php" ;?>
+<?php require "Head.php" ;?>
 
   <body>
-    <?php $ActivePageName="user"; include "view_NavBarre.php"; ?>
+    <?php $ActivePageName="user"; require "view_NavBarre.php"; ?>
     <br>
 <?php
 if (isset($resultMessage)){?>

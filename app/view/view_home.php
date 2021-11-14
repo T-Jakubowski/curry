@@ -11,11 +11,11 @@ namespace app\views;
 ?>
 
 <html>
-<?php include "Head.php" ;?>
+<?php require "Head.php" ;?>
 
 
     <body>
-    <?php $ActivePageName="home"; include "view_NavBarre.php"; ?>
+    <?php $ActivePageName="home"; require "view_NavBarre.php"; ?>
    <br>
 
 

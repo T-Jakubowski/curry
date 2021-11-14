@@ -29,7 +29,7 @@ function Edit(id){
 }
 </script>
   <body>
-    <?php $ActivePageName="caserne"; include "view_NavBarre.php"; ?>
+    <?php $ActivePageName="caserne"; require "view_NavBarre.php"; ?>
     <br>
 
     
