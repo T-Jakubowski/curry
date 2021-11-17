@@ -1,6 +1,7 @@
 <?php
 
 namespace app\views;
+
 ?>
 <html>
     <?php

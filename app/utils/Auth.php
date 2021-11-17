@@ -6,7 +6,7 @@ use app\models\DAOAuth;
 
 class Auth{
     
-    private DAOAuth $DAOAuth;
+    private static DAOAuth $DAOAuth;
 
     public function __construct() {
         $cnx = SingletonDBMaria::getInstance()->getConnection();
@@ -59,7 +59,7 @@ class Auth{
     */
     public static function has(string $role) : bool {
         self::start_session();
-        $isrole = $this->DAOAuth->findRoleById($_SESSION['idRole']);
+        $isrole = self::$DAOAuth->findRoleById($_SESSION['idRole']);
         if ($isrole == $role)
         {
             return true;
@@ -72,14 +72,54 @@ class Auth{
     * @param int $perm
     * @return bool
     */
-    public static function can(int $perm) : bool {
+    public static function can(string $perm) : bool {
         self::start_session();
-        $isperm = $this->DAOAuth->findPermissionById($_SESSION['idRole']);
-        if ($isperm == $perm)
-        {
-            return true;
+        $isperm = self::$DAOAuth->findPermissionById($_SESSION['idRole']);
+        switch($perm){
+            case 'read':
+                if ($isperm[7] == '1'){
+                    return true;
+                }
+                else{
+                    return false;
+                } 
+                break;
+            case 'write':
+                if ($isperm[6] == '1'){
+                    return true;
+                }
+                else{
+                    return false;
+                } 
+                break;
+            case 'update':
+                if ($isperm[5] == '1'){
+                    return true;
+                }
+                else{
+                    return false;
+                } 
+                break;
+            case 'delete':
+                if ($isperm[4] == '1'){
+                    return true;
+                }
+                else{
+                    return false;
+                } 
+                break;
+            case 'manage':
+                if ($isperm[3] == '1'){
+                    return true;
+                }
+                else{
+                    return false;
+                } 
+                break;
         }
-        return false;
+        
+
+        
     }
 }
 
