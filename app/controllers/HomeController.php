@@ -24,18 +24,17 @@ class HomeController extends BaseController {
 
     public function index() {
         $auth = new Auth();
-        $permission = $auth->can('read');
-        $islogged = $auth->is_logged();
-        if ($islogged) {
+        $isactive = $auth->is_session_active();
+        if ($isactive == true) {
+            $permission = $auth->can('read');
             if ($permission) {
                 $page = Renderer::render("view_home.php");
             }
             else{
-                $msg = 'Vous n\'avez pas les permissions';
-                $page = Renderer::render("view_error.php");
+                $page = Renderer::render("view_denyAccess.php");
             }
         } else {
-            $page = Renderer::render("view_error.php");
+            $page = Renderer::render("view_login.php");
         }
         echo $page;
     }

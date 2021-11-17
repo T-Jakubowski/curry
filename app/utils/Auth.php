@@ -11,7 +11,7 @@ class Auth{
     public function __construct() {
         $cnx = SingletonDBMaria::getInstance()->getConnection();
         $DAOAuth = new DAOAuth($cnx);
-        $this->DAOAuth = $DAOAuth;
+        self::$DAOAuth = $DAOAuth;
     }
     
     public static function login(User $user) {
@@ -47,6 +47,15 @@ class Auth{
         return false;
     }
     
+    public static function is_session_active() {
+        if (isset($_SESSION['identifiant'])) {
+            return true;    
+        }
+        else{
+            return false;        
+        }
+    }
+    
     public static function start_session(){
         if (self::is_logged() == false) {
             session_start();
@@ -72,9 +81,9 @@ class Auth{
     * @param int $perm
     * @return bool
     */
-    public static function can(string $perm) : bool {
+    public function can(string $perm) : bool {
         self::start_session();
-        $isperm = self::$DAOAuth->findPermissionById($_SESSION['idRole']);
+        $isperm = $this->DAOAuth->findPermissionById($_SESSION['idRole']);
         switch($perm){
             case 'read':
                 if ($isperm[7] == '1'){
