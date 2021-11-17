@@ -208,7 +208,6 @@ function caserneRoutes_get($fragments) {
             call_user_func_array([new CaserneController(), "delete"], $fragments);
             break;
         case "update" :
-            var_dump("1");
             call_user_func_array([new CaserneController(), "update"], $fragments);
             break;
 

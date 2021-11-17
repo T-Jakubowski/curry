@@ -4,6 +4,12 @@ namespace app\views;
 ?>
 <html>
 <?php require "Head.php" ;?>
+<?php 
+
+
+?>
+
+
 <script>
 function ConfirmDelete(id){
   var x = document.getElementById("idCaserneToDelete");
@@ -32,16 +38,16 @@ function Edit(id){
     <?php $ActivePageName="caserne"; require "view_NavBarre.php"; ?>
     <br>
 
-    
+    <?php if($insertPerm==true){ ?>
     <div class="container">
       <div class="row justify-content-end">
           <div class="col-1">
-              <span data-bs-toggle="tooltip" data-bs-placement="top" title="Ajout de Caserne">
-                  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createCaserneModal">+</button>
-              </span>
+                  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createCaserneModal">+</button>  
           </div>
       </div>
     </div>
+    <?php } ?>
+
     <br>
     <div><h3>Liste des Casernes :</h3></div>
 
@@ -65,8 +71,9 @@ function Edit(id){
           <th>CP</th>
           <th>Ville</th>
           <th>CodeTypeC</th>
-          <th>Edit/Delete</th>
-          
+          <?php if($updatePerm==true OR $deletePerm==true){?>
+          <th><?php if($updatePerm==true){?>Edit<?php } ?> <?php if($deletePerm==true){?>Delete<?php } ?></th>
+          <?php } ?>
         </tr>
       </thead>
       <tbody>
@@ -79,9 +86,16 @@ function Edit(id){
     <td id="<?php echo $id.":Adresse"; ?>"><?php echo $Caserne->getAdresse(); ?></td>
     <td id="<?php echo $id.":CP"; ?>"><?php echo $Caserne->getCP(); ?></td>
     <td id="<?php echo $id.":Ville"; ?>"><?php echo $Caserne->getVille(); ?></td>
-    <td id="<?php echo $id.":CodeTypeC"; ?>"><?php echo $Caserne->getCodeTypeC(); ?></std>
-    <td><button id="<?php echo $id.":edit"; ?>" onclick="Edit(<?php echo $id; ?>)" type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#editCaserneModal"><img class="fit-picture" src="/img/edit_black_24dp.svg" alt="edit"></button>
-      <button id="<?php echo $id.":del"; ?>" onclick="ConfirmDelete(<?php echo $id; ?>)" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteCaserneModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button></td>
+    <td id="<?php echo $id.":CodeTypeC"; ?>"><?php echo $Caserne->getCodeTypeC(); ?></td>
+    <?php if($updatePerm==true OR $deletePerm==true){?>
+    <td>
+    <?php if($updatePerm==true){?>
+      <button id="<?php echo $id.":edit"; ?>" onclick="Edit(<?php echo $id; ?>)" type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#editCaserneModal"><img class="fit-picture" src="/img/edit_black_24dp.svg" alt="edit"></button>
+      <?php }if($deletePerm==true){?>
+      <button id="<?php echo $id.":del"; ?>" onclick="ConfirmDelete(<?php echo $id; ?>)" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteCaserneModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button>
+    </td>
+    <?php }
+    }?>
   </tr>
   <?php
 
