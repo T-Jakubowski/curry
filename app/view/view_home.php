@@ -12,10 +12,6 @@ namespace app\views;
 
 <html>
 <?php
-            var_dump($_SESSION['identifiant']);
-            var_dump($_SESSION['nom']);
-            var_dump($_SESSION['prenom']);
-            var_dump($_SESSION['idRole']);
 
 require "Head.php" ;?>
 

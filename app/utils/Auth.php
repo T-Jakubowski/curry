@@ -16,7 +16,7 @@ class Auth{
     
     public static function login(User $user) {
         self::start_session();
-        
+
         $identifiant = $user->getIdentifiant();
         $nom = $user->getNom();
         $prenom = $user->getPrenom();
@@ -26,6 +26,7 @@ class Auth{
         $_SESSION['nom']=$nom;
         $_SESSION['prenom']=$prenom;
         $_SESSION['idRole']=$idRole;
+
     }
     /*
     * detruit la session de l'utilisateur en entré
@@ -72,8 +73,9 @@ class Auth{
         if ($isrole == $role)
         {
             return true;
+        }else{
+            return false;
         }
-        return false;
     }
     
     /*
@@ -83,7 +85,7 @@ class Auth{
     */
     public function can(string $perm) : bool {
         self::start_session();
-        $isperm = $this->DAOAuth->findPermissionById($_SESSION['idRole']);
+        $isperm = self::$DAOAuth->findPermissionById($_SESSION['idRole']);
         switch($perm){
             case 'read':
                 if ($isperm[7] == '1'){

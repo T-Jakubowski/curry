@@ -33,6 +33,7 @@ class LoginController {
     public function login() : void {
         $identifiant = htmlspecialchars($_POST['identifiant']);
         $password =  htmlspecialchars($_POST['password']);
+        
         if ($this->DAOAuth->isLoginValide($identifiant, $password)){
             $user = $this->DAOAuth->findUserByLogin($identifiant, $password);
             $auth = new Auth();

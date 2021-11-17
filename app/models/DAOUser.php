@@ -14,7 +14,7 @@ class DAOUser {
         $this->cnx = $cnx;
     }
 
-    /**
+    /*
       Renvoie un user par rapport a son id
       
       @param int $Identifiant
