@@ -32,7 +32,7 @@ class Auth{
     * @param User $user
     */
     public static function logout() {
-        if (self::is_logged()){ 
+        if (self::is_logged() == true){ 
             session_destroy();   
         }
     }
@@ -40,15 +40,15 @@ class Auth{
     * Vérifie qu'il y ait bien une variable de session User
     * @return bool
     */
-    public static function is_logged() : bool {
-        if (session_status() !== PHP_SESSION_ACTIVE) {
+    public static function is_logged() {
+        if (session_status() == PHP_SESSION_ACTIVE) {
             return true;
         }
         return false;
     }
     
     public static function start_session(){
-        if (!self::is_logged()) {
+        if (self::is_logged() == false) {
             session_start();
         }
     }

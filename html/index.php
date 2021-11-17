@@ -11,6 +11,7 @@ use app\controllers\LoginController;
 use app\controllers\DefaultController;
 use app\controllers\HomeController;
 
+session_start();
 //https://www.youtube.com/watch?v=tbYa0rJQyoM
 //https://www.youtube.com/watch?v=-iW6lo6wq1Y
 //https://openclassrooms.com/fr/courses/2078536-developpez-votre-site-web-avec-le-framework-symfony2-ancienne-version/2079345-le-routeur-de-symfony2

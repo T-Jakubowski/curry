@@ -1,5 +1,5 @@
 <?php
-use app\models\User;
+
 namespace app\models;
 
 class DAOAuth {

@@ -3,7 +3,8 @@
 namespace app\views;
 ?>
 <html>
-    <?php require "Head.php"; ?>
+    <?php
+            require "Head.php"; ?>
     <script>
         function ConfirmDelete(id) {
             var x = document.getElementById("idRoleToDelete");

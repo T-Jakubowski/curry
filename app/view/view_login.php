@@ -4,7 +4,8 @@ namespace app\views;
 ?>
 
 <html>
-    <?php require "Head.php"; ?>
+    <?php
+    require "Head.php"; ?>
     <body>
         <script type="text/javascript">
             function TurnVisibility() {
