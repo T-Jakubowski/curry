@@ -7,16 +7,19 @@
  */
 
 namespace app\controllers;
+
 use app\utils\Renderer;
 use app\models\DAOAuth;
 use app\utils\Auth;
 use app\utils\SingletonDBMaria;
+
 /*
  * Description of LoginController
  * @author student
  */
+
 class LoginController {
-    
+
     private DAOAuth $DAOAuth;
 
     public function __construct() {
@@ -24,36 +27,41 @@ class LoginController {
         $DAOAuth = new DAOAuth($cnx);
         $this->DAOAuth = $DAOAuth;
     }
-    public function show(){
-        
-        $page=Renderer::render("view_login.php");
+
+    public function show() {
+
+        $page = Renderer::render("view_login.php");
         echo $page;
     }
-    
-    public function login() : void {
+
+    public function login(): void {
         $identifiant = htmlspecialchars($_POST['identifiant']);
-        $password =  htmlspecialchars($_POST['password']);
-        
-        if ($this->DAOAuth->isLoginValide($identifiant, $password)){
+        $password = htmlspecialchars($_POST['password']);
+
+        if ($this->DAOAuth->isLoginValide($identifiant, $password)) {
             $user = $this->DAOAuth->findUserByLogin($identifiant, $password);
             $auth = new Auth();
             $auth->login($user);
-            $page=Renderer::render("view_home.php", compact('auth'));
-            
-            echo $page;
-        }else{
+            $permission = $auth->can('read');
+            if ($permission) {
+                $page = Renderer::render("view_home.php", compact('auth'));
+            }
+            else{
+                $page = Renderer::render("view_denyAccess.php");
+            }
+        } else {
             $WrongConnection = true;
-            $page=Renderer::render("view_login.php", compact('WrongConnection'));
-            echo $page;
+            $page = Renderer::render("view_login.php", compact('WrongConnection'));
         }
-    }
-
-    public function logout() : void {
-        $auth = new Auth();
-        $auth->logout();
-        $DestroyConnection=true;
-        $page=Renderer::render("view_login.php", compact('DestroyConnection'));
         echo $page;
     }
-    
+
+    public function logout(): void {
+        $auth = new Auth();
+        $auth->logout();
+        $DestroyConnection = true;
+        $page = Renderer::render("view_login.php", compact('DestroyConnection'));
+        echo $page;
+    }
+
 }
