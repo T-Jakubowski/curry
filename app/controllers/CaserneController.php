@@ -4,6 +4,7 @@ use app\models\DAOCaserne;
 use app\utils\SingletonDBMaria;
 use app\utils\Renderer;
 use app\models\Caserne;
+use app\utils\Auth;
 use app\utils\filtre\filtreCaserne\FiltreCaserne;
 
 class Casernecontroller extends BaseController{
@@ -17,120 +18,171 @@ class Casernecontroller extends BaseController{
 
     //renvoie la page avec la liste de tout les pompier
     public function show(){
-        if (isset($_GET["page"])){
-            $Offset=($_GET["page"]*10)-10;
-          }else{
-            $Offset=0;
-          }
-          if (isset($_GET["search"])){
-            $NumC=($_GET["search"]);
-            $LstCaserne = $this->DAOCaserne->findAllWhereNum($NumC,$Offset,10);
-            $CountCaserne = $this->DAOCaserne->countWhereNum($NumC);
-          }else{
-            $LstCaserne = $this->DAOCaserne->findAll($Offset,10);
-            $CountCaserne = $this->DAOCaserne->count();
-          }
-        $page=Renderer::render("view_caserne.php", compact("LstCaserne","CountCaserne"));
+        $auth = new Auth();
+        $isactive = $auth->is_session_active();
+        if ($isactive == true) {
+            $readPerm = $auth->can('read');
+            if ($readPerm == true) {
+                if (isset($_GET["page"])){
+                    $Offset=($_GET["page"]*10)-10;
+                  }else{
+                    $Offset=0;
+                  }
+                  if (isset($_GET["search"])){
+                    $NumC=($_GET["search"]);
+                    $LstCaserne = $this->DAOCaserne->findAllWhereNum($NumC,$Offset,10);
+                    $CountCaserne = $this->DAOCaserne->countWhereNum($NumC);
+                  }else{
+                    $LstCaserne = $this->DAOCaserne->findAll($Offset,10);
+                    $CountCaserne = $this->DAOCaserne->count();
+                  }
+
+                $insertPerm = $auth->can('write');
+                $updatePerm = $auth->can('update');
+                $deletePerm = $auth->can('delete');
+                $page=Renderer::render("view_caserne.php", compact("LstCaserne","CountCaserne","insertPerm","updatePerm","deletePerm"));
+
+            }
+            else{
+                $page = Renderer::render("view_denyAccess.php");
+            }
+        } else {
+            $page = Renderer::render("view_login.php");
+        }
         echo $page;
     }
 
     //
     public function insert(){
-        $NumCaserne = htmlspecialchars($_POST['AddCaserne_NumCaserne']);
-        $Addresse = htmlspecialchars($_POST['AddCaserne_Addresse']);
-        $CP = htmlspecialchars($_POST['AddCaserne_CP']);
-        $Ville = htmlspecialchars($_POST['AddCaserne_Ville']);
-        $CodeTypeC = htmlspecialchars($_POST['AddCaserne_CodeTypeC']);
-        $data = array(
-            "num" => $NumCaserne,
-            "addresse" => $Addresse,
-            "cp" => $CP,
-            "ville" => $Ville,
-            "codetypec" => $CodeTypeC
-        );
-        $f=new FiltreCaserne($data);
-        $data=$f->caser();
-        $isSuccess=true;
-        foreach($data as $key=>$value){
-            if ($value==false){
-                $isSuccess=false;
-                $valueError[]=$key;
+        $auth = new Auth();
+        $isactive = $auth->is_session_active();
+        if ($isactive == true) {
+            $$insertPerm = $auth->can('write');
+                if ($$insertPerm == true) {
+                $NumCaserne = htmlspecialchars($_POST['AddCaserne_NumCaserne']);
+                $Addresse = htmlspecialchars($_POST['AddCaserne_Addresse']);
+                $CP = htmlspecialchars($_POST['AddCaserne_CP']);
+                $Ville = htmlspecialchars($_POST['AddCaserne_Ville']);
+                $CodeTypeC = htmlspecialchars($_POST['AddCaserne_CodeTypeC']);
+                $data = array(
+                    "num" => $NumCaserne,
+                    "addresse" => $Addresse,
+                    "cp" => $CP,
+                    "ville" => $Ville,
+                    "codetypec" => $CodeTypeC
+                );
+                $f=new FiltreCaserne($data);
+                $data=$f->caser();
+                $isSuccess=true;
+                foreach($data as $key=>$value){
+                    if ($value==false){
+                        $isSuccess=false;
+                        $valueError[]=$key;
+                    }
+                }
+                if ($isSuccess==true){
+
+                    $caserneToAdd = new Caserne(htmlspecialchars($_POST['AddCaserne_NumCaserne']),htmlspecialchars($_POST['AddCaserne_Addresse']),htmlspecialchars($_POST['AddCaserne_CP']),htmlspecialchars($_POST['AddCaserne_Ville']),htmlspecialchars($_POST['AddCaserne_CodeTypeC']));
+                    $this->DAOCaserne->save($caserneToAdd);
+                    $resultMessage="la caserne numéro '".$NumCaserne."' a bien été ajouter";
+                    $page=Renderer::render("view_AddCaserne.php", compact("resultMessage"));
+                }else{
+                    $page=Renderer::render("view_AddCaserne.php", compact("valueError"));
+                }
+            }else{
+                $page = Renderer::render("view_denyAccess.php");
             }
-        }
-
-        if ($isSuccess==true){
-
-            $caserneToAdd = new Caserne(htmlspecialchars($_POST['AddCaserne_NumCaserne']),htmlspecialchars($_POST['AddCaserne_Addresse']),htmlspecialchars($_POST['AddCaserne_CP']),htmlspecialchars($_POST['AddCaserne_Ville']),htmlspecialchars($_POST['AddCaserne_CodeTypeC']));
-            $this->DAOCaserne->save($caserneToAdd);
-            $resultMessage="la caserne numéro '".$NumCaserne."' a bien été ajouter";
-            $page=Renderer::render("view_AddCaserne.php", compact("resultMessage"));
         }else{
-            $page=Renderer::render("view_AddCaserne.php", compact("valueError"));
+            $page = Renderer::render("view_login.php");
         }
         echo $page;
     }
 
 
     public function update() : void{
-        $NumCaserne = htmlspecialchars($_POST['UpdateCaserne_NumCaserne']);
-        $isExist = $this->DAOCaserne->findIfNumCaserneExist($NumCaserne);
-        $isSuccess=false;
-        if($isExist==true){
-            $Addresse = htmlspecialchars($_POST['UpdateCaserne_Addresse']);
-            $CP = htmlspecialchars($_POST['UpdateCaserne_CP']);
-            $Ville = htmlspecialchars($_POST['UpdateCaserne_Ville']);
-            $CodeTypeC = htmlspecialchars($_POST['UpdateCaserne_CodeTypeC']);
-            $data = array(
-                "num" => $NumCaserne,
-                "addresse" => $Addresse,
-                "cp" => $CP,
-                "ville" => $Ville,
-                "codetypec" => $CodeTypeC
-            );
-            $f=new FiltreCaserne($data);
-            $data=$f->caser();
-            $isSuccess=true;
-            foreach($data as $key=>$value){
-                if ($value==false){
-                    if ($key!="num"){
-                        $isSuccess=false;
-                        $valueError[]=$key;
-                    }
+        $auth = new Auth();
+        $isactive = $auth->is_session_active();
+        if ($isactive == true) {
+            $updatePerm = $auth->can('update');
+            if ($updatePerm == true) {
+                $NumCaserne = htmlspecialchars($_POST['UpdateCaserne_NumCaserne']);
+                $isExist = $this->DAOCaserne->findIfNumCaserneExist($NumCaserne);
+                $isSuccess=false;
+                if($isExist==true){
+                    $Addresse = htmlspecialchars($_POST['UpdateCaserne_Addresse']);
+                    $CP = htmlspecialchars($_POST['UpdateCaserne_CP']);
+                    $Ville = htmlspecialchars($_POST['UpdateCaserne_Ville']);
+                    $CodeTypeC = htmlspecialchars($_POST['UpdateCaserne_CodeTypeC']);
+                    $data = array(
+                        "num" => $NumCaserne,
+                        "addresse" => $Addresse,
+                        "cp" => $CP,
+                        "ville" => $Ville,
+                        "codetypec" => $CodeTypeC
+                    );
+                    $f=new FiltreCaserne($data);
+                    $data=$f->caser();
+                    $isSuccess=true;
+                    foreach($data as $key=>$value){
+                        if ($value==false){
+                            if ($key!="num"){
+                                $isSuccess=false;
+                                $valueError[]=$key;
+                            }
 
+                        }
+                    }
                 }
+                if ($isSuccess==true){
+                    $caserneToUpdate = new Caserne(htmlspecialchars($_POST['UpdateCaserne_NumCaserne']),htmlspecialchars($_POST['UpdateCaserne_Addresse']),htmlspecialchars($_POST['UpdateCaserne_CP']),htmlspecialchars($_POST['UpdateCaserne_Ville']),htmlspecialchars($_POST['UpdateCaserne_CodeTypeC']));
+                    $this->DAOCaserne->update($caserneToUpdate);
+                    $resultMessage="la caserne numéro '".$NumCaserne."' a bien été modifier";
+                    $page=Renderer::render("view_UpdateCaserne.php", compact("resultMessage"));
+                }else{
+                    $page=Renderer::render("view_UpdateCaserne.php", compact("valueError"));
+                }
+            }else{
+                $page = Renderer::render("view_denyAccess.php");
             }
-        }
-        if ($isSuccess==true){
-            $caserneToUpdate = new Caserne(htmlspecialchars($_POST['UpdateCaserne_NumCaserne']),htmlspecialchars($_POST['UpdateCaserne_Addresse']),htmlspecialchars($_POST['UpdateCaserne_CP']),htmlspecialchars($_POST['UpdateCaserne_Ville']),htmlspecialchars($_POST['UpdateCaserne_CodeTypeC']));
-            $this->DAOCaserne->update($caserneToUpdate);
-            $resultMessage="la caserne numéro '".$NumCaserne."' a bien été modifier";
-            $page=Renderer::render("view_UpdateCaserne.php", compact("resultMessage"));
         }else{
-            $page=Renderer::render("view_UpdateCaserne.php", compact("valueError"));
+            $page = Renderer::render("view_login.php");
         }
         echo $page;
     }
+
 
     public function delete() : void{
-        $id = htmlspecialchars($_POST['idCaserneToDelete']);
-        $isExist = $this->DAOCaserne->findIfNumCaserneExist($id);
-        if ($isExist==true){
-            $PompierOnCaserne = $this->DAOCaserne->findPompierFromCaserne($id);
-            if (empty($PompierOnCaserne)){
-                $resultMessage="la caserne numéro '".$id."' a bien été Supprimer";
-                $CaserneDetail = $this->DAOCaserne->remove($id);
-                $page=Renderer::render("view_DeleteCaserne.php", compact("resultMessage"));
+        $auth = new Auth();
+        $isactive = $auth->is_session_active();
+        if ($isactive == true) {
+            $deletePerm = $auth->can('delete');
+            if ($deletePerm == true) {
+                $id = htmlspecialchars($_POST['idCaserneToDelete']);
+                $isExist = $this->DAOCaserne->findIfNumCaserneExist($id);
+                if ($isExist==true){
+                    $PompierOnCaserne = $this->DAOCaserne->findPompierFromCaserne($id);
+                    if (empty($PompierOnCaserne)){
+                        $resultMessage="la caserne numéro '".$id."' a bien été Supprimer";
+                        $CaserneDetail = $this->DAOCaserne->remove($id);
+                        $page=Renderer::render("view_DeleteCaserne.php", compact("resultMessage"));
+                    }else{
+                        $valueError="La caserne numéro ".$id." possede des pompier et ne peut donc pas etre supprimer";
+                        $page=Renderer::render("view_DeleteCaserne.php", compact("valueError"));
+                    }
+                }else{
+                    $valueError="Vous ne pouvez pas supprimer la caserne ".$id." pour l'instant";
+                    $page=Renderer::render("view_DeleteCaserne.php", compact("valueError"));
+                }
             }else{
-                $valueError="La caserne numéro ".$id." possede des pompier et ne peut donc pas etre supprimer";
-                $page=Renderer::render("view_DeleteCaserne.php", compact("valueError"));
+                $page = Renderer::render("view_denyAccess.php");
             }
         }else{
-            $valueError="Vous ne pouvez pas supprimer la caserne ".$id." pour l'instant";
-            $page=Renderer::render("view_DeleteCaserne.php", compact("valueError"));
+            $page = Renderer::render("view_login.php");
+            }
+            echo $page;
         }
-        echo $page;
 
-    }
+
     public function showDetails(string $id){
         $isExist = $this->DAOCaserne->findIfNumCaserneExist($id);
         if ($isExist==true){
