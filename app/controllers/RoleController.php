@@ -25,8 +25,9 @@ class RoleController extends BaseController {
         $auth = new Auth();
         $isactive = $auth->is_session_active();
         if ($isactive == true) {
-            $permission = $auth->can('manage');
-            if ($permission) {
+            $permission_read = $auth->can('read');
+            $permission_manage = $auth->can('manage');
+            if ($permission_manage) {
                 if (isset($_GET["page"])) {
                     $Offset = (htmlspecialchars($_GET["page"]) * 10) - 10;
                 } else {
@@ -40,7 +41,7 @@ class RoleController extends BaseController {
                     $LstRole = $this->DAORole->findAll($Offset, 10);
                     $CountRole = $this->DAORole->count();
                 }
-                $page = Renderer::render("view_role.php", compact("LstRole", "CountRole"));
+                $page = Renderer::render("view_role.php", compact("LstRole", "CountRole", "permission_manage", "permission_read"));
             } else {
                 $page = Renderer::render("view_denyAccess.php");
             }

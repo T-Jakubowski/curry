@@ -27,8 +27,9 @@ class HomeController extends BaseController {
         $isactive = $auth->is_session_active();
         if ($isactive == true) {
             $permission = $auth->can('read');
+            $permission_manage = $auth->can('manage');
             if ($permission) {
-                $page = Renderer::render("view_home.php");
+                $page = Renderer::render("view_home.php", compact ("permission_manage"));
             }
             else{
                 $page = Renderer::render("view_denyAccess.php");

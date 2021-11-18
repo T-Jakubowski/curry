@@ -1,9 +1,7 @@
 <?php
 
 namespace app\view;
-
 use app\utils\Auth;
-
 /*
  * @author Baptiste Coquelet <b.coquelet@eleve.leschartreux.net>
  * @param string $ActivePageName
@@ -51,8 +49,9 @@ if (isset($ActivePageName)) {
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <?php
-                    $auth = new Auth();
+                    $auth = new auth();
                     $permission_read = $auth->can('read');
+                    $permission_manage = $auth->can('manage');
                     if ($permission_read) {
                         ?>
                         <a class="nav-link <?php echo $IsActive1; ?>" href="/home">Home</a>
@@ -63,7 +62,6 @@ if (isset($ActivePageName)) {
                     ?>
 
                     <?php
-                    $permission_manage = $auth->can('manage');
                     if ($permission_manage) {
                         ?>
                         <a class="nav-link <?php echo $IsActive4; ?>" href="/user/affiche">User</a>

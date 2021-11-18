@@ -25,8 +25,11 @@ class PompierController extends BaseController {
         $auth = new Auth();
         $isactive = $auth->is_session_active();
         if ($isactive == true) {
-            $permission = $auth->can('read');
-            if ($permission) {
+            $permission_write = $auth->can('write');
+            $permission_update = $auth->can('update');
+            $permission_delete = $auth->can('delete');
+            $permission_read = $auth->can('read');
+            if ($permission_read) {
                 if (isset($_GET["page"])) {
                     $Offset = ($_GET["page"] * 20) - 20;
                 } else {
@@ -40,7 +43,7 @@ class PompierController extends BaseController {
                     $LstPompier = $this->DAOPompier->findAll($Offset, 20);
                     $CountPompier = $this->DAOPompier->count();
                 }
-                $page = Renderer::render("view_pompier.php", compact("LstPompier", "CountPompier"));
+                $page = Renderer::render("view_pompier.php", compact("LstPompier", "CountPompier", "permission_update", "permission_delete", "permission_write", "permission_read"));
             } else {
                 $page = Renderer::render("view_denyAccess.php");
             }

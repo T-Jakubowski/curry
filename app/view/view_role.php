@@ -3,8 +3,7 @@
 namespace app\views;
 ?>
 <html>
-    <?php
-            require "Head.php"; ?>
+    <?php require "Head.php"; ?>
     <script>
         function ConfirmDelete(id) {
             var x = document.getElementById("idRoleToDelete");
@@ -17,7 +16,8 @@ namespace app\views;
         }
     </script>
     <body>
-        <?php $ActivePageName = "role";
+        <?php
+        $ActivePageName = "role";
         require "view_NavBarre.php";
         ?>
         <br>
@@ -53,8 +53,11 @@ namespace app\views;
                     <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(15)">Id</th>
                     <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(20)">Role</th>
                     <th data-bs-toggle="tooltip" data-bs-placement="top" title="Int (8)">Permission</th>
-                    <th>Edit/Delete</th>
-
+                    <?php
+                    if ($permission_manage) {
+                        ?>
+                        <th>Edit/Delete</th>
+                    <?php }?>
                 </tr>
             </thead>
             <tbody>
@@ -66,13 +69,16 @@ namespace app\views;
                         <td <?php $id = $Role->getId(); ?>id="<?php echo $id . ":Id"; ?>"><?php echo $id; ?></td>
                         <td id="<?php echo $id . ":Role"; ?>"><?php echo $Role->getRole(); ?></td>
                         <td id="<?php echo $id . ":Permission"; ?>"><?php echo $Role->getPermission(); ?></td>
-                        <td><button id="<?php echo $id . ":edit"; ?>" onclick="Edit(<?php echo $id; ?>)" type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#editRoleModal"><img class="fit-picture" src="/img/edit_black_24dp.svg" alt="edit"></button>
-                            <button id="<?php echo $id . ":del"; ?>" onclick="ConfirmDelete(<?php echo $id; ?>)" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteRoleModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button></td>
+                        <?php if ($permission_manage) { ?>
+                            <td><button id="<?php echo $id . ":edit"; ?>" onclick="Edit(<?php echo $id; ?>)" type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#editRoleModal"><img class="fit-picture" src="/img/edit_black_24dp.svg" alt="edit"></button>
+                                <button id="<?php echo $id . ":del"; ?>" onclick="ConfirmDelete(<?php echo $id; ?>)" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteRoleModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button></td>
+                        </tr>
+                        <?php }
+                    ?>
                     </tr>
                     <?php
                 }
                 ?>
-
             </tbody>
         </table>
 
