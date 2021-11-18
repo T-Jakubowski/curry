@@ -57,8 +57,8 @@ class Casernecontroller extends BaseController{
         $auth = new Auth();
         $isactive = $auth->is_session_active();
         if ($isactive == true) {
-            $$insertPerm = $auth->can('write');
-                if ($$insertPerm == true) {
+            $insertPerm = $auth->can('write');
+                if ($insertPerm == true) {
                 $NumCaserne = htmlspecialchars($_POST['AddCaserne_NumCaserne']);
                 $Addresse = htmlspecialchars($_POST['AddCaserne_Addresse']);
                 $CP = htmlspecialchars($_POST['AddCaserne_CP']);
@@ -181,6 +181,14 @@ class Casernecontroller extends BaseController{
             }
             echo $page;
         }
+
+
+
+
+
+
+
+
 
 
     public function showDetails(string $id){
