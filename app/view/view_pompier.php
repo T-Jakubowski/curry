@@ -7,12 +7,31 @@ namespace app\views;
     <script>
         function ConfirmDelete(id) {
             var x = document.getElementById("idPompierToDelete");
+            var y = document.getElementById("wantToDelete");
+            y.innerHTML = id;
             x.value = id;
         }
         function Edit(id) {
             var x = document.getElementById("editmatricule");
             x.value = id;
             x.innerHTML = id;
+
+            var Prenom = document.getElementById(id+":Prenom").innerHTML;
+            var Nom = document.getElementById(id+":Nom").innerHTML;
+            var ChefAgret = document.getElementById(id+":ChefAgret").innerHTML;
+            var DateNaissance = document.getElementById(id+":DateNaissance").innerHTML;
+            var NumCaserne = document.getElementById(id+":NumCaserne").innerHTML;
+            var CodeGrade = document.getElementById(id+":CodeGrade").innerHTML;
+            var MatriculeRespo = document.getElementById(id+":MatriculeRespo").innerHTML;
+
+            document.getElementById("editmatricule").value=id;
+            document.getElementById("editnom").value=Nom;
+            document.getElementById("editprenom").value=Prenom
+            document.getElementById("editchefagret").value=ChefAgret;
+            document.getElementById("editdatenaissance").value=DateNaissance;
+            document.getElementById("editnumcaserne").value=NumCaserne;
+            document.getElementById("editcodegrade").value=CodeGrade;
+            document.getElementById("editmatriculerespo").value=MatriculeRespo;
         }
     </script>
     <body>
@@ -53,14 +72,14 @@ namespace app\views;
         <table id="tablePompier" class="table table-striped table-hover table-Secondary .table-responsive" >
             <thead>
                 <tr>
-                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="nt(11)">#</th>
-                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(15)">Prenom</th>
-                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(20)">Nom</th>
-                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="Int (8)">ChefAgret</th>
-                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="Int(11)">DateNaissance</th>
-                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(15)">NumCaserne</th>
-                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(20)">CodeGrade</th>
-                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="Int (8)">MatriculeRespo</th>
+                    <th>#</th>
+                    <th>Prenom</th>
+                    <th>Nom</th>
+                    <th>ChefAgret</th>
+                    <th>DateNaissance</th>
+                    <th>NumCaserne</th>
+                    <th>CodeGrade</th>
+                    <th>MatriculeRespo</th>
                     <?php
                     if ($permission_update && $permission_delete) {
                         ?>

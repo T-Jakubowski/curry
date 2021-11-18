@@ -7,12 +7,19 @@ namespace app\views;
     <script>
         function ConfirmDelete(id) {
             var x = document.getElementById("idRoleToDelete");
+            var y = document.getElementById("wantToDelete");
             x.value = id;
+            var role = document.getElementById(id+":Role").innerHTML;
+            y.innerHTML = role;
         }
         function Edit(id) {
             var x = document.getElementById("editid");
             x.value = id;
             x.innerHTML = id;
+
+
+
+
         }
     </script>
     <body>
@@ -132,7 +139,7 @@ namespace app\views;
                         <div class="modal-body">
                             <div class="input-group mb-3">
                                 <input id="editid" name="editid" value="" type="text" class="form-control" placeholder="Value" readonly>
-                                <span class="input-group-text">NumCaserne</span>
+                                <span class="input-group-text">Id</span>
                             </div>
                             <div class="input-group mb-3">
                                 <input id="editrole" name="editrole" type="text" class="form-control" placeholder="ex: admin" aria-label="Recipient's username" aria-describedby="basic-addon2">
