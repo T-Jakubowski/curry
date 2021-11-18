@@ -198,7 +198,6 @@ class Casernecontroller extends BaseController {
             }
             echo $page;
         }
-
 }
 
 ?>
