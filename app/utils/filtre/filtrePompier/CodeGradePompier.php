@@ -4,11 +4,10 @@ namespace app\utils\filtre\filtrePompier;
 class CodeGradePompier extends AbstractPompier {
 
     public function checkPompier(string $data): bool {
-        $codeGradePompier = preg_match('([A-Za-z]{2})', $data);
-        if ($codeGradePompier) {
+        $isExist=$this->DAOPompier->iscodeGradePompierExist($data);
+        if ($isExist==true) {
             return true;
-        } 
-        else {
+        } else {
             return false;
         }
     }

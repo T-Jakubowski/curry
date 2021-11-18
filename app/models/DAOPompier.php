@@ -276,6 +276,28 @@ class DAOPompier {
         return $isExist;
     }
 
+    /*
+      Regarde si le codeGrade existe ou non
+      @param string $codeGrade
+      @return bool $isExist
+     */
+    public function iscodeGradePompierExist(string $codeGrade) : bool{
+        $SQL = 'SELECT CodeGrade FROM grades
+        WHERE CodeGrade=:CodeGrade;';
+        $cnx = $this->cnx;
+        $preparedStatement = $cnx->prepare($SQL);
+        $preparedStatement->bindParam("CodeGrade", $codeGrade);
+        $preparedStatement->execute();
+        $isExist = false;
+        while ($row = $preparedStatement->fetch(\PDO::FETCH_ASSOC)) {
+            $isExist = true;
+        }
+        return $isExist;
+    }
+
+
+    
+
 }
 
 ?>

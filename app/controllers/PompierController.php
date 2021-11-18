@@ -123,7 +123,7 @@ class PompierController extends BaseController {
         if ($isactive == true) {
             $permission = $auth->can('update');
             if ($permission) {
-                $matricule = htmlspecialchars($_POST['edimatricule']);
+                $matricule = htmlspecialchars($_POST['editmatricule']);
                 $isExist = $this->DAOPompier->findIfMatriculePompierExist($matricule);
                 $isSuccess = false;
                 if ($isExist == true) {

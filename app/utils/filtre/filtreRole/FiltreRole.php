@@ -32,6 +32,9 @@ class FiltreRole{
                 case "permission":
                     $datas[$key]=$this->acceptRole("permission",new PermissionRole());
                     break;
+                case "id":
+                    $datas[$key]=$this->acceptRole("id",new IdRole());
+                    break;
             }
         }
         return $datas;

@@ -14,6 +14,7 @@ class FiltreUser{
         $data=$this->formData;
         foreach($data as $keys=>$value){
             if ($keys==$key){
+                
                 $datas=$user->checkUser($value);
             }
         }

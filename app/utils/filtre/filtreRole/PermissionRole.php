@@ -7,13 +7,15 @@ namespace app\utils\filtre\filtreRole;
 class PermissionRole extends AbstractRole{
     public function checkRole(string $data) : bool {
         $chiffre = preg_match('@[0-1]@', $data);
-        if($chiffre && strlen($data) < 9 && strlen($data) > 0)
+        if($chiffre && strlen($data) == 8)
         {
-            return true;
+            $isValide=true;
         }
         else {
-            return false;
+            $isValide=false;
+            
         }
+        return $isValide;
     }
 }
 ?>

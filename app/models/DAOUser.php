@@ -87,8 +87,8 @@ class DAOUser {
     {
 
         $sql = 'UPDATE user
-                SET Identifiant=:Identifiant, Nom=:Nom, Prenom=:Prenom, password=:password, IdRole=:IdRole
-                Where Id=:Id';
+                SET Nom=:Nom, Prenom=:Prenom, password=:password, IdRole=:IdRole
+                Where Identifiant=:Identifiant';
 
         $Identifiant = $u->getIdentifiant();
         $Nom = $u->getNom();
@@ -99,7 +99,7 @@ class DAOUser {
         $prepared_Statement = $this->cnx->prepare($sql);
         $prepared_Statement->bindParam("Identifiant", $Identifiant);
         $prepared_Statement->bindParam("Prenom", $Prenom);
-        $prepared_Statement->bindParam("Nom", $Prenom);
+        $prepared_Statement->bindParam("Nom", $Nom);
         $prepared_Statement->bindParam("password", $password);
         $prepared_Statement->bindParam("IdRole", $IdRole);
         $prepared_Statement->execute();
@@ -192,7 +192,6 @@ class DAOUser {
         $prepared_Statement->execute();
         $nbUser = $prepared_Statement->fetch(\PDO::FETCH_ASSOC);
         $nbUser = $nbUser['nbUser'];
-        var_dump($nbUser);
         return $nbUser;
     }
 
@@ -275,6 +274,26 @@ class DAOUser {
         } else {
 
             return $user;
+        }
+        return $isExist;
+    }
+
+    /*
+      Renvoie si l'utilisateur a bien ce mdp chiffré ou non
+      @param string $login
+      @param mixed $password
+      @return bool
+     */
+
+    public function CheckPassword($login, $password) {
+        $sql = 'SELECT Identifiant FROM user WHERE Identifiant=:Identifiant AND password=:password;';
+        $prepared_Statement = $this->cnx->prepare($sql);
+        $prepared_Statement->bindParam("Identifiant", $login);
+        $prepared_Statement->bindParam("password", $password);
+        $prepared_Statement->execute();
+        $isExist = false;
+        while ($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)) {
+            $isExist = true;
         }
         return $isExist;
     }
