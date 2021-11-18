@@ -34,7 +34,10 @@ Answer of the third question with *italic words*.
 4. **Fourth question in bold**
 
 
+<<<<<<< HEAD
 | Headline 1 in the tablehead | Headline 2 in the tablehead | Headline 3 in the tablehead |
 |:--------------|:-------------:|--------------:|
 | text-align left | text-align center | text-align right |
+=======
+>>>>>>> 13e9fd10166c12d7015fe970e13674ef115f8447
 

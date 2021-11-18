@@ -66,7 +66,10 @@ class Casernecontroller extends BaseController {
         $auth = new Auth();
         $isactive = $auth->is_session_active();
         if ($isactive == true) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 13e9fd10166c12d7015fe970e13674ef115f8447
             $insertPerm = $auth->can('write');
                 if ($insertPerm == true) {
                 $NumCaserne = htmlspecialchars($_POST['AddCaserne_NumCaserne']);
@@ -198,6 +201,35 @@ class Casernecontroller extends BaseController {
             }
             echo $page;
         }
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+
+
+
+
+    public function showDetails(string $id){
+        $isExist = $this->DAOCaserne->findIfNumCaserneExist($id);
+        if ($isExist==true){
+            $Caserne = $this->DAOCaserne->find($id);
+            $PompierOnCaserne = $this->DAOCaserne->findPompierFromCaserne($id);//TODO
+            $page=Renderer::render("view_ShowDetail_Caserne.php", compact("Caserne","PompierOnCaserne"));
+        }else{
+            $errMessage="il n'existe pas de caserne avec le numero : ".$id;
+            $page=Renderer::render("view_ShowDetail_Caserne.php", compact("errMessage"));
+        }
+        echo $page;
+        //afficher plus de détail sur un pompier
+    }
+
+
+
+>>>>>>> 13e9fd10166c12d7015fe970e13674ef115f8447
 }
 
 ?>
