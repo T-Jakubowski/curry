@@ -2,7 +2,6 @@
 1. [General Info](#general-info)
 2. [Technologies](#technologies)
 3. [Installation](#installation)
-4. [Collaboration](#collaboration)
 5. [FAQs](#faqs)
 ### General Info
 ***
@@ -10,9 +9,7 @@ Write down the general informations of your project. It is worth to always put a
 ## Technologies
 ***
 A list of technologies used within the project:
-* [Technologie name](https://example.com): Version 12.3 
-* [Technologie name](https://example.com): Version 2.34
-* [Library name](https://example.com): Version 1234
+* [Bootsrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/): Version 5.0.2
 ## Installation
 ***
 A little intro about the installation. 
@@ -35,6 +32,8 @@ To answer this question we use an unordered list:
 3. **Third question in bold**
 Answer of the third question with *italic words*.
 4. **Fourth question in bold**
+
+
 | Headline 1 in the tablehead | Headline 2 in the tablehead | Headline 3 in the tablehead |
 |:--------------|:-------------:|--------------:|
 | text-align left | text-align center | text-align right |
