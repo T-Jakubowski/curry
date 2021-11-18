@@ -8,12 +8,23 @@ namespace app\views;
     <script>
         function ConfirmDelete(id) {
             var x = document.getElementById("idUserToDelete");
+            var y = document.getElementById("wantToDelete");
             x.value = id;
+            y.innerHTML = id;
         }
         function Edit(id) {
-            var x = document.getElementById("editid");
+            var x = document.getElementById("editidentifiant");
             x.value = id;
             x.innerHTML = id;
+
+            var nom = document.getElementById(id+":Nom").innerHTML;
+            var prenom = document.getElementById(id+":Prenom").innerHTML;
+            var password = document.getElementById(id+":Password").innerHTML;
+            var role = document.getElementById(id+":IdRole").innerHTML;
+            document.getElementById("editnom").value = nom;
+            document.getElementById("editprenom").value = prenom;
+            document.getElementById("editpassword").value = password;
+            document.getElementById("editidrole").value = role;
         }
     </script>
     <body>
@@ -71,8 +82,8 @@ namespace app\views;
                         <td id="<?php echo $id . ":Prenom"; ?>"><?php echo $User->getPrenom(); ?></td>
                         <td id="<?php echo $id . ":Password"; ?>"><?php echo $User->getPassword(); ?></td>
                         <td id="<?php echo $id . ":IdRole"; ?>"><?php echo $User->getIdRole(); ?></td>
-                        <td><button id="<?php echo $id . ":edit"; ?>" onclick="Edit(<?php echo $id; ?>)" type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#editUserModal"><img class="fit-picture" src="/img/edit_black_24dp.svg" alt="edit"></button>
-                            <button id="<?php echo $id . ":del"; ?>" onclick="ConfirmDelete(<?php echo $id; ?>)" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteUserModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button></td>
+                        <td><button id="<?php echo $id . ":edit"; ?>" onclick="Edit('<?php echo $id; ?>')" type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#editUserModal"><img class="fit-picture" src="/img/edit_black_24dp.svg" alt="edit"></button>
+                            <button id="<?php echo $id . ":del"; ?>" onclick="ConfirmDelete('<?php echo $id; ?>')" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteUserModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button></td>
                     </tr>
                     <?php
                 }

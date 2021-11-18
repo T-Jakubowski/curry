@@ -150,10 +150,6 @@ class UserController extends BaseController {
             } else {
                 $page = Renderer::render("view_login.php");
             }
-<<<<<<< HEAD
-
-=======
->>>>>>> 13e9fd10166c12d7015fe970e13674ef115f8447
         echo $page;
     }
 
@@ -162,11 +158,6 @@ class UserController extends BaseController {
         @return void
     */
     public function delete(): void {
-<<<<<<< HEAD
-        $identifiant = htmlspecialchars($_POST['idUserToDelete']);
-        $isExist = $this->DAOUser->findifUserIdentifiantExist($identifiant);
-=======
->>>>>>> 13e9fd10166c12d7015fe970e13674ef115f8447
         $auth = new Auth();
         $isactive = $auth->is_session_active();
         if ($isactive == true) {

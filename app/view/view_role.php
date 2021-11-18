@@ -16,7 +16,11 @@ namespace app\views;
             var x = document.getElementById("editid");
             x.value = id;
             x.innerHTML = id;
-
+            var role = document.getElementById(id+":Role").innerHTML;
+            var permission = document.getElementById(id+":Permission").innerHTML;
+            document.getElementById("editrole").value = role;
+            document.getElementById("editpermission").value = permission;
+            
 
 
 
