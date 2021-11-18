@@ -105,23 +105,23 @@ namespace app\views;
                     <form id="InsertUser" method="post" action="/user/add">
                         <div class="modal-body">
                             <div class="input-group mb-3">
-                                <input id="addidentifiant" name="addidentifiant" type="text" class="form-control" placeholder="ex: t.jakubowski" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <input id="addidentifiant" name="addidentifiant" type="text" class="form-control" placeholder="tjakubowski" aria-label="Recipient's username" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">Identifiant</span>
                             </div>
                             <div class="input-group mb-3">
-                                <input id="addnom" name="addnom" type="text" class="form-control" placeholder="ex: t.jakubowski" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <input id="addnom" name="addnom" type="text" class="form-control" placeholder="jakubowski" aria-label="Recipient's username" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">Nom</span>
                             </div>
                             <div class="input-group mb-3">
-                                <input id="addprenom" name="addprenom" type="text" class="form-control" placeholder="ex: t.jakubowski" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <input id="addprenom" name="addprenom" type="text" class="form-control" placeholder="thomas" aria-label="Recipient's username" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">Prenom</span>
                             </div>
                             <div class="input-group mb-3">
-                                <input id="addpassword" name="addpassword" type="text" class="form-control" placeholder="ex: *******" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <input id="addpassword" name="addpassword" type="text" class="form-control" placeholder="NZDIDNndzu$*125" aria-label="Recipient's username" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">Password</span>
                             </div>
                             <div class="input-group mb-3">
-                                <input id="addidrole" name="addidrole" type="text" class="form-control" placeholder="ex: 1" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <input id="addidrole" name="addidrole" type="text" class="form-control" placeholder="1" aria-label="Recipient's username" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">Id Role</span>
                             </div>
                         </div>
@@ -150,15 +150,15 @@ namespace app\views;
                                 <span class="input-group-text">Id</span>
                             </div>
                             <div class="input-group mb-3">
-                                <input id="editnom" name="editnom" value="" type="text" class="form-control" placeholder="Value" readonly>
+                                <input id="editnom" name="editnom" type="text" class="form-control" placeholder="jakubowski" aria-label="Recipient's username" aria-describedby="basic-addon2">
                                 <span class="input-group-text">Nom</span>
                             </div>
                             <div class="input-group mb-3">
-                                <input id="editprenom" name="editprenom" type="text" class="form-control" placeholder="ex: t.jakubowski" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <input id="editprenom" name="editprenom" type="text" class="form-control" placeholder="thomas" aria-label="Recipient's username" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">Prenom</span>
                             </div>
                             <div class="input-group mb-3">
-                                <input id="editpassword" name="editpassword" type="text" class="form-control" placeholder="ex: *******" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <input id="editpassword" name="editpassword" type="text" class="form-control" placeholder="NZDIDNndzu$*125" aria-label="Recipient's username" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">Password</span>
                             </div>
                             <div class="input-group mb-3">

@@ -241,9 +241,9 @@ class DAOUser {
      */
 
     public function findifUserIdentifiantExist($Identifiant) {
-        $sql = 'SELECT * FROM user WHERE Id=:Id;';
+        $sql = 'SELECT * FROM user WHERE Identifiant=:Identifiant;';
         $prepared_Statement = $this->cnx->prepare($sql);
-        $prepared_Statement->bindParam("Id", $Identifiant);
+        $prepared_Statement->bindParam("Identifiant", $Identifiant);
         $prepared_Statement->execute();
         $isExist = false;
         while ($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)) {

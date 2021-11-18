@@ -22,16 +22,19 @@ namespace app\views;
         ?>
         <br>
 
-
-        <div class="container">
-            <div class="row justify-content-end">
-                <div class="col-1">
-                    <span data-bs-toggle="tooltip" data-bs-placement="top" title="Ajout de Role">
-                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createRoleModal">+</button>
-                    </span>
+        <?php if ($permission_manage) {
+            ?>
+            <div class="container">
+                <div class="row justify-content-end">
+                    <div class="col-1">
+                        <span data-bs-toggle="tooltip" data-bs-placement="top" title="Ajout de Role">
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createRoleModal">+</button>
+                        </span>
+                    </div>
                 </div>
             </div>
-        </div>
+        <?php } ?>
+
         <br>
         <div><h3>Liste des Role:</h3></div>
 
@@ -57,7 +60,7 @@ namespace app\views;
                     if ($permission_manage) {
                         ?>
                         <th>Edit/Delete</th>
-                    <?php }?>
+                    <?php } ?>
                 </tr>
             </thead>
             <tbody>
@@ -73,7 +76,7 @@ namespace app\views;
                             <td><button id="<?php echo $id . ":edit"; ?>" onclick="Edit(<?php echo $id; ?>)" type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#editRoleModal"><img class="fit-picture" src="/img/edit_black_24dp.svg" alt="edit"></button>
                                 <button id="<?php echo $id . ":del"; ?>" onclick="ConfirmDelete(<?php echo $id; ?>)" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteRoleModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button></td>
                         </tr>
-                        <?php }
+                    <?php }
                     ?>
                     </tr>
                     <?php
@@ -81,17 +84,6 @@ namespace app\views;
                 ?>
             </tbody>
         </table>
-
-
-
-
-
-
-
-
-
-
-
 
 
 

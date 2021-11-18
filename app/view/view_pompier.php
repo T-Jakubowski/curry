@@ -97,7 +97,7 @@ namespace app\views;
                                 <button id="<?php echo $id . ":del"; ?>" onclick="ConfirmDelete('<?php echo $id; ?>')" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDeletePompierModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button></td>
                             <?php
                         }
-                        if ($permission_delete) {
+                        elseif ($permission_delete) {
                             ?>
                             <td><button id="<?php echo $id . ":del"; ?>" onclick="ConfirmDelete('<?php echo $id; ?>')" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDeletePompierModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button></td>
                             <?php

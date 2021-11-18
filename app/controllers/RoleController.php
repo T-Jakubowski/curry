@@ -19,8 +19,11 @@ class RoleController extends BaseController {
         $this->DAORole = $DAORole;
     }
 
-    //renvoie la page avec la liste de tout les pompier
-    public function show() {
+    /*
+        Affiche la page role
+        @return void
+    */
+    public function show() : void{
 
         $auth = new Auth();
         $isactive = $auth->is_session_active();
@@ -51,8 +54,11 @@ class RoleController extends BaseController {
         echo $page;
     }
 
-    //
-    public function insert() {
+    /*
+        Creer un role
+        @return void
+    */
+    public function insert() : void{
 
         $auth = new Auth();
         $isactive = $auth->is_session_active();
@@ -93,6 +99,10 @@ class RoleController extends BaseController {
         echo $page;
     }
 
+    /*
+        Modifie un role
+        @return void
+    */
     public function update(): void {
 
         $auth = new Auth();
@@ -140,6 +150,10 @@ class RoleController extends BaseController {
         echo $page;
     }
 
+    /*
+        Supprime un role
+        @return void
+    */
     public function delete(): void {
 
         $auth = new Auth();
@@ -150,9 +164,15 @@ class RoleController extends BaseController {
                 $id = htmlspecialchars($_POST['idRoleToDelete']);
                 $isExist = $this->DAORole->findIfRoleIdExist($id);
                 if ($isExist == true) {
-                    $resultMessage = "le role numéro '" . $id . "' a bien été Supprimer";
-                    $this->DAORole->remove($id);
-                    $page = Renderer::render("view_role_delete.php", compact("resultMessage"));
+                    $UserOnRole = $this->DAORole->findUserFromRole($id);
+                    if ($UserOnRole == false) {
+                        $resultMessage = "le role numéro '" . $id . "' a bien été Supprimer";
+                        $this->DAORole->remove($id);
+                        $page = Renderer::render("view_role_delete.php", compact("resultMessage"));
+                    } else {
+                        $valueError = "Le role numéro " . $id . " possede des users et ne peut donc pas etre supprimer";
+                        $page = Renderer::render("view_role_delete.php", compact("valueError"));
+                    }
                 } else {
                     $valueError = "Vous ne pouvez pas supprimer le role " . $id . " pour l'instant";
                     $page = Renderer::render("view_role_delete.php", compact("valueError"));

@@ -19,8 +19,11 @@ class PompierController extends BaseController {
         $this->DAOPompier = $DAOPompier;
     }
 
-    //renvoie la page avec la liste de tout les pompier
-    public function show() {
+    /*
+        Affiche la page pompier
+        @return void
+    */
+    public function show() : void{
 
         $auth = new Auth();
         $isactive = $auth->is_session_active();
@@ -53,8 +56,11 @@ class PompierController extends BaseController {
         echo $page;
     }
 
-    //
-    public function insert() {
+    /*
+        Creer un pompier
+        @return void
+    */
+    public function insert() : void{
 
         $auth = new Auth();
         $isactive = $auth->is_session_active();
@@ -106,6 +112,10 @@ class PompierController extends BaseController {
         echo $page;
     }
 
+    /*
+        Modifie un pompier
+        @return void
+    */
     public function update(): void {
 
         $auth = new Auth();
@@ -163,6 +173,10 @@ class PompierController extends BaseController {
         echo $page;
     }
 
+    /*
+        Supprime un pompier
+        @return void
+    */
     public function delete(): void {
 
         $auth = new Auth();

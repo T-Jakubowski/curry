@@ -21,8 +21,11 @@ class HomeController extends BaseController {
     public function __construct() {
         
     }
-
-    public function index() {
+/*
+        Affiche la page home
+        @return void
+    */
+    public function index() : void {
         $auth = new Auth();
         $isactive = $auth->is_session_active();
         if ($isactive == true) {

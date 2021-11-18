@@ -28,12 +28,20 @@ class LoginController {
         $this->DAOAuth = $DAOAuth;
     }
 
+    /*
+        Affiche la page login
+        @return void
+    */
     public function show() {
 
         $page = Renderer::render("view_login.php");
         echo $page;
     }
 
+    /*
+        Affiche la page home en vérifiant qu'il peut se connecter
+        @return void
+    */
     public function login(): void {
         $identifiant = htmlspecialchars($_POST['identifiant']);
         $password = htmlspecialchars($_POST['password']);
@@ -56,6 +64,10 @@ class LoginController {
         echo $page;
     }
 
+    /*
+        Affiche la page login et supprime les session
+        @return void
+    */
     public function logout(): void {
         $auth = new Auth();
         $auth->logout();

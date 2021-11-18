@@ -9,6 +9,12 @@ class DAOAuth {
     public function __construct($cnx) {
         $this->cnx = $cnx;
     }
+    
+    /*
+        Renvoie un role en fonction de son id
+        @param int $Id
+        @return string role
+    */
     public function findRoleById($Id) : string {
         $sql = 'SELECT * FROM role WHERE Id=:Id;';
         $prepared_Statement = $this->cnx->prepare($sql);
@@ -18,6 +24,12 @@ class DAOAuth {
             return $row['role'];
         }
     }
+    
+    /*
+        Renvoie une permission en fonction de son id
+        @param int $Id
+        @return string Permission
+    */
     public function findPermissionById(int $Id) : string {
         $sql = 'SELECT * FROM role WHERE Id=:Id;';
         $prepared_Statement = $this->cnx->prepare($sql);
@@ -28,6 +40,11 @@ class DAOAuth {
         }
     }
     
+    /*
+        Renvoie true si l'identifiant et le password correspondent a un user
+        @param string $identifiant, string $password
+        @return bool $isloginValide
+    */
     public function isLoginValide(string $identifiant, string $password) : bool {
         $password=hash('sha256', $password);
         $sql = 'SELECT * FROM user WHERE Identifiant=:Identifiant and password=:password;';
@@ -42,7 +59,12 @@ class DAOAuth {
         return $loginValide;
     }
     
-    public function findUserByLogin(string $identifiant, string $password) {
+    /*
+        Renvoie un user correspondant à l'identifiant et le password
+        @param string $identifiant, string $password
+        @return User $user
+    */
+    public function findUserByLogin(string $identifiant, string $password) : User{
         $password=hash('sha256', $password);
         $sql = 'SELECT * FROM user WHERE Identifiant=:Identifiant and password=:password;';
         $prepared_Statement = $this->cnx->prepare($sql);

@@ -15,7 +15,6 @@ class DAORole {
       @param int $Id
       @return Role $Role
      */
-
     public function find($Id): Role {
         $sql = 'SELECT * FROM role WHERE Id=:Id;';
         $prepared_Statement = $this->cnx->prepare($sql);
@@ -111,7 +110,6 @@ class DAORole {
       @param int $limit
       @return array<Role>
      */
-
     public function findAllWhereName($value, $offset = 0, $limit = 10): Array {
 
         $sql = 'SELECT * FROM role WHERE Role LIKE :Role LIMIT :limit OFFSET :offset';
@@ -130,11 +128,9 @@ class DAORole {
     }
 
     /*
-      Renvoie le nombre de role qui contienne $value
-      @param string $value
-      @return int
+      Renvoie le nombre de role
+      @return int $nbRole
      */
-
     public function count(): int {
         $sql = 'SELECT COUNT(*) as nbRoles from role p ;';
         $statement = $this->cnx->query($sql);
@@ -143,7 +139,12 @@ class DAORole {
         return $nbRole;
     }
 
-    public function countWhere($value): int {
+    /*
+        Renvoie un nombre de pompier en fonction d'un mot
+        @param string $value
+        @return int $nbRole
+    */
+    public function countWhere(string $value): int {
         $sql = 'SELECT COUNT(*) as nbRoles from role WHERE Role LIKE :Role  ;';
         $prepared_Statement = $this->cnx->prepare($sql);
         $value = "%$value%";
@@ -156,11 +157,11 @@ class DAORole {
 
     /*
       Renvoie Si le nom du role en entré existe
-      @param int $roleName
+      @param string $roleName
       @return bool
      */
 
-    public function findifRoleExist($roleName) {
+    public function findifRoleExist(string $roleName) : bool{
         $sql = 'SELECT * FROM role WHERE Role=:roleName;';
         $prepared_Statement = $this->cnx->prepare($sql);
         $prepared_Statement->bindParam("roleName", $roleName);
@@ -176,13 +177,30 @@ class DAORole {
       @param int $Identifiant
       @return bool
      */
-    public function findifRoleIdExist($Identifiant) {
+    public function findifRoleIdExist(int $Identifiant) : bool{
         $sql = 'SELECT * FROM role WHERE Id=:Id;';
         $prepared_Statement = $this->cnx->prepare($sql);
         $prepared_Statement->bindParam("Id", $Identifiant);
         $prepared_Statement->execute();
         $isExist = false;
         while ($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)) {
+            $isExist = true;
+        }
+        return $isExist;
+    }
+    
+    /*
+        Renvoie un user en fonction du role
+        @param int $Identifiant
+        @return bool $isExist
+    */
+    public function findUserFromRole(int $Identifiant) : bool{
+        $sql = 'SELECT * FROM user WHERE IdRole=:Identifiant';
+        $prepared_Statement = $this->cnx->prepare($sql);
+        $prepared_Statement->bindParam("Identifiant", $Identifiant);
+        $prepared_Statement->execute();
+        $isExist = false;
+        while($row = $prepared_Statement->fetch(\PDO::FETCH_ASSOC)){
             $isExist = true;
         }
         return $isExist;

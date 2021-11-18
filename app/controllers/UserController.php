@@ -18,8 +18,11 @@ class UserController extends BaseController {
         $this->DAOUser = $DAOUser;
     }
 
-    //renvoie la page avec la liste de tout les pompier
-    public function show() {
+    /*
+        Affiche la page user
+        @return void
+    */
+    public function show() : void{
         if (isset($_GET["page"])) {
             $Offset = ($_GET["page"] * 10) - 10;
         } else {
@@ -37,8 +40,11 @@ class UserController extends BaseController {
         echo $page;
     }
 
-    //
-    public function insert() {
+    /*
+        Creer un user
+        @return void
+    */
+    public function insert() : void{
         $identifiant = htmlspecialchars($_POST['addidentifiant']);
         $nom = htmlspecialchars($_POST['addnom']);
         $prenom = htmlspecialchars($_POST['addprenom']);
@@ -58,11 +64,10 @@ class UserController extends BaseController {
             if ($value == false) {
                 $isSuccess = false;
                 $valueError[] = $key;
-                
             }
         }
         if ($isSuccess == true) {
-            $password=hash('sha256', $password);
+            $password = hash('sha256', $password);
             $userToAdd = new User($identifiant, $nom, $prenom, $password, $role);
             $this->DAOUser->save($userToAdd);
             $resultMessage = "le user numéro a bien été ajouter";
@@ -73,6 +78,10 @@ class UserController extends BaseController {
         echo $page;
     }
 
+    /*
+        Modifie un user
+        @return void
+    */
     public function update(): void {
         $identifiant = htmlspecialchars($_POST['editidentifiant']);
         $isExist = $this->DAOUser->findIfUserIdentifiantExist($identifiant);
@@ -102,7 +111,7 @@ class UserController extends BaseController {
             }
         }
         if ($isSuccess == true) {
-            $password=hash('sha256', $password);
+            $password = hash('sha256', $password);
             $userToUpdate = new User($identifiant, $nom, $prenom, $password, $role);
             $this->DAOUser->edit($userToUpdate);
             $resultMessage = "le user numéro '" . $identifiant . "' a bien été modifier";
@@ -113,19 +122,31 @@ class UserController extends BaseController {
         echo $page;
     }
 
+    /*
+        Supprime un user
+        @return void
+    */
     public function delete(): void {
         $identifiant = htmlspecialchars($_POST['idUserToDelete']);
         $isExist = $this->DAOUser->findifUserIdentifiantExist($identifiant);
-        if ($isExist == true) {
-            $resultMessage = "le user numéro '" . $identifiant . "' a bien été Supprimer";
-            $this->DAOUser->remove($identifiant);
-            $page = Renderer::render("view_user_delete.php", compact("resultMessage"));
-        } else {
-            $valueError = "Vous ne pouvez pas supprimer le user " . $identifiant . " pour l'instant";
+        if ($_SESSION['identifiant'] == $identifiant) {
+            if ($isExist == true) {
+                $resultMessage = "le user numéro '" . $identifiant . "' a bien été Supprimer";
+                $this->DAOUser->remove($identifiant);
+                $page = Renderer::render("view_user_delete.php", compact("resultMessage"));
+            } else {
+                $valueError = "Vous ne pouvez pas supprimer le user " . $identifiant . " pour l'instant";
+                $page = Renderer::render("view_user_delete.php", compact("valueError"));
+            }
+        }
+        else{
+            $valueError = "Vous ne pouvez pas vous supprimer";
             $page = Renderer::render("view_user_delete.php", compact("valueError"));
         }
+
         echo $page;
     }
+
 }
 
 ?>

@@ -14,7 +14,12 @@ class Auth{
         self::$DAOAuth = $DAOAuth;
     }
     
-    public static function login(User $user) {
+    /*
+        Crée des session contenant les données d'un User
+        @param User $user
+        @return void
+    */
+    public static function login(User $user) : void{
         self::start_session();
 
         $identifiant = $user->getIdentifiant();
@@ -29,10 +34,10 @@ class Auth{
 
     }
     /*
-    * detruit la session de l'utilisateur en entré
-    * @param User $user
+    * detruit la session si un session est active
+    * @return void
     */
-    public static function logout() {
+    public static function logout() : void{
         if (self::is_logged() == true){ 
             session_destroy();   
         }
@@ -41,15 +46,19 @@ class Auth{
     * Vérifie qu'il y ait bien une variable de session User
     * @return bool
     */
-    public static function is_logged() {
+    public static function is_logged() : bool {
         if (session_status() == PHP_SESSION_ACTIVE) {
             return true;
         }
         return false;
     }
     
-    public static function is_session_active() {
-        if (isset($_SESSION['identifiant'])) {
+    /*
+        Regarde si la session d'un user est active
+        @return bool
+    */
+    public static function is_session_active() : bool{
+        if (isset($_SESSION['identifiant'])){
             return true;    
         }
         else{
@@ -57,13 +66,17 @@ class Auth{
         }
     }
     
-    public static function start_session(){
+    /*
+        active une session si aucune n'est lancée
+        @return void
+    */
+    public static function start_session (): void{
         if (self::is_logged() == false) {
             session_start();
         }
     }
     /*
-    * retourne si la personne logger est ce role ou non
+    * retourne si la personne logger à le role entré
     * @param string $role
     * @return bool
     */
@@ -79,8 +92,8 @@ class Auth{
     }
     
     /*
-    * retourne si la personne logger a cette permission ou non
-    * @param int $perm
+    * retourne si la personne logger a la permission entré
+    * @param string $perm
     * @return bool
     */
     public function can(string $perm) : bool {
