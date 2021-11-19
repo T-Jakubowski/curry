@@ -66,10 +66,6 @@ class Casernecontroller extends BaseController {
         $auth = new Auth();
         $isactive = $auth->is_session_active();
         if ($isactive == true) {
-<<<<<<< HEAD
-
-=======
->>>>>>> 13e9fd10166c12d7015fe970e13674ef115f8447
             $insertPerm = $auth->can('write');
                 if ($insertPerm == true) {
                 $NumCaserne = htmlspecialchars($_POST['AddCaserne_NumCaserne']);
@@ -201,9 +197,6 @@ class Casernecontroller extends BaseController {
             }
             echo $page;
         }
-<<<<<<< HEAD
-=======
-
 
 
 
@@ -226,10 +219,6 @@ class Casernecontroller extends BaseController {
         echo $page;
         //afficher plus de détail sur un pompier
     }
-
-
-
->>>>>>> 13e9fd10166c12d7015fe970e13674ef115f8447
 }
 
 ?>

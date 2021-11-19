@@ -6,7 +6,6 @@ use app\utils\Auth;
  * @author Baptiste Coquelet <b.coquelet@eleve.leschartreux.net>
  * @param string $ActivePageName
  */
-
 //FAKE VALUE TEST
 $permEdit = true;
 
