@@ -27,7 +27,7 @@ require "view_NavBarre.php"; ?>
                     </a>
                     <div class="card-body">
                         <h5 class="card-title">Pompier</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <p class="card-text">Contient la liste des pompiers dans la base de données.</p>
                     </div>
                 </div>
             </div>
@@ -38,7 +38,7 @@ require "view_NavBarre.php"; ?>
                     </a>
                     <div class="card-body">
                         <h5 class="card-title">Caserne</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <p class="card-text">Contient la liste des casernes dans la base de données.</p>
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@ if ($permission_manage) {
 
                         <div class="card-body">
                             <h5 class="card-title">User</h5>
-                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
+                            <p class="card-text">Contient la liste des utilisateur de l'application.</p>
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@ if ($permission_manage) {
                         </a>
                         <div class="card-body">
                             <h5 class="card-title">Role</h5>
-                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                            <p class="card-text">Contient la liste des role pouvant etre utilisé a des utilisateurs.</p>
                         </div>
                     </div>
                 </div>

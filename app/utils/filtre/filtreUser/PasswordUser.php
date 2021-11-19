@@ -15,8 +15,8 @@ class PasswordUser extends AbstractUser{
             $isValid=true;
         }
         else {
-            if(isset($_POST['editpassword'])){
-                $id=htmlspecialchars($_POST['editpassword']);
+            if(isset($_POST['editidentifiant'])){
+                $id=htmlspecialchars($_POST['editidentifiant']);
                 $IsAlreadyExist = $this->DAOUser->CheckPassword($id,$data);
                 if($IsAlreadyExist==true) {
                     $isValid=true;
