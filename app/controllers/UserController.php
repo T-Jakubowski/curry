@@ -19,8 +19,11 @@ class UserController extends BaseController {
         $this->DAOUser = $DAOUser;
     }
 
-    //renvoie la page avec la liste de tout les pompier
-    public function show() {
+    /*
+        Affiche la page user
+        @return void
+    */
+    public function show() : void{
         $auth = new Auth();
           $isactive = $auth->is_session_active();
           if ($isactive == true) {
@@ -50,8 +53,11 @@ class UserController extends BaseController {
         echo $page;
     }
 
-    //
-    public function insert() {
+    /*
+        Ajoute un user
+        @return void
+    */
+    public function insert() : void {
         $auth = new Auth();
         $isactive = $auth->is_session_active();
         if ($isactive == true) {
@@ -97,10 +103,9 @@ class UserController extends BaseController {
     }
 
     /*
-      Modifie un user
-      @return void
-     */
-
+        modifie un user
+        @return void
+    */
     public function update(): void {
         $auth = new Auth();
         $isactive = $auth->is_session_active();
@@ -153,10 +158,9 @@ class UserController extends BaseController {
     }
 
     /*
-      Supprime un user
-      @return void
-     */
-
+        supprime un user
+        @return void
+    */
     public function delete(): void {
         $auth = new Auth();
         $isactive = $auth->is_session_active();
