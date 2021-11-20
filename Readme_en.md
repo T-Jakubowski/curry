@@ -1,20 +1,21 @@
-## Table des matières
-1. [Informations générales](#informations-générales)
+## Table of Contents
+1. [General Info](#general-info)
 2. [Technologies](#technologies)
 3. [Installation](#installation)
 5. [FAQs](#faqs)
-### Informations générales
+### General Info
 ***
-Le projet Curry est développer par [Thomas Jakubowski](https://gitlab.com/T.Jakubowski) et [Baptiste Coquelet](https://gitlab.com/B.CoQueLeT).
-Le projet est une application web qui permet de géré des caserne de pompier et les pompier 
+The Curry project is developed by [Thomas Jakubowski](https://gitlab.com/T.Jakubowski) and [Baptiste Coquelet](https://gitlab.com/B.CoQueLeT).
+The project is a web application that allows to manage fire stations and firefighters
+
 ## Technologies
 ***
 A list of technologies used within the project:
 * [Bootsrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/): Version 5.0.2
 * HTML: Version 5
 * CSS: Version 3
-* Javascript: Version 11
-* PHP: Version 7.4.23
+* Javascript
+* PHP
 
 ## Installation
 ***
