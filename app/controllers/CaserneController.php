@@ -197,28 +197,6 @@ class Casernecontroller extends BaseController {
             }
             echo $page;
         }
-
-
-
-
-
-
-
-
-
-    public function showDetails(string $id){
-        $isExist = $this->DAOCaserne->findIfNumCaserneExist($id);
-        if ($isExist==true){
-            $Caserne = $this->DAOCaserne->find($id);
-            $PompierOnCaserne = $this->DAOCaserne->findPompierFromCaserne($id);//TODO
-            $page=Renderer::render("view_ShowDetail_Caserne.php", compact("Caserne","PompierOnCaserne"));
-        }else{
-            $errMessage="il n'existe pas de caserne avec le numero : ".$id;
-            $page=Renderer::render("view_ShowDetail_Caserne.php", compact("errMessage"));
-        }
-        echo $page;
-        //afficher plus de détail sur un pompier
-    }
 }
 
 ?>
