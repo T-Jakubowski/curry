@@ -64,9 +64,9 @@ namespace app\views;
         <table id="tableRole" class="table table-striped table-hover table-Secondary .table-responsive" >
             <thead>
                 <tr>
-                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(15)">Id</th>
-                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="Varchar(20)">Role</th>
-                    <th data-bs-toggle="tooltip" data-bs-placement="top" title="Int (8)">Permission</th>
+                    <th>Id</th>
+                    <th>Role</th>
+                    <th>Permission</th>
                     <?php
                     if ($permission_manage) {
                         ?>
