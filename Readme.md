@@ -2,7 +2,7 @@
 1. [Informations générales](#informations-générales)
 2. [Technologies](#technologies)
 3. [Installation](#installation)
-5. [FAQs](#faqs)
+5. [Informations supplémentaires](#Informations-supplémentaires)
 ### Informations générales
 ***
 Le projet Curry est développer par [Thomas Jakubowski](https://gitlab.com/T.Jakubowski) et [Baptiste Coquelet](https://gitlab.com/B.CoQueLeT).
@@ -48,7 +48,7 @@ Rendez-vous sur l'url suivante dans un navigateur
 http://127.0.0.1:8080/
 ```
 
-6. Premiere connexion<br/>
+6. Connexion<br/>
 
 Vous pouvez vous connecté au utilisateur déja crée :
 
@@ -59,19 +59,22 @@ Vous pouvez vous connecté au utilisateur déja crée :
 |   Utilisateur  |   EYeager   |  Acdfds78*$d |
 
 
-## FAQs
-***
-A list of frequently asked questions
-1. **This is a question**
-Answer of the first question with _italic words_. 
-2. __Second question in bold__ 
-To answer this question we use an unordered list:
-* First point
-* Second Point
-* Third point
-3. **Third question in bold**
-Answer of the third question with *italic words*.
-4. **Fourth question in bold**
+## Informations supplémentaires
+
+1. Permission<br/>
+
+Les permision des roles son décomposé comme ceci :
+```
+      P  I D U S
+0 0 0 0	 0 0 0 0
+
+P = Gestion des roles et users
+I = Insertion de pompiers et casernes
+D = Suppression de pompiers et casernes
+U = Mise a jour de pompiers et casernes
+S = Affichage de pompiers et casernes
+```
+
 
 
 
