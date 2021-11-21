@@ -66,13 +66,6 @@ if (isset($ActivePageName)) {
                         <a class="nav-link <?php echo $IsActive4; ?>" href="/user/affiche">User</a>
                         <a class="nav-link <?php echo $IsActive5; ?>" href="/role/affiche">Role</a>
                     <?php } ?>
-                    <?php
-                    if ($permission_read) {
-                        ?>
-                        <a class="nav-link disabled">Prochainement...</a>
-                        <?php
-                    }
-                    ?>
                 </div>
             </div>
             <a class="btn btn-danger" href="/logout"><img src="/img/logout_black_24dp.svg" alt="Deconnexion"></a>
