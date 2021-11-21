@@ -9,7 +9,7 @@ Le projet Curry est développer par [Thomas Jakubowski](https://gitlab.com/T.Jak
 Le projet est une application web qui permet de géré des caserne de pompier et des pompier 
 ## Technologies
 ***
-A list of technologies used within the project:
+Une liste des technologies utilisées dans le projet :
 * [Bootsrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/): Version 5.0.2
 * HTML: Version 5
 * CSS: Version 3
