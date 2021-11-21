@@ -2,7 +2,7 @@
 1. [General informations](#general-informations)
 2. [Technologies](#technologies)
 3. [Installation](#installation)
-5. [Additional Information](#additional-Information)
+5. [Additional Information](#additional-information)
 ### General informations
 ***
 The Curry project is developed by [Thomas Jakubowski](https://gitlab.com/T.Jakubowski) and [Baptiste Coquelet](https://gitlab.com/B.CoQueLeT).
