@@ -44,7 +44,7 @@ namespace app\views;
             </div>
         </div>
         <br>
-        <div><h3>Liste des User:</h3></div>
+        <div><h3>Liste des Users:</h3></div>
 
         <?php
         if (isset($_GET["page"])) {

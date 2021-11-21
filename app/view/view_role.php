@@ -47,7 +47,7 @@ namespace app\views;
         <?php } ?>
 
         <br>
-        <div><h3>Liste des Role:</h3></div>
+        <div><h3>Liste des Roles:</h3></div>
 
         <?php
         if (isset($_GET["page"])) {
@@ -67,11 +67,7 @@ namespace app\views;
                     <th>Id</th>
                     <th>Role</th>
                     <th>Permission</th>
-                    <?php
-                    if ($permission_manage) {
-                        ?>
-                        <th>Edit/Delete</th>
-                    <?php } ?>
+                    <th>Edit/Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -83,12 +79,9 @@ namespace app\views;
                         <td <?php $id = $Role->getId(); ?>id="<?php echo $id . ":Id"; ?>"><?php echo $id; ?></td>
                         <td id="<?php echo $id . ":Role"; ?>"><?php echo $Role->getRole(); ?></td>
                         <td id="<?php echo $id . ":Permission"; ?>"><?php echo $Role->getPermission(); ?></td>
-                        <?php if ($permission_manage) { ?>
-                            <td><button id="<?php echo $id . ":edit"; ?>" onclick="Edit(<?php echo $id; ?>)" type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#editRoleModal"><img class="fit-picture" src="/img/edit_black_24dp.svg" alt="edit"></button>
-                                <button id="<?php echo $id . ":del"; ?>" onclick="ConfirmDelete(<?php echo $id; ?>)" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteRoleModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button></td>
+                        <td><button id="<?php echo $id . ":edit"; ?>" onclick="Edit(<?php echo $id; ?>)" type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#editRoleModal"><img class="fit-picture" src="/img/edit_black_24dp.svg" alt="edit"></button>
+                        <button id="<?php echo $id . ":del"; ?>" onclick="ConfirmDelete(<?php echo $id; ?>)" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteRoleModal"><img class="fit-picture" src="/img/delete_black_24dp.svg" alt="delete"></button></td>
                         </tr>
-                    <?php }
-                    ?>
                     </tr>
                     <?php
                 }
