@@ -25,8 +25,9 @@ A list of technologies used within the project:
 $ git clone https://gitlab.com/sco-chartreux/slam21-22/team-1/curry.git
 ```
 2. Install the database
-Pour ce faire vous devez executé un des deux script sql qui se trouve dans le repertoire **../curry/sql/**.
-Le script **dump_pompierDataBase_Init.sql** contient un jeu de données par defaut alors que **dump_pompierDataBase_Init_WithoutData.sql** n'en contient pas (il contient uniquement les données necessaire pour se connecté a l'application)
+
+To do this you must run one of the two sql scripts located in the **../curry/sql/** directory.
+The **dump_pompierDataBase_Init.sql** script contains a default dataset while **dump_pompierDataBase_Init_WithoutData.sql** does not (it only contains the data needed to connect to the application) 
 
 3. Start a server
 ```
@@ -41,18 +42,11 @@ Go to the following url in a browser
 http://127.0.0.1:8080/
 ```
 
-5. Lancer l'application<br/>
+5. Log in<br/>
 
-Rendez-vous sur l'url suivante dans un navigateur
-```
-http://127.0.0.1:8080/
-```
+You can connect to the user already created:
 
-6. Connexion<br/>
-
-Vous pouvez vous connecté au utilisateur déja crée :
-
-|      Role      | Identifiant | Mot de passe |
+|      Role      |   Username  |   Password   |
 |:--------------:|:-----------:|:------------:|
 | Administrateur |   PDupond   | fdsf45-%%%DD |
 |   Secretaire   |  JMaurelle  |  -_25iidffd4 |
@@ -61,18 +55,18 @@ Vous pouvez vous connecté au utilisateur déja crée :
 
 ## Additional Information
 
-1. Permission<br/>
+1.  <br/>
 
-Les permision des roles son décomposé comme ceci :
+Role permissions are done like this:
 ```
       P  I D U S
 0 0 0 0	 0 0 0 0
 
-P = Gestion des roles et users
-I = Insertion de pompiers et casernes
-D = Suppression de pompiers et casernes
-U = Mise a jour de pompiers et casernes
-S = Affichage de pompiers et casernes
+P = Managing roles and users
+I = Insertion of firefighters and fire stations
+D = Deletion of firefighters and fire stations
+U = Update of firefighters and fire stations
+S = Display of firefighters and fire stations
 ```
 
 
