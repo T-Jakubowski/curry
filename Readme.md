@@ -26,17 +26,31 @@ $ git clone https://gitlab.com/sco-chartreux/slam21-22/team-1/curry.git
 ```
 2. Intaller la base de données
 Pour ce faire vous devez executé un des deux script sql qui se trouve dans le repertoire **../curry/sql/**.
-Le script **dump_pompierDataBase_Init.sql** contient un jeu de données par defaut alors **dump_pompierDataBase_Init_WithoutData.sql** n'en contient pas(il contient uniquement les données necessaire a se connecté a l'application)
-```
-../curry/sql/dump_pompierDataBase_Init.sql
-../curry/sql/dump_pompierDataBase_Init_WithoutData.sql
+Le script **dump_pompierDataBase_Init.sql** contient un jeu de données par defaut alors **dump_pompierDataBase_Init_WithoutData.sql** n'en contient pas(il contient uniquement les données necessaire pour se connecté a l'application)
 
-```
-
+3. Lancer un serveur
 ```
 $ cd ../curry
 $ php -S 127.0.0.1:8080 -t html
 ```
+
+4. Lancer l'application
+Rendez-vous sur l'url suivante dans un navigateur
+```
+http://127.0.0.1:8080/
+```
+
+5. Lancer l'application
+Rendez-vous sur l'url suivante dans un navigateur
+```
+http://127.0.0.1:8080/
+```
+
+6. Premiere connexion
+Vous pouvez vous connecté a 3 utilisateur déja crée :
+
+| Role | Identifiant | Mot de passe | |----------|:-------------:|--------------:| | Administrateur | PDupond | fdsf45-%%%DD | | Secretaire | JMaurelle | -_25iidffd4 | | Utilisateur | EYeager | Acdfds78*$d |
+
 
 ## FAQs
 ***
