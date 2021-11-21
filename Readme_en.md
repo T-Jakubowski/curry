@@ -55,7 +55,7 @@ You can connect to the user already created:
 
 ## Additional Information
 
-1.  <br/>
+1.  Permission<br/>
 
 Role permissions are done like this:
 ```
