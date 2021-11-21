@@ -6,7 +6,7 @@
 ### Informations générales
 ***
 Le projet Curry est développer par [Thomas Jakubowski](https://gitlab.com/T.Jakubowski) et [Baptiste Coquelet](https://gitlab.com/B.CoQueLeT).
-Le projet est une application web qui permet de géré des caserne de pompier et les pompier 
+Le projet est une application web qui permet de géré des caserne de pompier et des pompier 
 ## Technologies
 ***
 A list of technologies used within the project:
@@ -15,12 +15,25 @@ A list of technologies used within the project:
 * CSS: Version 3
 * Javascript: Version 11
 * PHP: Version 7.4.23
+* SQL
 
 ## Installation
 ***
-A little intro about the installation. 
+
+1. Cloner le dépôt
 ```
 $ git clone https://gitlab.com/sco-chartreux/slam21-22/team-1/curry.git
+```
+2. Intaller la base de données
+Pour ce faire vous devez executé un des deux script sql qui se trouve dans le repertoire **../curry/sql/**.
+Le script **dump_pompierDataBase_Init.sql** contient un jeu de données par defaut alors **dump_pompierDataBase_Init_WithoutData.sql** n'en contient pas(il contient uniquement les données necessaire a se connecté a l'application)
+```
+../curry/sql/dump_pompierDataBase_Init.sql
+../curry/sql/dump_pompierDataBase_Init_WithoutData.sql
+
+```
+
+```
 $ cd ../curry
 $ php -S 127.0.0.1:8080 -t html
 ```
