@@ -49,7 +49,11 @@ http://127.0.0.1:8080/
 6. Premiere connexion
 Vous pouvez vous connecté a 3 utilisateur déja crée :
 
-| Role | Identifiant | Mot de passe | |----------|:-------------:|--------------:| | Administrateur | PDupond | fdsf45-%%%DD | | Secretaire | JMaurelle | -_25iidffd4 | | Utilisateur | EYeager | Acdfds78*$d |
+|      Role      | Identifiant | Mot de passe |
+|:--------------:|:-----------:|:------------:|
+| Administrateur |   PDupond   | fdsf45-%%%DD |
+|   Secretaire   |  JMaurelle  |  -_25iidffd4 |
+|   Utilisateur  |   EYeager   |  Acdfds78*$d |
 
 
 ## FAQs
