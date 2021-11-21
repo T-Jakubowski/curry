@@ -25,7 +25,6 @@ if (isset($_SERVER["PATH_INFO"])) {
 
 
 $fragments = explode("/", $path); //cree tableau de caractére
-//var_dump($fragment);
 
 $control = array_shift($fragments);
 //echo "control : $control <hr>";
@@ -133,10 +132,8 @@ function homeRoutes_post($fragments)
 
 function pompierRoutes_get($fragments) {
 
-    //var_dump($fragment);
 
     $action = array_shift($fragments); //action c'est ce que je veut faire sur les pompier
-    //var_dump($action);
 
     switch ($action) {
         case "affiche" : {
@@ -198,9 +195,6 @@ function caserneRoutes_get($fragments) {
             //Access permission can be checked here too
             call_user_func_array([new CaserneController(), "show"], $fragments);
             break;
-        case "detail" :
-            call_user_func_array([new CaserneController(), "showDetails"], $fragments);
-            break;
         case "add" :
             call_user_func_array([new CaserneController(), "insert"], $fragments);
             break;
@@ -240,9 +234,6 @@ function userRoutes_get($fragments) {
         case "affiche":
             call_user_func_array([new UserController(), "show"], $fragments);
             break;
-        case "detail" :
-            call_user_func_array([new UserController(), "showDetails"], $fragments);
-            break;
         case "add" :
             call_user_func_array([new UserController(), "insert"], $fragments);
             break;
@@ -278,9 +269,6 @@ function roleRoutes_get($fragments) {
     switch ($action) {
         case "affiche":
             call_user_func_array([new RoleController(), "show"], $fragments);
-            break;
-        case "detail" :
-            call_user_func_array([new RoleController(), "showDetails"], $fragments);
             break;
         case "add" :
             call_user_func_array([new RoleController(), "insert"], $fragments);
