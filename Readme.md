@@ -34,22 +34,22 @@ $ cd ../curry
 $ php -S 127.0.0.1:8080 -t html
 ```
 
-4. Lancer l'application
-<br/>
+4. Lancer l'application<br/>
+
 Rendez-vous sur l'url suivante dans un navigateur
 ```
 http://127.0.0.1:8080/
 ```
 
-5. Lancer l'application
-<br/>
+5. Lancer l'application<br/>
+
 Rendez-vous sur l'url suivante dans un navigateur
 ```
 http://127.0.0.1:8080/
 ```
 
-6. Premiere connexion
-<br/>
+6. Premiere connexion<br/>
+
 Vous pouvez vous connecté au utilisateur déja crée :
 
 |      Role      | Identifiant | Mot de passe |
