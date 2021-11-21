@@ -364,8 +364,8 @@ Create table user(
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-insert into user (Identifiant, IdRole, Prenom, Nom, Password) values ('PDupond', 1, 'Paul', 'Dupond', '116fd3797ad35cb658e211b0a4489ca7614c51a028699dd1020f408767ae12a1');/* fdsf45-%%%DD */
-insert into user (Identifiant, IdRole, Prenom, Nom, Password) values ('JMaurelle', 2, 'Jean', 'Maurelle', '069dc5ec79a138946d96ac4f03ead5a75dd7abccf2ff1ff9fe5036c53756bc0a');/* -_25iidffd4 */
-insert into user (Identifiant, IdRole, Prenom, Nom, Password) values ('EYeager', 3, 'eren', 'yeager', '9599500373a5d2f5512097dc406b086231c1454f1f327c1c6febced3c9a025e0');/* Acdfds78*$d */
+insert into user (Identifiant, IdRole, Prenom, Nom, Password) values ('PDupond', 1, 'Paul', 'Dupond', '116fd3797ad35cb658e211b0a4489ca7614c51a028699dd1020f408767ae12a1');
+insert into user (Identifiant, IdRole, Prenom, Nom, Password) values ('JMaurelle', 2, 'Jean', 'Maurelle', '069dc5ec79a138946d96ac4f03ead5a75dd7abccf2ff1ff9fe5036c53756bc0a');
+insert into user (Identifiant, IdRole, Prenom, Nom, Password) values ('EYeager', 3, 'eren', 'yeager', '9599500373a5d2f5512097dc406b086231c1454f1f327c1c6febced3c9a025e0');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
