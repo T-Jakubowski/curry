@@ -48,8 +48,8 @@ You can connect to the user already created:
 
 |      Role      |   Username  |   Password   |
 |:--------------:|:-----------:|:------------:|
-| Administrateur |   PDupond   | fdsf45-%%%DD |
-|   Secretaire   |  JMaurelle  |  -_25iidffd4 |
+|      Admin     |   PDupond   | fdsf45-%%%DD |
+|   Responsable  |  JMaurelle  |  -_25iidffd4 |
 |   Utilisateur  |   EYeager   |  Acdfds78*$d |
 
 
