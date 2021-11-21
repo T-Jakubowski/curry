@@ -35,21 +35,21 @@ $ php -S 127.0.0.1:8080 -t html
 ```
 
 4. Lancer l'application
-<br/>;
+<br/>
 Rendez-vous sur l'url suivante dans un navigateur
 ```
 http://127.0.0.1:8080/
 ```
 
 5. Lancer l'application
-<br/>;
+<br/>
 Rendez-vous sur l'url suivante dans un navigateur
 ```
 http://127.0.0.1:8080/
 ```
 
 6. Premiere connexion
-<br/>;
+<br/>
 Vous pouvez vous connecté au utilisateur déja crée :
 
 |      Role      | Identifiant | Mot de passe |
