@@ -139,12 +139,20 @@ class UserController extends BaseController {
                         }
                     }
                 }
+                
                 if ($isSuccess == true) {
-                    $password = hash('sha256', $password);
-                    $userToUpdate = new User($identifiant, $nom, $prenom, $password, $role);
-                    $this->DAOUser->edit($userToUpdate);
-                    $resultMessage = "le user numéro '" . $identifiant . "' a bien été modifier";
-                    $page = Renderer::render("view_user_edit.php", compact("resultMessage"));
+                    if ($identifiant != "PDupond") {
+                        $password = hash('sha256', $password);
+                        $userToUpdate = new User($identifiant, $nom, $prenom, $password, $role);
+                        $this->DAOUser->edit($userToUpdate);
+                        $resultMessage = "le user numéro '" . $identifiant . "' a bien été modifier";
+                        $page = Renderer::render("view_user_edit.php", compact("resultMessage"));
+                    }
+                    else{
+                        $resultMessage = "Vous ne pouvez pas modifier ce user";
+                        $page = Renderer::render("view_user_edit.php", compact("resultMessage"));
+                    }
+                    
                 } else {
                     $page = Renderer::render("view_user_edit.php", compact("valueError"));
                 }
@@ -172,9 +180,15 @@ class UserController extends BaseController {
                 if ($identifiant != $identifiant_session) {
                     $isExist = $this->DAOUser->findifUserIdentifiantExist($identifiant);
                     if ($isExist == true) {
-                        $resultMessage = "le user numéro '" . $identifiant . "' a bien été Supprimer";
-                        $this->DAOUser->remove($identifiant);
-                        $page = Renderer::render("view_user_delete.php", compact("resultMessage"));
+                        if ($identifiant != "PDupond"){
+                            $resultMessage = "le user numéro '" . $identifiant . "' a bien été Supprimer";
+                            $this->DAOUser->remove($identifiant);
+                            $page = Renderer::render("view_user_delete.php", compact("resultMessage"));
+                        }
+                        else{   
+                            $resultMessage = "Vous ne pouvez pas supprimer ce user";
+                            $page = Renderer::render("view_user_edit.php", compact("resultMessage"));
+                        }        
                     } else {
                         $valueError = "Vous ne pouvez pas supprimer le user " . $identifiant . " pour l'instant";
                         $page = Renderer::render("view_user_delete.php", compact("valueError"));
