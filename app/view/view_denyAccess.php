@@ -6,7 +6,7 @@
 <?php $ActivePageName="Undefine"; require "view_NavBarre.php"; ?>
 
 <div class="alert alert-danger" role="alert">
-    cette page n'existe ou vous ne possédez pas les autorisations pour y accéder
+    cette page n'existe pas ou vous ne possédez pas les autorisations pour y accéder
 </div>
 
 </html>

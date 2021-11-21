@@ -53,7 +53,7 @@ if ($permission_manage) {
 
                         <div class="card-body">
                             <h5 class="card-title">User</h5>
-                            <p class="card-text">Contient la liste des utilisateur de l'application.</p>
+                            <p class="card-text">Contient la liste des utilisateurs de l'application.</p>
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@ if ($permission_manage) {
                         </a>
                         <div class="card-body">
                             <h5 class="card-title">Role</h5>
-                            <p class="card-text">Contient la liste des role pouvant etre utilisé a des utilisateurs.</p>
+                            <p class="card-text">Contient la liste des roles pouvant etre attribués a des utilisateurs.</p>
                         </div>
                     </div>
                 </div>
