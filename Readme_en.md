@@ -20,23 +20,23 @@ A list of technologies used within the project:
 ## Installation
 ***
 
-1. Cloner le dépôt
+1. Clone the repository
 ```
 $ git clone https://gitlab.com/sco-chartreux/slam21-22/team-1/curry.git
 ```
-2. Intaller la base de données
+2. Install the database
 Pour ce faire vous devez executé un des deux script sql qui se trouve dans le repertoire **../curry/sql/**.
-Le script **dump_pompierDataBase_Init.sql** contient un jeu de données par defaut alors **dump_pompierDataBase_Init_WithoutData.sql** n'en contient pas(il contient uniquement les données necessaire pour se connecté a l'application)
+Le script **dump_pompierDataBase_Init.sql** contient un jeu de données par defaut alors que **dump_pompierDataBase_Init_WithoutData.sql** n'en contient pas (il contient uniquement les données necessaire pour se connecté a l'application)
 
-3. Lancer un serveur
+3. Start a server
 ```
 $ cd ../curry
 $ php -S 127.0.0.1:8080 -t html
 ```
 
-4. Lancer l'application<br/>
+4. Launch the application<br/>
 
-Rendez-vous sur l'url suivante dans un navigateur
+Go to the following url in a browser
 ```
 http://127.0.0.1:8080/
 ```
